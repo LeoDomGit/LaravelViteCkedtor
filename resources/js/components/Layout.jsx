@@ -9,6 +9,8 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import GroupIcon from '@mui/icons-material/Group';
+import CategoryIcon from '@mui/icons-material/Category';
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import "../../css/app.css";
 function Layout({ children }) {
   const { collapseSidebar } = useProSidebar();
@@ -34,8 +36,9 @@ function Layout({ children }) {
            <a href={'/roles'}> <MenuItem icon={<GroupIcon />}>Loại tài khoản</MenuItem></a>
            <a href={'/users'}> <MenuItem icon={<GroupIcon />}>Tài khoản</MenuItem></a>
             </SubMenu>
-            <SubMenu label="Sản phẩm" icon={<HomeOutlinedIcon />}>
-            <a href={'/categories'}> <MenuItem icon={<HomeOutlinedIcon />}>Loại sản phẩm</MenuItem></a>
+            <SubMenu label="Sản phẩm" icon={<BrandingWatermarkIcon />}>
+            <a href={'/categories'}> <MenuItem icon={<CategoryIcon />}>Loại sản phẩm</MenuItem></a>
+            <a href={'/brands'}> <MenuItem icon={<BrandingWatermarkIcon />}>Thương hiệu</MenuItem></a>
 
             </SubMenu>
 

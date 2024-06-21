@@ -19,6 +19,7 @@
         "leo/permissions": "*",
         "leo/roles": "*",
         "leo/users":"*",
+        "leo/brands":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "spatie/laravel-permission": "^6.7",
@@ -88,7 +89,10 @@
          ],
          "./plugins/users": [
             "leo/users"
-     ]
+     ],
+     "./plugins/brands": [
+        "leo/brands"
+ ]
         }
     },
     "config": {
@@ -121,6 +125,10 @@
         {
             "type": "path",
             "url": "./packages/users/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/brands/"
         }
     ]
 }
