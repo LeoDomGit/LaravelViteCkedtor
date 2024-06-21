@@ -33,6 +33,11 @@ function Layout({ children }) {
            <a href={'/roles'}> <MenuItem icon={<HomeOutlinedIcon />}>Loại tài khoản</MenuItem></a>
            <a href={'/users'}> <MenuItem icon={<HomeOutlinedIcon />}>Tài khoản</MenuItem></a>
             </SubMenu>
+            <SubMenu label="Sản phẩm" icon={<HomeOutlinedIcon />}>
+            <a href={'/categories'}> <MenuItem icon={<HomeOutlinedIcon />}>Loại sản phẩm</MenuItem></a>
+
+            </SubMenu>
+
             <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
             <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
             <MenuItem icon={<CalendarTodayOutlinedIcon />}>Calendar</MenuItem>
