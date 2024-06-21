@@ -1,6 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Leo\Categories\Controllers\CategoriesController;
+use Leo\Brands\Controllers\BrandsController;
 
-Route::resource('brands', CategoriesController::class);
+Route::resource('brands', BrandsController::class);

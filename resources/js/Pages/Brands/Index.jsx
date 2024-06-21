@@ -70,7 +70,7 @@ function Index({ brands }) {
   ];
   const submitBrand = () => {
     axios.post('/brands', {
-      name: category
+      name: brand
     }).then((res) => {
       if (res.data.check == true) {
         notyf.open({

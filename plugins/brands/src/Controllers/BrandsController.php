@@ -1,6 +1,6 @@
 <?php
 
-namespace Leo\Categories\Controllers;
+namespace Leo\Brands\Controllers;
 
 use App\Http\Controllers\Controller;
 use Leo\Brands\Models\Brands;
@@ -10,7 +10,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class CategoriesController extends Controller
+class BrandsController extends Controller
 {
     /**
      * Display a listing of the resource.
