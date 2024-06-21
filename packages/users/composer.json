@@ -1,0 +1,13 @@
+{
+    "name": "leo/users",
+    "description": "Users",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Leo\\Users\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
