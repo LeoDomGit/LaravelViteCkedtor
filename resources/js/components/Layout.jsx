@@ -8,6 +8,7 @@ import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import GroupIcon from '@mui/icons-material/Group';
 import "../../css/app.css";
 function Layout({ children }) {
   const { collapseSidebar } = useProSidebar();
@@ -28,10 +29,10 @@ function Layout({ children }) {
               {" "}
               <h2>Admin</h2>
             </MenuItem>
-            <SubMenu label="Tài khoản" icon={<HomeOutlinedIcon />}>
-            <a href={'/permissions'}> <MenuItem icon={<HomeOutlinedIcon />}>Quyền tài khoản</MenuItem></a>
-           <a href={'/roles'}> <MenuItem icon={<HomeOutlinedIcon />}>Loại tài khoản</MenuItem></a>
-           <a href={'/users'}> <MenuItem icon={<HomeOutlinedIcon />}>Tài khoản</MenuItem></a>
+            <SubMenu label="Tài khoản" icon={<GroupIcon />}>
+            <a href={'/permissions'}> <MenuItem icon={<GroupIcon />}>Quyền tài khoản</MenuItem></a>
+           <a href={'/roles'}> <MenuItem icon={<GroupIcon />}>Loại tài khoản</MenuItem></a>
+           <a href={'/users'}> <MenuItem icon={<GroupIcon />}>Tài khoản</MenuItem></a>
             </SubMenu>
             <SubMenu label="Sản phẩm" icon={<HomeOutlinedIcon />}>
             <a href={'/categories'}> <MenuItem icon={<HomeOutlinedIcon />}>Loại sản phẩm</MenuItem></a>
