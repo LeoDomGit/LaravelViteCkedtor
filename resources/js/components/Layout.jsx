@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react'
-import { Sidebar, Menu, MenuItem, useProSidebar } from "react-pro-sidebar";
+import { Sidebar, Menu, MenuItem, useProSidebar, SubMenu } from "react-pro-sidebar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
@@ -28,9 +28,11 @@ function Layout({ children }) {
               {" "}
               <h2>Admin</h2>
             </MenuItem>
+            <SubMenu label="Tài khoản" icon={<HomeOutlinedIcon />}>
             <a href={'/permissions'}> <MenuItem icon={<HomeOutlinedIcon />}>Quyền tài khoản</MenuItem></a>
            <a href={'/roles'}> <MenuItem icon={<HomeOutlinedIcon />}>Loại tài khoản</MenuItem></a>
-           <a href={'/categories'}> <MenuItem icon={<HomeOutlinedIcon />}>Loại sản phẩm</MenuItem></a>
+           <a href={'/users'}> <MenuItem icon={<HomeOutlinedIcon />}>Tài khoản</MenuItem></a>
+            </SubMenu>
             <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
             <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
             <MenuItem icon={<CalendarTodayOutlinedIcon />}>Calendar</MenuItem>

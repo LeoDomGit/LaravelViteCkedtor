@@ -8,9 +8,9 @@ import { DataGrid } from '@mui/x-data-grid';
 import 'notyf/notyf.min.css';
 import Swal from 'sweetalert2'
 import axios from 'axios';
-function Index({ categories }) {
+function Index({ permissions }) {
   const [permission, setPermission] = useState('');
-  const [data, setData] = useState(categories)
+  const [data, setData] = useState(permissions)
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

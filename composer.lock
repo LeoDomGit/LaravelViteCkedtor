@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a33d7c47cd0242dfdb3f61a776068cc",
+    "content-hash": "c55fecb336c040595e71f7526c9e2932",
     "packages": [
         {
             "name": "brick/math",
@@ -2411,6 +2411,54 @@
                     "src/Providers",
                     "src/Models",
                     "./routes"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dom",
+                    "email": "leodomsolar@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "leo/users",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/users",
+                "reference": "09c996f4ae64fb2e87b14cce11d2e91790d89eb8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Leo\\Users\\Providers\\UserServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Leo\\Users\\": "src/",
+                    "Leo\\Users\\Providers\\": "src/Providers/",
+                    "Leo\\Users\\Database\\Migrations\\": "database/migrations/",
+                    "Leo\\Users\\Database\\Seeders\\": "database/seeders/"
+                },
+                "classmap": [
+                    "src/Controllers",
+                    "src/Providers",
+                    "src/Models",
+                    "./routes"
+                ]
+            },
+            "scripts": {
+                "post-update-cmd": [
+                    "@php artisan migrate"
                 ]
             },
             "license": [
