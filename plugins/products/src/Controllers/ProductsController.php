@@ -15,7 +15,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use Inertia\Inertia;
 use Leo\Brands\Models\Brands;
 use Leo\Categories\Models\Categories;
-use ZipArchive;
 
 class ProductsController extends Controller
 {

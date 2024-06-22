@@ -41,6 +41,8 @@ function Layout({ children }) {
             <a href={'/categories'}> <MenuItem icon={<CategoryIcon />}>Loại sản phẩm</MenuItem></a>
             <a href={'/brands'}> <MenuItem icon={<BrandingWatermarkIcon />}>Thương hiệu</MenuItem></a>
             <a href={'/products'}> <MenuItem icon={<InventoryIcon />}>Sản phẩm</MenuItem></a>
+            <a href={'/product-group'}> <MenuItem icon={<InventoryIcon />}>Nhóm sản phẩm</MenuItem></a>
+
             </SubMenu>
 
             <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
