@@ -18,8 +18,9 @@
         "leo/categories": "*",
         "leo/permissions": "*",
         "leo/roles": "*",
-        "leo/users":"*",
-        "leo/brands":"*",
+        "leo/users": "*",
+        "leo/brands": "*",
+        "leo/products": "*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "spatie/laravel-permission": "^6.7",
@@ -78,21 +79,24 @@
             "merge-scripts": true
         },
         "installer-paths": {
-         "./plugins/roles": [
+            "./plugins/roles": [
                 "leo/roles"
-         ],
-         "./plugins/categories": [
+            ],
+            "./plugins/categories": [
                 "leo/categories"
-         ],
-         "./plugins/permissions": [
+            ],
+            "./plugins/permissions": [
                 "leo/permissions"
-         ],
-         "./plugins/users": [
-            "leo/users"
-     ],
-     "./plugins/brands": [
-        "leo/brands"
- ]
+            ],
+            "./plugins/users": [
+                "leo/users"
+            ],
+            "./plugins/brands": [
+                "leo/brands"
+            ],
+            "./plugins/products": [
+                "leo/products"
+            ]
         }
     },
     "config": {
@@ -129,6 +133,10 @@
         {
             "type": "path",
             "url": "./packages/brands/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/products/"
         }
     ]
 }

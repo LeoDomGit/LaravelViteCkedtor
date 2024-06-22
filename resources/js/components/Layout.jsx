@@ -11,6 +11,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import GroupIcon from '@mui/icons-material/Group';
 import CategoryIcon from '@mui/icons-material/Category';
 import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import "../../css/app.css";
 function Layout({ children }) {
   const { collapseSidebar } = useProSidebar();
@@ -39,7 +40,7 @@ function Layout({ children }) {
             <SubMenu label="Sản phẩm" icon={<BrandingWatermarkIcon />}>
             <a href={'/categories'}> <MenuItem icon={<CategoryIcon />}>Loại sản phẩm</MenuItem></a>
             <a href={'/brands'}> <MenuItem icon={<BrandingWatermarkIcon />}>Thương hiệu</MenuItem></a>
-
+            <a href={'/products'}> <MenuItem icon={<InventoryIcon />}>Sản phẩm</MenuItem></a>
             </SubMenu>
 
             <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
