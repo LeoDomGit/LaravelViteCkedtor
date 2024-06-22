@@ -131,6 +131,7 @@ class ProductsController extends Controller
         $data['price'] = $request->price;
         $data['idCate'] = $request->idCate;
         $data['idBrand'] = $request->idBrand;
+        $data['discount'] = $request->discount;
         $data['content'] = $request->content;
         $data['in_stock'] = $request->in_stock;
         $data['created_at']=now();
