@@ -19,7 +19,14 @@ class CategoriesController extends Controller
         $categories= Categories::all();
         return Inertia::render("Categories/Index",['categories'=>$categories]);
     }
-
+    public function api_index(Categories $categories)
+    {
+        return response()->json(Categories::active()->orderBy('id','asc')->get());
+    }
+    public function api_show(Categories $categories, $id)
+    {
+        return response()->json(Categories::active()->where('slug',$id)->with('products')->get());
+    }
     public function create()
     {
         //

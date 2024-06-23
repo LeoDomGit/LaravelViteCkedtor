@@ -51,9 +51,13 @@ class BrandsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Categories $categories)
+    public function api_index(Brands $categories)
     {
-        //
+        return response()->json(Brands::active()->orderBy('id','asc')->get());
+    }
+    public function api_show(Brands $categories, $id)
+    {
+        return response()->json(Brands::active()->where('slug',$id)->get());
     }
 
     /**
