@@ -42,6 +42,8 @@ function Layout({ children }) {
             <a href={'/brands'}> <MenuItem icon={<BrandingWatermarkIcon />}>Thương hiệu</MenuItem></a>
             <a href={'/products'}> <MenuItem icon={<InventoryIcon />}>Sản phẩm</MenuItem></a>
             </SubMenu>
+           <a href={'/slides'}> <MenuItem icon={<GroupIcon />}>Slides</MenuItem></a>
+            
             <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
             <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
             <MenuItem icon={<CalendarTodayOutlinedIcon />}>Calendar</MenuItem>
