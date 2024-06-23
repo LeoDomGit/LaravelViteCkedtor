@@ -69,8 +69,7 @@ function Edit({dataId,dataBrand,dataCate,dataproduct,datagallery,dataimage}) {
       });
     const handleRemoveImage = (index) => {
        const path=gallery[index].split('/');
-       const id = path[3]; 
-       const imageName = path[4]; 
+       const imageName = path[3]; 
        const check = window.confirm('Delete this image');
        if(check){
             axios.delete('/products/drop-image/'+id+'/'+imageName,{
