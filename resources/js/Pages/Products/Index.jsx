@@ -133,7 +133,7 @@ function Products({ dataproducts, databrands, datacategories }) {
     }
     const columns = [
         { field: "id", headerName: "#", width: 100 },
-        { field: "name", headerName: "Permission", width: 200, editable: true },
+        { field: "name", headerName: "Tên sản phẩm", width: 200, editable: true },
         { field: "slug", headerName: "Slug", width: 200, editable: false },
         {
             field: "price",
