@@ -27,9 +27,9 @@ Route::post('/products/set-image/{id}/{imageName}', [ProductsController::class, 
 // });
 
 
-// Route::prefix('api2/')->name('api2.')->group(function () {
-//     Route::prefix('products')->name('products.')->group(function () {
-//         Route::get('/',[ProductsController::class,'Active']);
-//         Route::get('/{id}',[ProductsController::class,'Single_Active']);
-//     });
-// });
+Route::prefix('api/')->name('api.')->group(function () {
+    Route::prefix('products')->name('products.')->group(function () {
+        Route::get('/',[ProductsController::class,'api_product']);
+        Route::get('/{id}',[ProductsController::class,'api_single_product']);
+    });
+});

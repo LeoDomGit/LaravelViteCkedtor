@@ -422,5 +422,18 @@ class ProductsController extends Controller
 
     }
 
+    public function api_product(){
+        $result = Products::join('gallery','products.id','=','gallery.id_parent')
+                    ->where('gallery.status',1)->select('products.*','gallery.image as image')
+                    ->get();
+        return response()->json($result);
+    }
+
+    public function api_single_product($slug){
+        $result = Products::where('products.slug',$slug)->where('products.status',1)->select('products.*')
+                    ->first();
+        $medias = Gallery::where('id_parent',$result->id)->pluck('image');
+        return response()->json(['product'=>$result,'medias'=>$medias]);
+    }
 }
 
