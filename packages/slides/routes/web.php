@@ -4,5 +4,5 @@ use Leo\Slides\Controllers\SlidesController;
 
 Route::resource('slides', SlidesController::class);
 
-Route::get('/api/slides/', [SlidesController::class,'api_index']);
-Route::get('/api/slides/{slug}', [SlidesController::class,'api_single']);
+Route::get('api/slides/', [SlidesController::class,'api_index']);
+Route::get('api/slides/{slug}', [SlidesController::class,'api_single']);
