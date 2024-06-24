@@ -423,12 +423,22 @@ class ProductsController extends Controller
 
     }
 
-    public function api_product(){
-        $result = Products::join('gallery','products.id','=','gallery.id_parent')
-        ->where('products.status',1)            
-        ->where('gallery.status',1)->select('products.*','gallery.image as image')
-                    ->paginate(4);
-        return response()->json($result);
+    public function api_product(Request $request){
+        if($request->has('limit')){
+            $result = Products::join('gallery','products.id','=','gallery.id_parent')
+            ->where('products.status',1)            
+            ->where('gallery.status',1)->select('products.*','gallery.image as image')
+                        ->take($request->limit);
+            return response()->json($result);
+    
+        }else{
+            $result = Products::join('gallery','products.id','=','gallery.id_parent')
+            ->where('products.status',1)            
+            ->where('gallery.status',1)->select('products.*','gallery.image as image')
+                        ->paginate(4);
+            return response()->json($result);
+    
+        }
     }
     
     public function api_single_product($slug){
