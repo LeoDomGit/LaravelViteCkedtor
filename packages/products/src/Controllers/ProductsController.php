@@ -422,8 +422,9 @@ class ProductsController extends Controller
 
     public function api_product(){
         $result = Products::join('gallery','products.id','=','gallery.id_parent')
-                    ->where('gallery.status',1)->select('products.*','gallery.image as image')
-                    ->get();
+        ->where('products.status',1)            
+        ->where('gallery.status',1)->select('products.*','gallery.image as image')
+                    ->paginate(4);
         return response()->json($result);
     }
     
@@ -431,7 +432,20 @@ class ProductsController extends Controller
         $result = Products::where('products.slug',$slug)->where('products.status',1)->select('products.*')
                     ->first();
         $medias = Gallery::where('id_parent',$result->id)->pluck('image');
-        return response()->json(['product'=>$result,'medias'=>$medias]);
+        $cate_products=Products::join('gallery','products.id','=','gallery.id_parent')
+        ->where('products.status',1)
+        ->where('products.idCate',$result->idCate)
+        ->where('gallery.status',1)
+        ->select('products.*','gallery.image as image')
+        ->take(4);
+        $brand_products=Products::join('gallery','products.id','=','gallery.id_parent')
+        ->where('products.status',1)
+        ->where('products.idBrand',$result->idBrand)
+        ->where('gallery.status',1)
+        ->select('products.*','gallery.image as image')
+        ->take(4);
+        $links = $cate_products->union($brand_products)->get();
+        return response()->json(['product'=>$result,'medias'=>$medias,'links'=>$link]);
     }   
 }
 

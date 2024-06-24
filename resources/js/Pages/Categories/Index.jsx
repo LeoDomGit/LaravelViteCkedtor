@@ -3,7 +3,7 @@ import Layout from '../../components/Layout'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Notyf } from 'notyf';
-import { Box, Typography } from "@mui/material";
+import { Box, Switch, Typography } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import 'notyf/notyf.min.css';
 import Swal from 'sweetalert2'
@@ -83,11 +83,53 @@ const renderParentSelect = (params) => {
     {
       field: 'id_parent', headerName: "Parent", width: 200, renderCell: renderParentSelect
     },
-
+    {
+      field: "status",
+      headerName: "Status",
+      width: 70,
+      renderCell: (params) => (
+        <Switch
+          checked={params.value == 1}
+          onChange={(e) => switchCate(params, e.target.checked ? 1 : 0)}
+          inputProps={{ "aria-label": "controlled" }}
+        />
+      ),
+    },
     {
       field: 'created_at', headerName: 'Created at', width: 200, valueGetter: (params) => formatCreatedAt(params)
     }
   ];
+  const switchCate = (params, value) => {
+    var id = params.id;
+    var field = params.field;
+    axios
+      .put(
+        `/categories/${id}`,
+        {
+          [field]: value,
+        }
+        // {
+        //     headers: {
+        //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+        //         Accept: "application/json",
+        //     },
+        // }
+      )
+      .then((res) => {
+        if (res.data.check == true) {
+          notyf.open({
+            type: "success",
+            message: "Chỉnh sửa thương hiệu sản phẩm thành công",
+          });
+          setData(res.data.data);
+        } else if (res.data.check == false) {
+          notyf.open({
+            type: "error",
+            message: res.data.msg,
+          });
+        }
+      });
+  };
   const submitCategory = () => {
     axios.post('/categories', {
       id_parent:id_parent,
