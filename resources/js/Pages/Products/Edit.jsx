@@ -7,7 +7,6 @@ import { Notyf } from 'notyf';
 import { Dropzone, FileMosaic } from "@dropzone-ui/react";
 import Modal from 'react-bootstrap/Modal';
 import 'notyf/notyf.min.css';
-import CKEditor from "../../components/CKEditor";
 
 function Edit({dataId,dataBrand,dataCate,dataproduct,datagallery,dataimage}) {
     const [id,setId]= useState(dataId)
@@ -70,7 +69,8 @@ function Edit({dataId,dataBrand,dataCate,dataproduct,datagallery,dataimage}) {
       });
     const handleRemoveImage = (index) => {
        const path=gallery[index].split('/');
-       const imageName = path[3]; 
+       const id = path[3]; 
+       const imageName = path[4]; 
        const check = window.confirm('Delete this image');
        if(check){
             axios.delete('/products/drop-image/'+id+'/'+imageName,{
@@ -250,10 +250,14 @@ function Edit({dataId,dataBrand,dataCate,dataproduct,datagallery,dataimage}) {
                         </div>
                     </div>
                     <div className="row mt-3">
-                    <CKEditor
-                                        value={product.content}
-                                        onBlur={(newContent) => setProduct({ ...product, content: newContent })}
-                                    />
+                        <JoditEditor
+                            style={{ height: '400px' }}
+                            config={config}
+                            value={product.content}
+                            tabIndex={1}
+                            onBlur={(newContent) => setProduct({ ...product, content: newContent })}
+                            onChange={(newContent) => setProduct({ ...product, content: newContent })}
+                        />
                     </div>
                     <div className="row mt-3">
                         <div className="col-md-3">
