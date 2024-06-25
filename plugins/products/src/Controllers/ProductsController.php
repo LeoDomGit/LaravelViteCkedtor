@@ -15,7 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Inertia\Inertia;
 use Leo\Brands\Models\Brands;
 use Leo\Categories\Models\Categories;
-
+use DB;
 class ProductsController extends Controller
 {
     use HasCrud;
@@ -460,5 +460,32 @@ class ProductsController extends Controller
         $links = $cate_products->union($brand_products)->get();
         return response()->json(['product'=>$result,'medias'=>$medias,'links'=>$links]);
     }   
+    
+    public function api_load_cart_product(Request $request){
+        $validator = Validator::make($request->all(), [
+            'cart' => 'required|array',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
+        }
+        $arr=[];
+        foreach($request->cart as $item){
+            $item=json_decode($item);
+            $product=Products::join('gallery','products.id','=','gallery.id_parent')->where('gallery.status',1)->where('products.id',$item[0])->select('products.id','gallery.image','name','price','discount')->get();
+            foreach($product as $item1){
+                $item2=[
+                    'id'=> $item1->id,
+                     'name'=>$item1->name,
+                     'quantity'=>$item[1],
+                     'discount'=>(int)$item1->discount,
+                     'price'=>(int)$item1->price,
+                     'image'=>$item1->image,
+                     'total'=>(int)$item1->discount*$item[1],
+                 ];
+               array_push($arr,$item2);
+            }
+       }
+       return response()->json($arr);
+    }
 }
 
