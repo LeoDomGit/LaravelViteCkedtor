@@ -153,8 +153,15 @@ class SlidesController
         return response()->json(['check' => true, 'data' => $slides]);
     }
 
+    public function api_index(){ 
+        $result=Slides::active()->get();
+        return response()->json($result);
+    }
 
-
+    public function api_single($lug){ 
+        $result=Slides::active()->where('slug','like','%'.$slug.'%')->get();
+        return response()->json($result);
+    }
     /**
      * Remove the specified resource from storage.
      */
