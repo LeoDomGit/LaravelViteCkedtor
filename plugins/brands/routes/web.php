@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Leo\Brands\Controllers\BrandsController;
 
-Route::resource('brands', BrandsController::class);
+Route::resource('brands', BrandsController::class)->middleware('auth.basic');
 
 Route::prefix('api')->group(function () {
     Route::get('/brands',[BrandsController::class,'api_index']);

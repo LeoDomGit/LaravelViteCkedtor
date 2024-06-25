@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Leo\Categories\Controllers\CategoriesController;
 
-Route::resource('categories', CategoriesController::class);
+Route::resource('categories', CategoriesController::class)->middleware('auth.basic');
 
 Route::prefix('api')->group(function () {
     Route::get('/categories',[CategoriesController::class,'api_index']);

@@ -1,6 +1,6 @@
 <?php
 
-// use App\Http\Middleware\JWT;
+use App\Http\Middleware\AdminLogin  ;
 use Illuminate\Support\Facades\Route;
 use Leo\Users\Controllers\UserController;
 
@@ -14,7 +14,11 @@ use Leo\Users\Controllers\UserController;
 //     Route::put('/switch/{id}', [UserController::class, 'switchUser'])->name('users.switch');
 //     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 // });
-
-Route::resource('users', UserController::class);
-Route::put('/users/switch/{id}', [UserController::class,'switchUser']);
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/', [UserController::class,'login']);
+    Route::post('/users/checkLogin',[UserController::class,'checkLogin']);
+    Route::get('/logout', [UserController::class,'logout']);
+});
+Route::resource('users', UserController::class)->middleware('auth.basic');
+Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware('auth');
 

@@ -15,6 +15,11 @@ use Leo\Users\Controllers\UserController;
 //     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 // });
 
-Route::resource('users', UserController::class);
-Route::put('/users/switch/{id}', [UserController::class,'switchUser']);
+Route::get('/', [UserController::class,'login']);
+Route::post('/users/checkLogin',[UserController::class,'checkLogin']);
+
+Route::resource('users', UserController::class)->middleware('auth.basic');
+Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware('auth.basic');
+
+
 

@@ -2,4 +2,6 @@
 use Illuminate\Support\Facades\Route;
 use Leo\Roles\Controllers\RolesController;
 
-Route::resource('roles', RolesController::class);
+Route::middleware(['web', 'auth.basic'])->group(function () {
+    Route::resource('roles', RolesController::class);
+});
