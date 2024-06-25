@@ -475,12 +475,13 @@ class ProductsController extends Controller
             foreach($product as $item1){
                 $item2=[
                     'id'=> $item1->id,
-                     'name'=>$item1->name,
-                     'quantity'=>$item[1],
-                     'discount'=>(int)$item1->discount,
-                     'price'=>(int)$item1->price,
-                     'image'=>$item1->image,
-                     'total'=>(int)$item1->discount*$item[1],
+                    'name'=>$item1->name,
+                    'slug'=>$item1->slug,
+                    'quantity'=>$item[1],
+                    'discount'=>(int)$item1->discount,
+                    'price'=>(int)$item1->price,
+                    'image'=>$item1->image,
+                    'total'=>(int)$item1->discount*$item[1],
                  ];
                array_push($arr,$item2);
             }

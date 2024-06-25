@@ -471,8 +471,9 @@ class ProductsController extends Controller
             $product=Products::join('gallery','products.id','=','gallery.id_parent')->where('gallery.status',1)->where('products.id',$item[0])->select('products.id','gallery.image','name','price','discount')->get();
             foreach($product as $item1){
                 $item2=[
-                   'id'=> $item1->id,
+                    'id'=> $item1->id,
                     'name'=>$item1->name,
+                    'slug'=>$item1->slug,
                     'quantity'=>$item[1],
                     'discount'=>(int)$item1->discount,
                     'price'=>(int)$item1->price,
