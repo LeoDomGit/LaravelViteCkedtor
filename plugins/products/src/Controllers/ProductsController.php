@@ -442,7 +442,7 @@ class ProductsController extends Controller
     }
     
     public function api_single_product($slug){
-        $result = Products::where('products.slug',$slug)->where('products.status',1)->select('products.*')
+        $result = Products::with(['brands','categories'])->where('products.slug',$slug)->where('products.status',1)->select('products.*')
                     ->first();
         $medias = Gallery::where('id_parent',$result->id)->pluck('image');
         $cate_products=Products::join('gallery','products.id','=','gallery.id_parent')

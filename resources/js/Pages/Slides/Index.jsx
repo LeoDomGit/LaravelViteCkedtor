@@ -125,6 +125,9 @@ function Index({ dataSlides }) {
       if (response.data.check) {
         notyf.open({ type: "success", message: "Đã thêm thành công" });
         setData(response.data.data);
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
       } else {
         notyf.open({ type: "error", message: response.data.msg });
       }
