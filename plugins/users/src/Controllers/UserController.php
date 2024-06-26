@@ -37,7 +37,8 @@ class UserController
         ]);
     }
 
-    public function login(){
+    public function login(Request $request){
+        $request->session()->forget('user');
         return Inertia::render('Login/SignIn');
     }
 
@@ -101,8 +102,10 @@ class UserController
         }
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => 1], true)) {
+            $user = User::where('email',$request->email)->first();
+            $request->session()->put('user', $user);
             $request->session()->regenerate();
-            return response()->json(['check' => true]);
+            return response()->json(['check'=>true]);
         } else {
             return response()->json(['check' => false, 'msg' => 'Tài khoản không hợp lệ']);
         }

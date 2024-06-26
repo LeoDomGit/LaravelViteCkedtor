@@ -1,5 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Leo\Permissions\Controllers\PermissionController;
-
-Route::resource('permissions', PermissionController::class)->middleware('auth');
+use App\Http\Middleware\CheckLogin;
+Route::resource('permissions', PermissionController::class)->middleware(CheckLogin::class);

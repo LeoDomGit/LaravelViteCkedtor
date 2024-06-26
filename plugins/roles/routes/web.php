@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use Leo\Roles\Controllers\RolesController;
-
-Route::middleware(['web', 'auth'])->group(function () {
+use App\Http\Middleware\CheckLogin;
+Route::middleware(['web',CheckLogin::class])->group(function () {
     Route::resource('roles', RolesController::class);
 });

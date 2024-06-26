@@ -3,8 +3,8 @@
 use App\Http\Middleware\JWT;
 use Illuminate\Support\Facades\Route;
 use Leo\Products\Controllers\ProductsController;
-
-Route::resource('products', ProductsController::class);
+use App\Http\Middleware\CheckLogin;
+Route::resource('products', ProductsController::class)->middleware(CheckLogin::class);
 Route::put('/products/switch/{id}',[ProductsController::class,'switchProduct']);
 Route::delete('/products/drop-image/{id}/{imageName}', [ProductsController::class, 'removeImage']);
 Route::post('/products/set-image/{id}/{imageName}', [ProductsController::class, 'setImage']);
