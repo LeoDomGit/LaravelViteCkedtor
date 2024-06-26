@@ -378,8 +378,8 @@ class ProductsController extends Controller
             ]);
 
         }
-
-        return response()->json(['check' => true, 'data' => $result]);
+        $products=$this->model::with('categories', 'brands')->select('products.*')->get();
+        return response()->json(['check' => true, 'data' => $products]);
 
     }
 
