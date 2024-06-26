@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Leo\Brands\Controllers\BrandsController;
 use App\Http\Middleware\CheckLogin;
-Route::resource('brands', BrandsController::class)->middleware(CheckLogin::class);
+Route::middleware(['web', CheckLogin::class])->group(function () {
+    Route::resource('brands', BrandsController::class);
+
+});
 
 Route::prefix('api')->group(function () {
     Route::get('/brands',[BrandsController::class,'api_index']);

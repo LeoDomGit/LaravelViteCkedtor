@@ -73,7 +73,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Leo\Customer\Models\Customer::class,
+            // 'model' => Leo\Customer\Models\Customer::class,
         ],
 
         'admins' => [
@@ -111,7 +111,7 @@ return [
 
         'admins' => [
             'provider' => 'admins',
-            'table' => 'password_reset_tokens',
+            'table' => 'admin_password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

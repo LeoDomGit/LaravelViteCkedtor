@@ -2,4 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use Leo\Permissions\Controllers\PermissionController;
 use App\Http\Middleware\CheckLogin;
-Route::resource('permissions', PermissionController::class)->middleware(CheckLogin::class);
+Route::middleware(['web', CheckLogin::class])->group(function () {
+    Route::resource('permissions', PermissionController::class);
+
+});
