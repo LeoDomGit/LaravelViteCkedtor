@@ -61,6 +61,7 @@ class CustomersController
             $token = $customer->createToken('CustomerToken')->plainTextToken;
             return response()->json([
                 'check' => true,
+                'id'=>$customer->id,
                 'token' => $token,
             ]);
         }
