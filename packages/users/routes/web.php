@@ -1,6 +1,7 @@
 <?php
 
 // use App\Http\Middleware\JWT;
+use App\Http\Middleware\checkLogin;
 use Illuminate\Support\Facades\Route;
 use Leo\Users\Controllers\UserController;
 
@@ -16,10 +17,10 @@ use Leo\Users\Controllers\UserController;
 // });
 
 Route::get('/', [UserController::class,'login']);
-Route::post('/users/checkLogin',[UserController::class,'checkLogin']);
+Route::post('/users/checkLogin',[\App\Http\Controllers\UserController::class,'checkLogin']);
 
-Route::resource('users', UserController::class)->middleware('auth.basic');
-Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware('auth.basic');
+Route::resource('users', UserController::class)->middleware(checkLogin::class);
+Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware('auth');
 
 
 

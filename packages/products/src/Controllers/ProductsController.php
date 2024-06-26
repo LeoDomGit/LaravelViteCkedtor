@@ -66,7 +66,7 @@ class ProductsController extends Controller
 
             $imageName = $file->getClientOriginalName();
 
-            $extractTo = storage_path('app/public/products/' . $id);
+            $extractTo = storage_path('app/public/products/');
 
             $file->move($extractTo, $imageName);
 
@@ -80,7 +80,7 @@ class ProductsController extends Controller
 
             ]);
 
-            $result[] = Storage::url('products/' . $id . '/' . $imageName);
+            $result[] = Storage::url('products/'. $imageName);
 
         }
 

@@ -168,4 +168,5 @@ class SlidesController
         $slides = Slides::all();
         return response()->json(['check' => true, 'data' => $slides]);
     }
+    
 }

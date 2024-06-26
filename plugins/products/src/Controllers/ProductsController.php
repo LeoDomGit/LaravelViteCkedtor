@@ -67,7 +67,7 @@ class ProductsController extends Controller
 
             $imageName = $file->getClientOriginalName();
 
-            $extractTo = storage_path('app/public/products/' . $id);
+            $extractTo = storage_path('app/public/products/');
 
             $file->move($extractTo, $imageName);
 
@@ -424,11 +424,12 @@ class ProductsController extends Controller
     }
 
     public function api_product(Request $request){
+
         if($request->has('limit')){
             $result = Products::join('gallery','products.id','=','gallery.id_parent')
             ->where('products.status',1)            
             ->where('gallery.status',1)->select('products.*','gallery.image as image')
-                        ->take($request->limit);
+                        ->take($request->limit)->get();
             return response()->json($result);
     
         }else{

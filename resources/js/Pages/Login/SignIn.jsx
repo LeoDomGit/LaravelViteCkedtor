@@ -62,6 +62,8 @@ export default function SignInSide() {
                 message: "Password is required",
             });
         } else {
+            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
             axios.post('/users/checkLogin', {
                 email: email,
                 password: password,

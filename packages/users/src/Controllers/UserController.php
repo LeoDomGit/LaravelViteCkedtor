@@ -2,6 +2,7 @@
 
 namespace Leo\Users\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Traits\HasCrud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -90,21 +91,7 @@ class UserController
         return response()->json(['check'=>true]);
     }
 
-    public function checkLogin (Request $request, User $user){
-        $validator = Validator::make($request->all(), [
-            'email'=>'required|email|exists:users,email',
-            'password'=>'required'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['check'=>false,'msg'=>$validator->errors()->first()]);
-        }
-        if(Auth::attempt(['name'=>$request->name,'password'=>$request->password,'status'=>1],true)){
-            $user = User::where('email',$request->email)->first();
-            return response()->json(['check'=>true]);
-        }else{
-            return response()->json(['check'=>false,'msg'=>'Tài khoản không hợp lệ']);
-        }
-    }
+ 
 
     public function checkLogin2 (Request $request, User $user){
         $validator = Validator::make($request->all(), [

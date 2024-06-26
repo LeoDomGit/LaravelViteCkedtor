@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Middleware\AdminLogin  ;
+use App\Http\Middleware\checkLogin;
 use Illuminate\Support\Facades\Route;
 use Leo\Users\Controllers\UserController;
 
@@ -19,6 +19,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/users/checkLogin',[UserController::class,'checkLogin']);
     Route::get('/logout', [UserController::class,'logout']);
 });
-Route::resource('users', UserController::class)->middleware('auth.basic');
+Route::resource('users', UserController::class)->middleware('auth.session');
 Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware('auth');
 
