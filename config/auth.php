@@ -45,11 +45,15 @@ return [
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
-    ],
+        ],
 
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
+        ],
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customers',
         ],
     ],
 
@@ -73,13 +77,18 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            // 'model' => Leo\Customer\Models\Customer::class,
+            'model' => Leo\Customer\Models\Customer::class,
         ],
 
         'admins' => [
             'driver' => 'eloquent',
             'model' => Leo\Users\Models\User::class,
         ],
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => Leo\Customers\Models\Customers::class,
+        ],
+
     ],
 
     /*
@@ -112,6 +121,12 @@ return [
         'admins' => [
             'provider' => 'admins',
             'table' => 'admin_password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'customers' => [
+            'provider' => 'customers',
+            'table' => 'customer_password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

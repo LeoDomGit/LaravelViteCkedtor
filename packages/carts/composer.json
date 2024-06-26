@@ -1,0 +1,13 @@
+{
+    "name": "leo/carts",
+    "description": "Cart Login",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Leo\\Carts\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}

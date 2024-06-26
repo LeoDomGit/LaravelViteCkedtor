@@ -23,6 +23,7 @@
         "leo/roles": "*",
         "leo/slides": "*",
         "leo/users": "*",
+        "leo/customers":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "spatie/laravel-permission": "^6.7",
@@ -98,6 +99,9 @@
             ],
             "./plugins/slides": [
                 "leo/slides"
+            ],
+            "./plugins/customers": [
+                "leo/customers"
             ]
         }
     },
@@ -143,6 +147,10 @@
         {
             "type": "path",
             "url": "./packages/slides/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/customers/"
         }
     ]
 }
