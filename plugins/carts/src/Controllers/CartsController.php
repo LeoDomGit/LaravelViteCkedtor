@@ -32,7 +32,7 @@ class CartController extends Controller
         $validator = Validator::make($request->all(), [
             'id_customer' => 'required|exists:customers,id',
             'id_product' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1',
+            'quantity' => 'integer|min:1',
         ]);
 
         if ($validator->fails()) {
@@ -42,9 +42,17 @@ class CartController extends Controller
         $cart=Carts::where('id_customer',$request->id_customer)
         ->where('id_product',$request->id_product)->first();
         if($cart){
-            $cart->update($request->all());
+            $data=$request->all();
+            if(!$request->quantity){
+                $data['quantity']=$cart->quantity+1;
+            }
+            $cart->update($data);
         }else{
-            Carts::create($request->all());
+            $data=$request->all();
+            if(!$request->quantity){
+                $data['quantity']=1;
+            }
+            Carts::create($data);
         }
         $carts = Carts::join('customers','carts.id_customer','=','customers.id')
         ->join('products','carts.id_product','=','products.id')
