@@ -15,4 +15,7 @@ class Customers extends Authenticatable
     protected $table='customers';
     protected $fillable=['id','name','address','password','phone','email','status','email_verified_at','created_at','updated_at'];
     
+    public function cart(){
+        return $this->hasMany(Customers::class);
+    }
 }

@@ -24,6 +24,7 @@
         "leo/slides": "*",
         "leo/users": "*",
         "leo/customers":"*",
+        "leo/carts":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "spatie/laravel-permission": "^6.7",
@@ -102,6 +103,9 @@
             ],
             "./plugins/customers": [
                 "leo/customers"
+            ],
+            "./plugins/carts": [
+                "leo/carts"
             ]
         }
     },
@@ -151,6 +155,10 @@
         {
             "type": "path",
             "url": "./packages/customers/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/carts/"
         }
     ]
 }

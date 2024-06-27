@@ -5,6 +5,7 @@ namespace Leo\Products\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Leo\Brands\Models\Brands;
+use Leo\Carts\Models\Carts;
 use Leo\Categories\Models\Categories;
 
 class Products extends Model
@@ -37,5 +38,9 @@ class Products extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 1);
+    }
+    public function carts()
+    {
+        return $this->hasMany(Carts::class, 'id_product');
     }
 }
