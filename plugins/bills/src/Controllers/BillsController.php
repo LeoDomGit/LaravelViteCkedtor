@@ -55,7 +55,11 @@ class BillsController extends Controller
         if ($validator->fails()) {
             return response()->json(['check'=>false , 'msg' => $validator->errors()->first()], 200);
         }
-        $data= $request->all();
+        $data= [];
+        $data['name']=$request->name;
+        $data['email']=$request->email;
+        $data['phone']=$request->phone;
+        $data['address']=$request->address;
         $id_hoa_don = Bills::insertGetId($data);
         foreach ($request->cart as $key => $item) {
             $item=json_decode($item);
