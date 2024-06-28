@@ -11,8 +11,9 @@ Route::middleware(['web',CheckLogin::class])->group(function () {
 });
 
 Route::prefix('api')->group(function () {
-    Route::prefix('bills.')->group(function () {
+    Route::prefix('bills')->group(function () {
         Route::post('/',[BillsController::class,'store']);
+        Route::post('/login',[BillsController::class,'store2']);
         // Route::get('/{id}',[CartController::class,'index']);
 
     });
