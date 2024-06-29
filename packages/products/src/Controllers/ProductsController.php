@@ -443,6 +443,7 @@ class ProductsController extends Controller
         ->where('products.status',1)            
         ->where('gallery.status',1)
         ->where('products.slug','like','%'.$slug.'%')
+        ->orwhere('products.name','like','%'.$slug.'%')
         ->select('products.*','gallery.image as image')
         ->get();
         if(count($result)==0){
