@@ -99,6 +99,9 @@
             "./plugins/brands": [
                 "leo/brands"
             ],
+            "./plugins/products": [
+                "leo/products"
+            ],
             "./plugins/slides": [
                 "leo/slides"
             ],

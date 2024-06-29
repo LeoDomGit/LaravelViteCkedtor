@@ -437,7 +437,20 @@ class ProductsController extends Controller
     
         }
     }
-    
+    // --------------------------------------
+    public function api_search_product($slug){
+        $result = Products::join('gallery','products.id','=','gallery.id_parent')
+        ->where('products.status',1)            
+        ->where('gallery.status',1)
+        ->where('products.slug','like','%'.$slug.'%')
+        ->select('products.*','gallery.image as image')
+        ->get();
+        if(count($result)==0){
+            return response()->json(['product'=>[]]);
+        }
+        return response()->json(['products'=>$result]);
+    }
+    // --------------------------------------
     public function api_single_product($slug){
         $result = Products::with(['brands','categories'])->where('products.slug',$slug)->where('products.status',1)->select('products.*')
                     ->first();
