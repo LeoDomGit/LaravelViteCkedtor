@@ -15,6 +15,5 @@ Route::prefix('api')->group(function () {
         Route::post('/',[CartController::class,'store']);
         Route::delete('/{id}',[CartController::class,'destroy']);
         Route::get('/{id}',[CartController::class,'index']);
-
     });
 });

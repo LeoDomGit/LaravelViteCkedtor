@@ -35,6 +35,7 @@ function Products({ dataproducts, databrands, datacategories }) {
                         message: "Product is updated successfully",
                     });
                     setProducts(res.data.data);
+                    console.log(res.data.data);
                 } else if (res.data.check == false) {
                     notyf.open({
                         type: "error",

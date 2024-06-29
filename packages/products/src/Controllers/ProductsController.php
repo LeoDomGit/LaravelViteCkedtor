@@ -375,7 +375,7 @@ class ProductsController extends Controller
             ]);
 
         }
-
+        $result = $this->model::with('categories', 'brands')->get();
         return response()->json(['check' => true, 'data' => $result]);
 
     }
