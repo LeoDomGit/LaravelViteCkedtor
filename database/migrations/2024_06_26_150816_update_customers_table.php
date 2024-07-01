@@ -13,7 +13,10 @@ return new class extends Migration
     {
         if (Schema::hasTable('customers')) {
             Schema::table('customers', function (Blueprint $table) {
-                $table->string('remember_token',255)->nullable();
+                if (!Schema::hasColumn('customers', 'remember_token')) {
+                    $table->string('remember_token',255)->nullable();
+                }
+              
             });
         }
     }
