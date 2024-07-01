@@ -58,6 +58,7 @@ class CustomersController
 
         if (Auth::guard('customer')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>1], true)) {
             $customer = Auth::guard('customer')->user();
+            $customer->tokens()->delete();
             $token = $customer->createToken('CustomerToken')->plainTextToken;
             return response()->json([
                 'check' => true,
