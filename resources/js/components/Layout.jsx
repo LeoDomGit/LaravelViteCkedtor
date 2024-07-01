@@ -1,12 +1,6 @@
 /* eslint-disable */
 import React from 'react'
 import { Sidebar, Menu, MenuItem, useProSidebar, SubMenu } from "react-pro-sidebar";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import GroupIcon from '@mui/icons-material/Group';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -15,6 +9,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CardTravelIcon from '@mui/icons-material/CardTravel';
 import ShopIcon from '@mui/icons-material/Shop';
+import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone';
 import "../../css/app.css";
 function Layout({ children }) {
   const { collapseSidebar } = useProSidebar();
@@ -47,6 +42,7 @@ function Layout({ children }) {
             </SubMenu>
            <a href={'/slides'}> <MenuItem icon={<ShopIcon />}>Slides</MenuItem></a>
            <a href={'/bills'}> <MenuItem icon={<CardTravelIcon />}>Hoá đơn</MenuItem></a>
+           <a href={'/services'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Dịch vụ </MenuItem></a>
            <a href={'/logout'}> <MenuItem icon={<LogoutIcon />}>Log out</MenuItem></a>
 
 {/*             

@@ -45,12 +45,35 @@ function Index() {
             </div>
           </div>
         </nav>
-        <div className="row">
-            <div class="card text-start">
-                <div class="card-body">
+        <div className="row mt-3">
+          <div className="container">
+            <div class="card text-start shadow-sm p-3 mb-5 bg-body rounded">
+              <div class="card-body">
+                <div className="row">
+                  <div className="col-md-3">
+                    <div className="input-group mb-3">
+                      <span className="input-group-text">Tiêu đề</span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        aria-label="Amount (to the nearest dollar)"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-3">
+                    <div className="input-group mb-3">
+                      <span className="input-group-text">Tiêu đề</span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        aria-label="Amount (to the nearest dollar)"
+                      />
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-            
+          </div>
         </div>
       </>
     </Layout>

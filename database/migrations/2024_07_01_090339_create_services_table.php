@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name',255);
             $table->string('image',255);
+            $table->string('summary',255);
             $table->longText('content');
+            $table->unsignedBigInteger('price');
+            $table->unsignedInteger('discount')->default(0);
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

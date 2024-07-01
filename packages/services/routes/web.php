@@ -1,7 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckLogin;
+use Leo\Services\Controllers\ServicesController;
 
 Route::middleware(['web', CheckLogin::class])->group(function () {
-    Route::resource('services', ProductsController::class);
+    Route::resource('services', ServicesController::class);
 });

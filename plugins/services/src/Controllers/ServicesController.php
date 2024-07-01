@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Traits\HasCrud;
 use Inertia\Inertia;
 
-class ServicesController extends Controller
+class ServicesController 
 {
     use HasCrud;
     protected $model;
@@ -23,7 +23,7 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Services/Index');
     }
 
     /**
