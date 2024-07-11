@@ -100,7 +100,7 @@ class UserController
         if ($validator->fails()) {
             return response()->json(['check'=>false,'msg'=>$validator->errors()->first()]);
         }
-        if(Auth::attempt(['name'=>$request->name,'password'=>$request->password,'status'=>1],true)){
+        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'status'=>1],true)){
             $user = User::where('email',$request->email)->first();
             $request->session()->put('user', $user);
             $request->session()->regenerate();

@@ -19,8 +19,8 @@ Route::middleware(['web',CheckLogin::class])->group(function () {
     Route::resource('users', UserController::class);
 });
 Route::get('/', [UserController::class,'login'])->middleware('web');
-Route::post('/users/checkLogin',[UserController::class,'checkLogin']);
-Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware('auth:admin');
+Route::post('/users/checkLogin',[UserController::class,'checkLogin'])->middleware('web');
+Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware(['web','auth:admin']);
 
 
 
