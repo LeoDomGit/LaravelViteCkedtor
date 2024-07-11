@@ -40,7 +40,7 @@ class UserController
     public function login(Request $request){
         $request->session()->invalidate(); 
         $request->session()->regenerateToken();
-        return Inertia::render('Login/SignInSide');
+        return Inertia::render('Login/SignIn');
     }
 
     public function store(StoreRequest $request)
