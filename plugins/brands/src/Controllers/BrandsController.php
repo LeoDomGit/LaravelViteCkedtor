@@ -58,7 +58,6 @@ class BrandsController extends Controller
     public function api_show(Brands $categories, $id)
     {
         return response()->json(Brands::active()->where('slug',$id)->with('products.gallery')->get());
-
     }
 
     /**

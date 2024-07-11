@@ -23,10 +23,14 @@ Route::middleware(['web',CheckLogin::class])->group(function () {
 
 
 Route::prefix('api')->group(function () {
+
     Route::prefix('bills')->group(function () {
-        Route::get('/',[BillsController::class,'api_bills'])->middleware('auth:sanctum');
+
         Route::post('/',[BillsController::class,'store']);
         Route::post('/login',[BillsController::class,'store2']);
+
+
+
     });
 
 });
