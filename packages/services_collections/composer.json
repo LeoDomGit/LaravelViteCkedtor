@@ -1,0 +1,17 @@
+{
+    "name": "leo/services_collections",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Leo\\ServicesCollections\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Leo"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
