@@ -9,15 +9,47 @@ import "notyf/notyf.min.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Dropzone, FileMosaic } from "@dropzone-ui/react";
-function Index({ services }) {
+function Index({ service,services }) {
   const [data, setData] = useState(services);
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [discount, setDiscount] = useState(0);
-  const [compare_price, setComparePrice] = useState(0);
-  const [summary, setSummary] = useState("");
+  const [name, setName] = useState(service.name);
+  const [price, setPrice] = useState(service.price);
+  const [discount, setDiscount] = useState(service.discount);
+  const [compare_price, setComparePrice] = useState(service.compare_price);
+  const [summary, setSummary] = useState(service.summary);
   const [files, setFiles] = React.useState([]);
-  const [create, setCreate] = useState(false);
+  const [edit, setEdit] = useState(true);
+
+  function switchService(params, value) {
+    if (params.row.status == 1) {
+        var newStatus = 0;
+    } else {
+        var newStatus = 1;
+    }
+    axios
+        .put("/services/" + params.id, {
+            status: newStatus,
+        })
+        .then((res) => {
+            if (res.data.check == false) {
+                if (res.data.msg) {
+                    notyf.open({
+                        type: "error",
+                        message: res.data.msg,
+                    });
+                }
+            } else if (res.data.check == true) {
+                notyf.open({
+                    type: "success",
+                    message: "Chuyển trạng thái thành công",
+                });
+                if (res.data.data) {
+                    setData(res.data.data);
+                } else {
+                    setData([]);
+                }
+            }
+        });
+}
   const options = {
     filebrowserImageBrowseUrl: "/laravel-filemanager?type=Images",
     filebrowserImageUploadUrl:
@@ -32,33 +64,9 @@ function Index({ services }) {
     setComparePrice(0);
     setSummary("");
     setFiles([]);
-    setCreate(true);
+    setEdit(true);
   };
-  const handleCellEditStop = (id, field, value) => {
-    if(value!=''){
-        axios
-        .put(
-          `/services/${id}`,
-          { [field]: value },
-        )
-        .then((res) => {
-          if (res.data.check == true) {
-            notyf.open({
-              type: "success",
-              message: "Chỉnh sửa dịch vụ thành công",
-            });
-            setData(res.data.data);
   
-          } else if (res.data.check == false) {
-            notyf.open({
-              type: "error",
-              message: res.data.msg,
-            });
-          }
-        });
-    }
-   
-  };
   window.CKEDITOR.replace("editor", options);
   const updateFiles = (incommingFiles) => {
     setFiles(incommingFiles);
@@ -124,11 +132,6 @@ function Index({ services }) {
         type: "error",
         message: "Vui lòng tóm tắt dịch vụ",
       });
-    } else if (files.length == 0) {
-      notyf.open({
-        type: "error",
-        message: "Chưa có hình ảnh dịch vụ",
-      });
     } else if (content == "") {
       notyf.open({
         type: "error",
@@ -146,7 +149,7 @@ function Index({ services }) {
       formData.append("summary", summary);
       formData.append("content", content);
       axios
-        .post("/services", formData, {
+        .post("/update-services/"+service.id, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -154,39 +157,41 @@ function Index({ services }) {
         .then((res) => {
           if (res.data.check == true) {
             notyf.open({
-              type: "error",
-              message: "Đã thêm thành công",
+              type: "success",
+              message: "Đã sửa thành công",
             });
             setTimeout(() => {
-              window.location.reload();
+              window.location.replace('/services');
             }, 2000);
           }
         });
     }
   };
-  function switchService(params, value) {
-    axios
+  const handleCellEditStop = (id, field, value) => {
+    if(value!=''){
+        axios
         .put(
-            "/services/" + params.id,
-            { status: value }
+          `/services/${id}`,
+          { [field]: value },
         )
         .then((res) => {
-            if (res.data.check == false) {
-                if (res.data.msg) {
-                    notyf.open({
-                        type: "error",
-                        message: res.data.msg,
-                    });
-                }
-            } else if (res.data.check == true) {
-                notyf.open({
-                    type: "success",
-                    message: "Switch successfully",
-                });
-                setData(res.data.data);
-            }
+          if (res.data.check == true) {
+            notyf.open({
+              type: "success",
+              message: "Chỉnh sửa dịch vụ thành công",
+            });
+            setData(res.data.data);
+  
+          } else if (res.data.check == false) {
+            notyf.open({
+              type: "error",
+              message: res.data.msg,
+            });
+          }
         });
-}
+    }
+   
+  };
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'name', headerName: 'Tên dịch vụ', width: 200,editable:true },
@@ -198,7 +203,7 @@ function Index({ services }) {
       renderCell: (params) => (
         <Switch
           checked={params.value == 1}
-          onChange={(e) => switchService(params, e.target.checked ? 1 : 0)}
+          onChange={(e) => switchService(params, e.target.value)}
           inputProps={{ "aria-label": "controlled" }}
         />
       ),
@@ -242,7 +247,7 @@ function Index({ services }) {
               <div className="d-flex">
               <a
                     className="btn btn-outline-success ms-3"
-                    onClick={(e) => setCreate(false)}
+                    onClick={(e) => setEdit(false)}
                     aria-current="page"
                     href="#"
                   >
@@ -255,7 +260,7 @@ function Index({ services }) {
 
         <div className="row mt-3">
           <div className="container">
-            {create && (
+            {edit && (
               <div className="card text-start shadow-sm p-3 mb-5 bg-body rounded">
                 <div className="card-body">
                   <div>
@@ -267,6 +272,7 @@ function Index({ services }) {
                             type="text"
                             className="form-control"
                             name="name"
+                            value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
                           />
@@ -279,6 +285,7 @@ function Index({ services }) {
                             type="text"
                             className="form-control"
                             name="summary"
+                            value={summary}
                             onChange={(e) => setSummary(e.target.value)}
                             required
                           />
@@ -291,6 +298,7 @@ function Index({ services }) {
                           <span className="input-group-text">Giá</span>
                           <input
                             type="number"
+                            value={price}
                             className="form-control"
                             onChange={(e) => setPrice(e.target.value)}
                           />
@@ -301,6 +309,7 @@ function Index({ services }) {
                           <span className="input-group-text">Giá so sánh</span>
                           <input
                             type="number"
+                            value={compare_price}
                             className="form-control"
                             onChange={(e) => setComparePrice(e.target.value)}
                             required
@@ -313,6 +322,7 @@ function Index({ services }) {
                           <input
                             type="number"
                             className="form-control"
+                            value={discount}
                             onChange={(e) => setDiscount(e.target.value)}
                             required
                           />
@@ -326,6 +336,7 @@ function Index({ services }) {
                           <textarea
                             className="form-control"
                             name="content"
+                            value={service.content}
                             id="editor"
                             required
                           />
@@ -350,15 +361,15 @@ function Index({ services }) {
                     <button
                       type="button"
                       onClick={(e) => handleSubmit()}
-                      className="btn btn-primary"
+                      className="btn btn-warning"
                     >
-                      Thêm
+                      Sửa
                     </button>
                   </div>
                 </div>
               </div>
             )}
-            {!create && (
+            {!edit && (
               <>
               <div className="row">
               <DataGrid

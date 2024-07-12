@@ -308,7 +308,7 @@ function Products({ dataproducts, databrands, datacategories }) {
         <>
             <Layout>
                 <div className="row">
-                    <div className="col-md-9">
+                    <div className="col-md">
                         <div className="row">
                             <div className="col-md-2">
                                 <button
@@ -485,7 +485,7 @@ function Products({ dataproducts, databrands, datacategories }) {
                             </>
                         )}
                         {create == false && products && products.length > 0 && (
-                            <Box sx={{ height: 400, width: "100%" }}>
+                            <Box sx={{ height: 400 }}>
                                 <DataGrid
                                     rows={products}
                                     columns={columns}
