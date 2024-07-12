@@ -28,7 +28,7 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $result = $this->model::with('categories', 'brands')->where('id_user', Auth::id())->get();
+        $result = $this->model::with('categories', 'brands')->get();
         $categories=Categories::active()->get();
         $brands= Brands::active()->get();
         return Inertia::render('Products/Index',['dataproducts'=>$result,'databrands'=>$brands,'datacategories'=>$categories]);
@@ -37,7 +37,6 @@ class ProductsController extends Controller
     {
         $result = $this->model::with('categories', 'brands', 'gallery')
             ->where('status', 1)
-            ->where('id_user', Auth::id())
             ->where('gallery.status',1)
             ->paginate(3);
         return response()->json($result);
@@ -46,7 +45,6 @@ class ProductsController extends Controller
     {
         $product = $this->model::with('categories', 'brands')
             ->where('status', 1)
-            ->where('id_user', Auth::id())
             ->where('id', $id)
             ->first();
         $result = Gallery::where('id_parent', $id)->pluck('image')->toArray();
@@ -129,7 +127,6 @@ class ProductsController extends Controller
         $data['price'] = $request->price;
         $data['idCate'] = $request->idCate;
         $data['idBrand'] = $request->idBrand;
-        $data['id_user'] = Auth::id();
         $data['discount'] = $request->discount;
         $data['content'] = $request->content;
         $data['in_stock'] = $request->in_stock;
@@ -362,16 +359,9 @@ class ProductsController extends Controller
     }
 
     public function api_product(Request $request){
-        $validator = Validator::make($request->all(), [
-            'id_user'=>'required|exists:users,id'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
-        }
         if($request->has('limit')){
             $result = Products::join('gallery','products.id','=','gallery.id_parent')
             ->where('products.status',1)            
-            ->where('id_user',$request->id_user)
             ->where('gallery.status',1)->select('products.*','gallery.image as image')
                         ->take($request->limit)->get();
             return response()->json($result);
@@ -387,15 +377,8 @@ class ProductsController extends Controller
     }
     // --------------------------------------
     public function api_search_product($slug){
-        $validator = Validator::make($request->all(), [
-            'id_user'=>'required|exists:users,id'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
-        }
         $result = Products::join('gallery', 'products.id', '=', 'gallery.id_parent')
         ->where('products.status', 1)
-        ->where('id_user',$request->id_user)
         ->where('gallery.status', 1)
         ->where(function($query) use ($slug) {
             $query->where('products.name', 'like', '%' . $slug . '%')
@@ -410,12 +393,6 @@ class ProductsController extends Controller
     }
     // --------------------------------------
     public function api_single_product($slug){
-        $validator = Validator::make($request->all(), [
-            'id_user'=>'required|exists:users,id'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
-        }
         $result = Products::with(['brands','categories'])->where('products.slug',$slug)->where('products.status',1)->select('products.*')
                     ->first();
         if(!$result){
@@ -424,14 +401,12 @@ class ProductsController extends Controller
         $medias = Gallery::where('id_parent',$result->id)->pluck('image');
         $cate_products=Products::join('gallery','products.id','=','gallery.id_parent')
         ->where('products.status',1)
-        ->where('id_user',$request->id_user)
         ->where('products.idCate',$result->idCate)
         ->where('gallery.status',1)
         ->select('products.*','gallery.image as image')
         ->take(4);
         $brand_products=Products::join('gallery','products.id','=','gallery.id_parent')
         ->where('products.status',1)
-        ->where('id_user',$request->id_user)
         ->where('products.idBrand',$result->idBrand)
         ->where('gallery.status',1)
         ->select('products.*','gallery.image as image')
