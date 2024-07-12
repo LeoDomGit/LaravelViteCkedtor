@@ -20,7 +20,7 @@ class Products extends Model
     protected $table='products';
     
     protected $fillable = [
-       'id', 'name', 'slug', 'status','content','price','in_stock','discount','idCate','idBrand', 'created_at','updated_at'
+       'id', 'name', 'slug','id_user', 'status','content','price','in_stock','discount','idCate','idBrand', 'created_at','updated_at'
     ];
     
     public function categories (){
@@ -42,5 +42,9 @@ class Products extends Model
     public function carts()
     {
         return $this->hasMany(Carts::class, 'id_product');
+    }
+
+    public function users(){
+        return $this->belongsTo(Users::class,'id_user');
     }
 }
