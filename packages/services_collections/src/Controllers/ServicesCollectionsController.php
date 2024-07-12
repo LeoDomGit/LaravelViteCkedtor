@@ -17,7 +17,7 @@ class ServicesCollectionsController extends Controller
     public function index()
     {
         $data= ServicesCollections::all();
-        return Inertia::render("ServiceCollections/Index",['brands'=>$data]);
+        return Inertia::render("ServiceCollections/Index",['servicecollections'=>$data]);
     }
 
     public function create()
@@ -31,38 +31,34 @@ class ServicesCollectionsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:brands,name',
-          
-        ], [
-            'name.required' => 'Chưa nhận được thương hiệu',
-            'name.unique' => 'Thương hiệu bị trùng',
+            'name' => 'required|unique:service_collections,name',
         ]);
         if ($validator->fails()) {
             return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
         }
         $data = $request->all();
         $data['slug']= Str::slug($request->name);
-        Brands::create($data);
-        $brands= Brands::all();
-        return response()->json(['check'=> true,'data'=> $brands]);
+        ServicesCollections::create($data);
+        $data= ServicesCollections::all();
+        return response()->json(['check'=> true,'data'=> $data]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function api_index(Brands $categories)
+    public function api_index(ServicesCollections $servicescollections)
     {
-        return response()->json(Brands::active()->orderBy('id','asc')->get());
+        return response()->json(ServicesCollections::active()->orderBy('id','asc')->get());
     }
-    public function api_show(Brands $categories, $id)
+    public function api_show(ServicesCollections $servicescollections, $id)
     {
-        return response()->json(Brands::active()->where('slug',$id)->with('products.gallery')->get());
+        return response()->json(ServicesCollections::active()->where('slug',$id)->with('products.gallery')->get());
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Categories $categories)
+    public function edit(ServicesCollections $servicescollections)
     {
         //
     }
@@ -70,14 +66,10 @@ class ServicesCollectionsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categories $categories,$id)
+    public function update(Request $request, ServicesCollections $servicescollections,$id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'unique:brands,name',
-          
-        ], [
-            'name.required' => 'Chưa nhận được loại tài khoản',
-            'name.unique' => 'Loại tài khoản bị trùng',
+            'name' => 'required|unique:service_collections,name',
         ]);
         if ($validator->fails()) {
             return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
