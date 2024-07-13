@@ -3,17 +3,18 @@ import Layout from "../../components/Layout";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Notyf } from "notyf";
-import { Box, Switch, Typography } from "@mui/material";
+import { Box, Switch, Select, MenuItem } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import "notyf/notyf.min.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Dropzone, FileMosaic } from "@dropzone-ui/react";
-function Index({ services }) {
+function Index({ services,collections }) {
   const [data, setData] = useState(services);
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [discount, setDiscount] = useState(0);
+  const [idCollection, setIdCollection] = useState(services.idCollection);
   const [compare_price, setComparePrice] = useState(0);
   const [summary, setSummary] = useState("");
   const [files, setFiles] = React.useState([]);
@@ -102,6 +103,27 @@ function Index({ services }) {
       },
     ],
   });
+  const handleParentChange1 = (id,value)=>{
+    axios.put("/services/" + id, {
+        id_collection:value
+    }).then((res) => {
+        if (res.data.check == false) {
+            if (res.data.msg) {
+                notyf.open({
+                    type: "error",
+                    message: res.data.msg,
+                });
+            }
+        } else if (res.data.check == true) {
+            notyf.open({
+                type: "success",
+                message: "Chuyển nhóm danh mục thành công",
+            });
+            setData(res.data.data);
+            console.log(res.data.data);
+        }
+    });
+  }
   const handleSubmit = (e) => {
     var content = CKEDITOR.instances["editor"].getData();
     if (name == "") {
@@ -142,6 +164,7 @@ function Index({ services }) {
       formData.append("name", name);
       formData.append("price", price);
       formData.append("compare_price", compare_price);
+      formData.append("id_collections", idCollection);
       formData.append("discount", discount);
       formData.append("summary", summary);
       formData.append("content", content);
@@ -154,7 +177,7 @@ function Index({ services }) {
         .then((res) => {
           if (res.data.check == true) {
             notyf.open({
-              type: "error",
+              type: "success",
               message: "Đã thêm thành công",
             });
             setTimeout(() => {
@@ -191,6 +214,20 @@ function Index({ services }) {
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'name', headerName: 'Tên dịch vụ', width: 200,editable:true },
     { field: 'summary', headerName: 'Tóm tắt', width: 300,editable:true },
+    {
+      field: 'id_collections', headerName: "Nhóm danh mục", width: 200, renderCell: (params) => (
+        <Select
+          defaultValue={params.value}
+          className='w-100'
+          onChange={(e) => handleParentChange1(params.id, e.target.value)}
+        >
+          <MenuItem value={null}>None</MenuItem>
+          {collections.map((parent) => (
+            <MenuItem key={parent.id} value={parent.id}>{parent.name}</MenuItem>
+          ))}
+        </Select>
+      )
+    },
     {
       field: 'status',
       headerName: 'Status',
@@ -260,7 +297,7 @@ function Index({ services }) {
                 <div className="card-body">
                   <div>
                     <div className="row">
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-4 mb-3">
                         <div className="input-group">
                           <span className="input-group-text">Tên dịch vụ</span>
                           <input
@@ -272,7 +309,7 @@ function Index({ services }) {
                           />
                         </div>
                       </div>
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-4 mb-3">
                         <div className="input-group">
                           <span className="input-group-text">Tóm tắt</span>
                           <input
@@ -282,6 +319,17 @@ function Index({ services }) {
                             onChange={(e) => setSummary(e.target.value)}
                             required
                           />
+                        </div>
+                      </div>
+                      <div className="col-md-4 mb-3">
+                        <div className="input-group">
+                          <span className="input-group-text">Nhóm dịch vụ</span>
+                          <select name="" defaultValue={idCollection} onChange={(e)=>setIdCollection(e.target.value)} className="form-control" id="">
+                            <option value={0} disabled>Chọn nhóm dịch vụ</option>
+                            {collections.map((item,index)=>(
+                              <option value={item.id}>{item.name}</option>
+                            ))}
+                          </select>
                         </div>
                       </div>
                     </div>

@@ -8,9 +8,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import "notyf/notyf.min.css";
 import Swal from "sweetalert2";
 import axios from "axios";
-function Index({ brands }) {
-  const [brand, setBrand] = useState("");
-  const [data, setData] = useState(brands);
+function Index({ collections }) {
+  const [collection, setCollection] = useState("");
+  const [data, setData] = useState(collections);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -66,7 +66,7 @@ function Index({ brands }) {
       width: 100,
       renderCell: (params) => params.rowIndex,
     },
-    { field: "name", headerName: "Thương hiệu", width: 200, editable: true },
+    { field: "name", headerName: "Loại dịch vụ", width: 200, editable: true },
     { field: "slug", headerName: "Slug", width: 200, editable: false },
     ,
     {
@@ -76,7 +76,7 @@ function Index({ brands }) {
       renderCell: (params) => (
         <Switch
           checked={params.value == 1}
-          onChange={(e) => switchBrand(params, e.target.checked ? 1 : 0)}
+          onChange={(e) => switchCollection(params, e.target.checked ? 1 : 0)}
           inputProps={{ "aria-label": "controlled" }}
         />
       ),
@@ -88,10 +88,10 @@ function Index({ brands }) {
       valueGetter: (params) => formatCreatedAt(params),
     },
   ];
-  const submitBrand = () => {
+  const submitCollection = () => {
     axios
-      .post("/brands", {
-        name: brand,
+      .post("/service-collections", {
+        name: collection,
       })
       .then((res) => {
         if (res.data.check == true) {
@@ -111,15 +111,15 @@ function Index({ brands }) {
       });
   };
   const resetCreate = () => {
-    setBrand("");
+    setCollection("");
     setShow(true);
   };
-  const switchBrand = (params, value) => {
+  const switchCollection = (params, value) => {
     var id = params.id;
     var field = params.field;
     axios
       .put(
-        `/brands/${id}`,
+        `/service-collections/${id}`,
         {
           [field]: value,
         }
@@ -134,7 +134,7 @@ function Index({ brands }) {
         if (res.data.check == true) {
           notyf.open({
             type: "success",
-            message: "Chỉnh sửa thương hiệu sản phẩm thành công",
+            message: "Chỉnh sửa nhóm dịch vụ sản phẩm thành công",
           });
           setData(res.data.data);
         } else if (res.data.check == false) {
@@ -149,7 +149,7 @@ function Index({ brands }) {
     if (value != "") {
       axios
         .put(
-          `/brands/${id}`,
+          `/service-collections/${id}`,
           {
             name: value,
           }
@@ -164,7 +164,7 @@ function Index({ brands }) {
           if (res.data.check == true) {
             notyf.open({
               type: "success",
-              message: "Chỉnh sửa thương hiệu sản phẩm thành công",
+              message: "Chỉnh sửa nhóm dịch vụ sản phẩm thành công",
             });
             setData(res.data.data);
           } else if (res.data.check == false) {
@@ -177,7 +177,7 @@ function Index({ brands }) {
     } else {
       Swal.fire({
         icon: "question",
-        text: "Xoá thương hiệu này ?",
+        text: "Xoá nhóm dịch vụ này ?",
         showDenyButton: true,
         showCancelButton: false,
         confirmButtonText: "Đúng",
@@ -187,7 +187,7 @@ function Index({ brands }) {
         if (result.isConfirmed) {
           axios
             .delete(
-              `/brands/${id}`
+              `/service-collections/${id}`
               // {
               //     headers: {
               //         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -199,7 +199,7 @@ function Index({ brands }) {
               if (res.data.check == true) {
                 notyf.open({
                   type: "success",
-                  message: "Xoá thương hiệu thành công",
+                  message: "Xoá nhóm dịch vụ thành công",
                 });
                 setData(res.data.data);
               } else if (res.data.check == false) {
@@ -219,13 +219,13 @@ function Index({ brands }) {
       <>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Tạo thương hiệu sản phẩm</Modal.Title>
+            <Modal.Title>Tạo nhóm dịch vụ sản phẩm</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <input
               type="text"
               className="form-control"
-              onChange={(e) => setBrand(e.target.value)}
+              onChange={(e) => setCollection(e.target.value)}
             />
           </Modal.Body>
           <Modal.Footer>
@@ -234,8 +234,8 @@ function Index({ brands }) {
             </Button>
             <Button
               variant="primary"
-              disabled={brand == "" ? true : false}
-              onClick={(e) => submitBrand()}
+              disabled={collection == "" ? true : false}
+              onClick={(e) => submitCollection()}
             >
               Tạo mới
             </Button>
@@ -274,7 +274,7 @@ function Index({ brands }) {
           </div>
         </nav>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-8">
             {data && data.length > 0 && (
               <Box sx={{ height: 400, width: "100%" }}>
                 <DataGrid

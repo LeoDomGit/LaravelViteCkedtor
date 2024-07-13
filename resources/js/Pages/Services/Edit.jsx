@@ -9,13 +9,14 @@ import "notyf/notyf.min.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Dropzone, FileMosaic } from "@dropzone-ui/react";
-function Index({ service,services }) {
+function Index({ service,services,collections }) {
   const [data, setData] = useState(services);
   const [name, setName] = useState(service.name);
   const [price, setPrice] = useState(service.price);
   const [discount, setDiscount] = useState(service.discount);
   const [compare_price, setComparePrice] = useState(service.compare_price);
   const [summary, setSummary] = useState(service.summary);
+  const [idCollection, setIdCollection] = useState(service.id_collections);
   const [files, setFiles] = React.useState([]);
   const [edit, setEdit] = useState(true);
 
@@ -146,6 +147,7 @@ function Index({ service,services }) {
       formData.append("price", price);
       formData.append("compare_price", compare_price);
       formData.append("discount", discount);
+      formData.append("id_collections", idCollection);
       formData.append("summary", summary);
       formData.append("content", content);
       axios
@@ -289,6 +291,17 @@ function Index({ service,services }) {
                             onChange={(e) => setSummary(e.target.value)}
                             required
                           />
+                        </div>
+                      </div>
+                      <div className="col-md-4 mb-3">
+                        <div className="input-group">
+                          <span className="input-group-text">Nhóm dịch vụ</span>
+                          <select name="" defaultValue={idCollection} onChange={(e)=>setIdCollection(e.target.value)} className="form-control" id="">
+                            <option value={0} disabled>Chọn nhóm dịch vụ</option>
+                            {collections.map((item,index)=>(
+                              <option value={item.id}>{item.name}</option>
+                            ))}
+                          </select>
                         </div>
                       </div>
                     </div>
