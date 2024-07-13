@@ -188,10 +188,13 @@ function Index({ services,collections }) {
     }
   };
   function switchService(params, value) {
+    var field = params.field;
     axios
         .put(
             "/services/" + params.id,
-            { status: value }
+            {
+              [field]: value,
+            }
         )
         .then((res) => {
             if (res.data.check == false) {
