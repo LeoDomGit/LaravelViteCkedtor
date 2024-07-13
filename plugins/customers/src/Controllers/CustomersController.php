@@ -14,7 +14,7 @@ use Leo\Customers\Mail\createUser;
 use Illuminate\Support\Facades\Auth;
 use Leo\Bills\Models\Bills;
 
-class CustomersController 
+class CustomersController
 {
     /**
      * Display a listing of the resource.
@@ -85,7 +85,8 @@ class CustomersController
      */
     public function show(Customers $customers)
     {
-        //
+        $result = Customers::where('id',Auth::id())->first();
+        return response()->json($result);
     }
 
     /**
