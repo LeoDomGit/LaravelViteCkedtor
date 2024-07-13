@@ -30,17 +30,18 @@ class CustomersController
     public function get_bills(Request $request)
     {
         $bills = Bills::with(['details.product'])
-        ->where('email',Auth::user()->email)
-        ->get()
-        ->map(function ($bill) {
-            $total = $bill->details->reduce(function ($carry, $detail) {
-                $productDiscount = $detail->product->discount;
-                $quantity = $detail->quantity;
-                return $carry + ($productDiscount * $quantity);
-            }, 0);
-            $bill->total = $total;
-            return $bill;
-        });
+            ->where('email', Auth::user()->email)
+            ->paginate(4) // paginate with 4 items per page
+            ->through(function ($bill) {
+                $total = $bill->details->reduce(function ($carry, $detail) {
+                    $productDiscount = $detail->product->discount;
+                    $quantity = $detail->quantity;
+                    return $carry + ($productDiscount * $quantity);
+                }, 0);
+                $bill->total = $total;
+                return $bill;
+            });
+
         return response ()->json($bills);
     }
 

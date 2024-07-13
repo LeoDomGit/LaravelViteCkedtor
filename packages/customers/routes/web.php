@@ -12,7 +12,7 @@ Route::middleware(['web',CheckLogin::class])->group(function () {
 
 Route::prefix('api')->group(function () {
     Route::prefix('customers')->group(function () {
-        Route::get('/',[CustomersController::class,'show']);
+        Route::get('/',[CustomersController::class,'show'])->middleware('auth:sanctum');
         Route::post('/auth/register',[CustomersController::class,'store']);
         Route::post('/auth/login',[CustomersController::class,'CheckLogin']);
         Route::post('/auth/login-email',[CustomersController::class,'CheckLogin']);
