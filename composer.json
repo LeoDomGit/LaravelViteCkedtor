@@ -27,6 +27,7 @@
         "leo/carts":"*",
         "leo/bills":"*",
         "leo/services":"*",
+        "leo/services_collections":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "spatie/laravel-permission": "^6.7",
@@ -114,6 +115,9 @@
             ],
             "./plugins/services": [
                 "leo/services"
+            ],
+            "./plugins/services_collections": [
+                "leo/services_collections"
             ]
         }
     },
@@ -175,6 +179,10 @@
         {
             "type": "path",
             "url": "./packages/services/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/services_collections/"
         }
     ]
 }
