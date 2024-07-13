@@ -215,7 +215,7 @@ function Index({ services,collections }) {
     { field: 'name', headerName: 'Tên dịch vụ', width: 200,editable:true },
     { field: 'summary', headerName: 'Tóm tắt', width: 300,editable:true },
     {
-      field: 'id_collections', headerName: "Nhóm danh mục", width: 200, renderCell: (params) => (
+      field: 'id_collection', headerName: "Nhóm danh mục", width: 200, renderCell: (params) => (
         <Select
           defaultValue={params.value}
           className='w-100'
