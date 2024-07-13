@@ -82,6 +82,18 @@ function Index({ collections }) {
       ),
     },
     {
+      field: "highlighted",
+      headerName: "Highlight",
+      width: 70,
+      renderCell: (params) => (
+        <Switch
+          checked={params.value == 1}
+          onChange={(e) => switchCollection(params, e.target.checked ? 1 : 0)}
+          inputProps={{ "aria-label": "controlled" }}
+        />
+      ),
+    },
+    {
       field: "created_at",
       headerName: "Created at",
       width: 200,

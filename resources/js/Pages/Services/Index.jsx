@@ -241,6 +241,18 @@ function Index({ services,collections }) {
       ),
     },
     {
+      field: 'highlighted',
+      headerName: 'Highlight',
+      width: 200,
+      renderCell: (params) => (
+        <Switch
+          checked={params.value == 1}
+          onChange={(e) => switchService(params, e.target.checked ? 1 : 0)}
+          inputProps={{ "aria-label": "controlled" }}
+        />
+      ),
+    },
+    {
         headerName: "Chi tiết",
         width: 70,
         renderCell: (params) => (
