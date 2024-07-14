@@ -27,6 +27,7 @@
         "leo/bills":"*",
         "leo/services":"*",
         "leo/services_collections":"*",
+        "leo/bookings":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "tymon/jwt-auth": "*",
@@ -119,6 +120,9 @@
             ],
             "./plugins/services_collections": [
                 "leo/services_collections"
+            ],
+            "./plugins/bookings": [
+                "leo/bookings"
             ]
         }
     },
@@ -184,6 +188,10 @@
         {
             "type": "path",
             "url": "./packages/services_collections/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/bookings/"
         }
     ]
 }
