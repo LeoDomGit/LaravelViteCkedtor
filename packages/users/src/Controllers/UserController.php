@@ -38,9 +38,16 @@ class UserController
     }
 
     public function login(Request $request){
-        $request->session()->invalidate(); 
+        $request->session()->invalidate();
         $request->session()->regenerateToken();
         return Inertia::render('Login/SignIn');
+    }
+
+    public function staff_list(){
+        $users = $this->model::where('status',1)->whereHas('roles', function($query) {
+            $query->where('name','like', '%Nhân viên%');
+        })->select('name','id')->get();
+        return response()->json($users);
     }
 
     public function store(StoreRequest $request)
@@ -54,7 +61,8 @@ class UserController
             'password' => $password,
         ];
         Mail::to($request->email)->send(new createUser($data));
-        return response()->json(['check' => true]);
+        $users = $this->model::with('roles')->get();
+        return response()->json(['check' => true,'data'=>$users]);
     }
 
     public function show($identifier)
