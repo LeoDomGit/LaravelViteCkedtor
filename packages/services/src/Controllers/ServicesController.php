@@ -77,7 +77,14 @@ class ServicesController
         $services=Services::all();
         return response()->json(['check'=>true,'data'=>$services]);
     }
+    /**
+     * Show the form for creating a new resource.
+     */
 
+    public function api_single($slug){
+        $service=Services::active()->where('slug',$slug)->get();
+        return response()->json($service);
+    }
     /**
      * Display the specified resource.
      */

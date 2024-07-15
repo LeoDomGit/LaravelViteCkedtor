@@ -10,5 +10,6 @@ Route::middleware(['web', CheckLogin::class])->group(function () {
 
 Route::prefix('api/services/')->group(function () {
     Route::get('home', [ServicesController::class,'api_home']);
+    Route::get('service/{id}', [ServicesController::class,'api_single']);
 
 });
