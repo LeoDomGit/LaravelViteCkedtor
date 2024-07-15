@@ -43,6 +43,28 @@ class UserController
         return Inertia::render('Login/SignIn');
     }
 
+    public function checkLoginManager(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email'=>'required|email|exists:users,email',
+            'password'=>'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['check'=>false,'msg'=>$validator->errors()->first()]);
+        }
+        $idRole = Roles::where('name','Quản lý')->value('id');
+        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password,'status'=>1],true)){
+            $user=User::where('email',$request->email)->first();
+            $token = $user->createToken('userToken')->plainTextToken;
+            if($user->idRole==$idRole){
+                return response()->json(['check'=>true,'token'=>$token,'role'=>'manager']);
+            }else{
+                return response()->json(['check'=>true,'token'=>$token,'role'=>'staff']);
+
+            }
+        }
+    }
+
     public function staff_list(){
         $users = $this->model::where('status',1)->whereHas('roles', function($query) {
             $query->where('name','like', '%Nhân viên%');
