@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c272a474f4c9cdb4b9a14abe5538a2a",
+    "content-hash": "e07180c1bb046da240b4d50e686f9a3f",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -2918,6 +2918,54 @@
                     "src/Providers",
                     "src/Models",
                     "./routes"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dom",
+                    "email": "leodomsolar@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "leo/bookings",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/bookings",
+                "reference": "8e19efe560d7df0bc8939e71bf9f8232b2709d7a"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Leo\\Bookings\\Providers\\BookingsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Leo\\Categories\\": "src/",
+                    "Leo\\Bookings\\Providers\\": "src/Providers/",
+                    "Leo\\Bookings\\Database\\Migrations\\": "database/migrations/",
+                    "Leo\\Bookings\\Database\\Seeders\\": "database/seeders/"
+                },
+                "classmap": [
+                    "src/Controllers",
+                    "src/Providers",
+                    "src/Models",
+                    "./routes"
+                ]
+            },
+            "scripts": {
+                "post-update-cmd": [
+                    "@php artisan migrate"
                 ]
             },
             "license": [

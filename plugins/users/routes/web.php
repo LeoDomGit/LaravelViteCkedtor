@@ -22,5 +22,6 @@ Route::get('/', [UserController::class,'login'])->middleware('web');
 Route::post('/users/checkLogin',[UserController::class,'checkLogin'])->middleware('web');
 Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware(['web','auth:admin']);
 
+Route::get('/api/staff', [UserController::class,'staff_list']);
 
 
