@@ -140,7 +140,66 @@ class BookingController extends Controller
     public function api_nhan_vien (Request $request){
         $id_nhan_vien=Auth::user()->id;
         $result = Bookings::where('id_user',$id_nhan_vien)->where('status',1)->get();
-        $bookings = $bookings->map(function ($booking) {
+        $bookings = $result->map(function ($booking) {
+            return [
+                'id' => $booking->id,
+                'id_user' => $booking->id_user,
+                'phone' => $booking->customer->phone,
+                'customer_name' => $booking->customer->name,
+                'customer_email' => $booking->customer->email,
+                'service_id' => $booking->id_service,
+                'service_name' => $booking->service->name,
+                'service_slug' => $booking->service->slug,
+                'service_discount' => $booking->service->price,
+                'service_price' => $booking->service->compare_price,
+                'time' => $booking->time,
+                'end_time' => $booking->end_time,
+                'status' => $booking->status,
+            ];
+        });
+            return response()->json($bookings);
+    }
+
+    public function api_cancelbooking_nhan_vien ($id,Request $request){
+        $validator = Validator::make($request->all(), [
+            'note' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
+        }
+        $id_nhan_vien=Auth::user()->id;
+        Bookings::where('id_user',$id_nhan_vien)
+        ->where('id',$id)
+        ->update(['status'=>3,'note'=>$request->note,'updated_at'=>now()]);
+        $result = Bookings::where('id_user',$id_nhan_vien)->where('status',1)->get();
+        $bookings = $result->map(function ($booking) {
+            return [
+                'id' => $booking->id,
+                'id_user' => $booking->id_user,
+                'phone' => $booking->customer->phone,
+                'customer_name' => $booking->customer->name,
+                'customer_email' => $booking->customer->email,
+                'service_id' => $booking->id_service,
+                'service_name' => $booking->service->name,
+                'service_slug' => $booking->service->slug,
+                'service_discount' => $booking->service->price,
+                'service_price' => $booking->service->compare_price,
+                'time' => $booking->time,
+                'end_time' => $booking->end_time,
+                'status' => $booking->status,
+            ];
+        });
+            return response()->json($bookings);
+    }
+
+    public function api_submitbooking_nhan_vien ($id,Request $request){
+        $id_nhan_vien=Auth::user()->id;
+        Bookings::where('id_user',$id_nhan_vien)
+        ->where('id',$id)
+        ->update(['status'=>2,'note'=>$request->note,'updated_at'=>now()]);
+        $result = Bookings::where('id_user',$id_nhan_vien)->where('status',1)->get();
+        $bookings = $result->map(function ($booking) {
             return [
                 'id' => $booking->id,
                 'id_user' => $booking->id_user,
