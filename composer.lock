@@ -2892,7 +2892,7 @@
         },
         {
             "name": "leo/bills",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/bills",
@@ -2935,7 +2935,7 @@
         },
         {
             "name": "leo/bookings",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/bookings",
@@ -2983,7 +2983,7 @@
         },
         {
             "name": "leo/brands",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/brands",
@@ -3031,7 +3031,7 @@
         },
         {
             "name": "leo/carts",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/carts",
@@ -3074,7 +3074,7 @@
         },
         {
             "name": "leo/categories",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/categories",
@@ -3122,7 +3122,7 @@
         },
         {
             "name": "leo/customers",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/customers",
@@ -3165,7 +3165,7 @@
         },
         {
             "name": "leo/permissions",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/permissions",
@@ -3208,7 +3208,7 @@
         },
         {
             "name": "leo/products",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/products",
@@ -3257,7 +3257,7 @@
         },
         {
             "name": "leo/roles",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/roles",
@@ -3300,7 +3300,7 @@
         },
         {
             "name": "leo/services",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/services",
@@ -3343,7 +3343,7 @@
         },
         {
             "name": "leo/services_collections",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/services_collections",
@@ -3386,7 +3386,7 @@
         },
         {
             "name": "leo/slides",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/slides",
@@ -3429,7 +3429,7 @@
         },
         {
             "name": "leo/users",
-            "version": "dev-main",
+            "version": "dev-hoa_don",
             "dist": {
                 "type": "path",
                 "url": "./packages/users",

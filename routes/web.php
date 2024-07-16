@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Leo\Bills\Controllers\BillsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,3 +15,5 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+Route::get('/vnpay',[BillsController::class,'vnpay']);
+Route::get('/return-vnpay',[BillsController::class,'return']);
