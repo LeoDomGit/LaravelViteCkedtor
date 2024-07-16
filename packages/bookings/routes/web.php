@@ -7,7 +7,7 @@ Route::apiResource('bookings', BookingController::class);
 
 Route::prefix('api')->group(function () {
     Route::post('/bookings',[BookingController::class,'store']);
-    Route::get('/customers',[BookingController::class,'getCustomer']);
+    Route::get('/bookings/customers',[BookingController::class,'getCustomer']);
     Route::get('/customers/{id}',[BookingController::class,'getBillsCustomer']);
     Route::get('/checkOut/{id}',[BookingController::class,'createBill']);
     Route::put('/bookings/{id}',[BookingController::class,'update']);

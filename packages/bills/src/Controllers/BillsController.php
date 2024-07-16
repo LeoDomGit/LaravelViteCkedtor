@@ -66,7 +66,9 @@ class BillsController extends Controller
         }
         return response()->json(['check'=>true]);
     }
-
+ /**
+     * Display the specified resource.
+     */
     public function store2(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -136,34 +138,47 @@ class BillsController extends Controller
     }
     // ============================================
     public function return (Request $request){
-        $url = session('url_prev','/');
-        if($request->vnp_ResponseCode == "00") {
-            $this->apSer->thanhtoanonline(session('cost_id'));
-            return redirect($url)->with('success' ,'Đã thanh toán phí dịch vụ');
+        $vnp_SecureHash = $_GET['vnp_SecureHash'];
+        $inputData = array();
+        foreach ($_GET as $key => $value) {
+            if (substr($key, 0, 4) == "vnp_") {
+                $inputData[$key] = $value;
+            }
         }
-        session()->forget('url_prev');
-        return redirect($url)->with('errors' ,'Lỗi trong quá trình thanh toán phí dịch vụ');
+
+        unset($inputData['vnp_SecureHash']);
+        ksort($inputData);
+        $i = 0;
+        $hashData = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashData = $hashData . '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashData = $hashData . urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+        }
+        $secureHash = hash_hmac('sha512', $hashData, "OZ8LAHQWCQHK3HIAI30VURVJ6CHM23CI");
+        Bills::where('id',$request->id)->update(['status'=>1,'transaction_id'=>$_GET['vnp_TransactionNo'],'updated_at'=>now()]);
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function vnpay(Request $request,Bills $bills)
+        public function vnpay(Request $request,Bills $bills)
     {
-        $vnp_TmnCode = "JPYX2RJF"; //Mã định danh merchant kết nối (Terminal Id)
-        $vnp_HashSecret = "OZ8LAHQWCQHK3HIAI30VURVJ6CHM23CI"; //Secret key
+        $vnp_TmnCode = "JPYX2RJF";
+        $vnp_HashSecret = "OZ8LAHQWCQHK3HIAI30VURVJ6CHM23CI";
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost/vnpay_php/vnpay_return.php";
+        $vnp_Returnurl = "http://localhost:8000/return-vnpay?id=".$request->id;
         $vnp_apiUrl = "http://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
         $apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
-        //Config input format
-        //Expire
         $startTime = date("YmdHis");
         $expire = date('YmdHis',strtotime('+15 minutes',strtotime($startTime)));
-        $vnp_TxnRef = rand(1,10000);
-        $vnp_Amount = 20000000; // Số tiền thanh toán
-        $vnp_Locale = 'vi'; //Ngôn ngữ chuyển hướng thanh toán
-        $vnp_BankCode = "QR"; //Mã phương thức thanh toán
-        $vnp_IpAddr = '13.160.92.202'; //IP Khách hàng thanh toán
+        $vnp_TxnRef = $request->id;
+        $vnp_Amount = $request->total;
+        $vnp_Locale = 'vi';
+        $vnp_BankCode = "QR";
+        $vnp_IpAddr = $request->ip();
 
         $inputData = array(
             "vnp_Version" => "2.1.0",
@@ -204,8 +219,7 @@ class BillsController extends Controller
             $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-        dd($vnp_Url);
-        header('Location: ' . $vnp_Url);
+        return response()->json(['url'=>$vnp_Url]);
     }
 
 }

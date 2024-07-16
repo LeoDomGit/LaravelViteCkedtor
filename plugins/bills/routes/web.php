@@ -22,14 +22,8 @@ Route::get('/vnpay',[BillsController::class,'vnpay']);
 Route::get('/return-vnpay',[BillsController::class,'return']);
 
 Route::prefix('api')->group(function () {
-
     Route::prefix('bills')->group(function () {
-
         Route::post('/',[BillsController::class,'store']);
         Route::post('/login',[BillsController::class,'store2']);
-
-
-
     });
-
 });
