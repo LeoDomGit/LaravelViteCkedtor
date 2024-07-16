@@ -118,7 +118,7 @@ class BookingController extends Controller
     public function api_home(Request $request){
         $bookings = Bookings::with(['customer', 'user', 'service'])->where('status', 0)->get();
 
-    $bookings = $bookings->map(function ($booking) {
+        $bookings = $bookings->map(function ($booking) {
         return [
             'id' => $booking->id,
             'id_user' => $booking->id_user,
@@ -134,7 +134,7 @@ class BookingController extends Controller
             'end_time' => $booking->end_time,
             'status' => $booking->status,
         ];
-    });
+        });
         return response()->json($bookings);
     }
     public function api_nhan_vien (Request $request){
