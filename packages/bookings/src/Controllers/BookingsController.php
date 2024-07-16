@@ -218,4 +218,23 @@ class BookingController extends Controller
         });
             return response()->json(['check'=>true,'bookings'=>$bookings]);
     }
+
+    public function getCustomer(){
+        $result = Bookings::with(['customer'])
+        ->where('status',2)
+        ->get();
+        $customers = $result->map(function ($booking) {
+            return [
+                'id' => $booking->id,
+                'phone' => $booking->customer->phone,
+                'name' => $booking->customer->name,
+                'email' => $booking->customer->email,
+            ];
+        });
+        return response()->json(['data'=>$customers]);
+    }
+
+    public function createBill($id){
+
+    }
 }
