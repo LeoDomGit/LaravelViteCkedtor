@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Events\PushBooking;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -135,5 +136,27 @@ class BookingController extends Controller
         ];
     });
         return response()->json($bookings);
+    }
+    public function api_nhan_vien (Request $request){
+        $id_nhan_vien=Auth::user()->id;
+        $result = Bookings::where('id_user',$id_nhan_vien)->where('status',1)->get();
+        $bookings = $bookings->map(function ($booking) {
+            return [
+                'id' => $booking->id,
+                'id_user' => $booking->id_user,
+                'phone' => $booking->customer->phone,
+                'customer_name' => $booking->customer->name,
+                'customer_email' => $booking->customer->email,
+                'service_id' => $booking->id_service,
+                'service_name' => $booking->service->name,
+                'service_slug' => $booking->service->slug,
+                'service_discount' => $booking->service->price,
+                'service_price' => $booking->service->compare_price,
+                'time' => $booking->time,
+                'end_time' => $booking->end_time,
+                'status' => $booking->status,
+            ];
+        });
+            return response()->json($bookings);
     }
 }

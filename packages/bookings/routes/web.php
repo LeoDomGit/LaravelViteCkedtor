@@ -7,8 +7,7 @@ Route::apiResource('api/bookings', BookingController::class);
 Route::apiResource('bookings', BookingController::class);
 
 Route::prefix('api')->group(function () {
-    Route::prefix('bookings')->group(function () {
-        Route::get('/',[BookingController::class,'api_home'])->middleware('auth:sanctum');
-    });
+    Route::get('/bookings',[BookingController::class,'api_home'])->middleware('auth:sanctum');
+    Route::get('/bookings/nhan-vien',[BookingController::class,'api_nhan_vien'])->middleware('auth:sanctum');
 
 });
