@@ -190,7 +190,7 @@ class BookingController extends Controller
                 'status' => $booking->status,
             ];
         });
-            return response()->json($bookings);
+        return response()->json(['check'=>true,'bookings'=>$bookings]);
     }
 
     public function api_submitbooking_nhan_vien ($id,Request $request){
@@ -216,6 +216,6 @@ class BookingController extends Controller
                 'status' => $booking->status,
             ];
         });
-            return response()->json($bookings);
+            return response()->json(['check'=>true,'bookings'=>$bookings]);
     }
 }
