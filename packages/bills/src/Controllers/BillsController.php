@@ -162,7 +162,7 @@ class BillsController extends Controller
         $vnp_TxnRef = rand(1,10000);
         $vnp_Amount = 20000000; // Số tiền thanh toán
         $vnp_Locale = 'vi'; //Ngôn ngữ chuyển hướng thanh toán
-        $vnp_BankCode = "NCB"; //Mã phương thức thanh toán
+        $vnp_BankCode = "QR"; //Mã phương thức thanh toán
         $vnp_IpAddr = '13.160.92.202'; //IP Khách hàng thanh toán
 
         $inputData = array(
@@ -204,8 +204,8 @@ class BillsController extends Controller
             $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
+        dd($vnp_Url);
         header('Location: ' . $vnp_Url);
-die();
     }
 
 }

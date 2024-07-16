@@ -15,5 +15,4 @@ use Leo\Bills\Controllers\BillsController;
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
-Route::get('/vnpay',[BillsController::class,'vnpay']);
-Route::get('/return-vnpay',[BillsController::class,'return']);
+

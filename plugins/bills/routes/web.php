@@ -15,12 +15,11 @@ use Leo\Bills\Controllers\BillsController;
 
 
 Route::middleware(['web',CheckLogin::class])->group(function () {
-
     Route::resource('bills', BillsController::class);
-
 });
 
-
+Route::get('/vnpay',[BillsController::class,'vnpay']);
+Route::get('/return-vnpay',[BillsController::class,'return']);
 
 Route::prefix('api')->group(function () {
 
