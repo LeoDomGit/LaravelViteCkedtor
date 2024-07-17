@@ -98,8 +98,10 @@ class ServicesController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Services $services,$id)
+    public function api_service()
     {
+        $result = Services::active()->get();
+        return response()->json($result);
 
     }
 
