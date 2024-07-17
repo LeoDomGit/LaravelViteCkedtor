@@ -224,6 +224,7 @@ class BookingController extends Controller
         return response()->json(['check' => true, 'bookings' => $bookings]);
     }
 
+    // get all bookings for the current user
     public function getCustomer()
     {
         $result = Bookings::with(['customer'])
@@ -231,7 +232,8 @@ class BookingController extends Controller
             ->get();
         $customers = $result->map(function ($booking) {
             return [
-                'id' => $booking->id,
+                'id_booking' => $booking->id,
+                'id_customer' => $booking->id_customer,
                 'phone' => $booking->customer->phone,
                 'name' => $booking->customer->name,
                 'email' => $booking->customer->email,
@@ -268,26 +270,28 @@ class BookingController extends Controller
         $startOfDay = Carbon::now()->startOfDay();
         $endOfDay = Carbon::now()->endOfDay();
         $result =  Bookings::with(['customer', 'user', 'service'])
-            ->where('id', $id)
+            ->where('id_customer', $id)
             ->where('status', 2)
             ->whereBetween('time', [$startOfDay, $endOfDay])
-            ->firstOrFail();
-        if ($result) {
-            $bill = ServiceBills::insertGetId([
-                'id_customer' => $result->id_customer,
+            ->get();
+        if (empty($result)) {
+            return response()->json(['check' => false], 404);
+        }
+
+        foreach ($result as $query) {
+            $idBill = ServiceBills::insertGetId([
+                'id_customer' => $query->id_customer,
                 'status' => 0,
             ]);
-
             ServiceBillsDetails::create([
-                'id_bill' => $bill,
-                'id_service' => $result->id_service,
-                'id_booking' => $result->id,
+                'id_bill' => $idBill,
+                'id_service' => $query->id_service,
+                'id_booking' => $query->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-
-            return response()->json(['check' => true]);
         }
-        return response()->json(['message' => 'Không tìm thấy lịch hẹn'], 404);
+
+        return response()->json(['check' => true], 200);
     }
 }
