@@ -27,6 +27,7 @@
         "leo/services_collections": "*",
         "leo/slides": "*",
         "leo/users": "*",
+        "leo/contacts":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "pusher/pusher-php-server": "^7.2",
@@ -124,6 +125,9 @@
             ],
             "./plugins/bookings": [
                 "leo/bookings"
+            ],
+            "./plugins/contacts": [
+                "leo/contacts"
             ]
         }
     },
@@ -193,6 +197,10 @@
         {
             "type": "path",
             "url": "./packages/bookings/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/contacts/"
         }
     ]
 }

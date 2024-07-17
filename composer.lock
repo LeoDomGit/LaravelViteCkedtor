@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e07180c1bb046da240b4d50e686f9a3f",
+    "content-hash": "23276442eb5c8a06eb3d7180ad5a9b1c",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -3105,6 +3105,49 @@
             "scripts": {
                 "post-update-cmd": [
                     "@php artisan migrate"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dom",
+                    "email": "leodomsolar@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "leo/contacts",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/contacts",
+                "reference": "d3ca88e1ddd4fd2d39d9a592ceae8929e8c57e76"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Leo\\Contacts\\Providers\\ContactsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Leo\\Contacts\\": "src/",
+                    "Leo\\Contacts\\Providers\\": "src/Providers/",
+                    "Leo\\Contacts\\Database\\Migrations\\": "database/migrations/",
+                    "Leo\\Contacts\\Database\\Seeders\\": "database/seeders/"
+                },
+                "classmap": [
+                    "src/Controllers",
+                    "src/Providers",
+                    "src/Models",
+                    "./routes"
                 ]
             },
             "license": [

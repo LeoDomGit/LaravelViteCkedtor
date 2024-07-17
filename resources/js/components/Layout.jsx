@@ -40,16 +40,17 @@ function Layout({ children }) {
             <a href={'/brands'}> <MenuItem icon={<BrandingWatermarkIcon />}>Thương hiệu</MenuItem></a>
             <a href={'/products'}> <MenuItem icon={<InventoryIcon />}>Sản phẩm</MenuItem></a>
             </SubMenu>
+           <a href={'/contacts'}> <MenuItem icon={<ShopIcon />}>Liên hệ</MenuItem></a>
            <a href={'/slides'}> <MenuItem icon={<ShopIcon />}>Slides</MenuItem></a>
            <a href={'/bills'}> <MenuItem icon={<CardTravelIcon />}>Hoá đơn</MenuItem></a>
            <SubMenu label="Dịch vụ" icon={<BrandingWatermarkIcon />}>
            <a href={'/service-collections'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Nhóm Dịch vụ </MenuItem></a>
            <a href={'/services'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Dịch vụ </MenuItem></a>
            </SubMenu>
-         
+
            <a href={'/logout'}> <MenuItem icon={<LogoutIcon />}>Log out</MenuItem></a>
 
-{/*             
+{/*
             <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
             <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
             <MenuItem icon={<CalendarTodayOutlinedIcon />}>Calendar</MenuItem> */}
