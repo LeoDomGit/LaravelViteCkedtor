@@ -3,9 +3,10 @@ import Layout from "../../components/Layout";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Select, MenuItem } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import { Notyf } from "notyf";
 import { Box, Switch, Typography } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import "notyf/notyf.min.css";
 import CKEditor from "../../components/CKEditor";
 import Swal from "sweetalert2";
@@ -147,6 +148,12 @@ function Index({ sitemap }) {
 		{ field: "url", headerName: "Url", width: 250, editable: true },
 		{ field: "content", headerName: "Content", width: 250, editable: true },
 		{
+			field: "status",
+			headerName: "Status",
+			width: 150,
+			renderCell: (params) => <Switch checked={params.value == 1} onClick={(event) => handleCellEditStop(params.row.id, "status", event.target.checked ? 1 : 0)} />,
+		},
+		{
 			field: "static_page",
 			headerName: "Static Page",
 			width: 150,
@@ -157,6 +164,12 @@ function Index({ sitemap }) {
 					<MenuItem value={1}>Trang Link</MenuItem>
 				</Select>
 			),
+		},
+		{
+			field: "action",
+			headerName: "Action",
+			width: 150,
+			renderCell: (params) => <GridActionsCellItem icon={<EditIcon />} label="Edit" onClick={() => handleEditClick(params.row.id)} showInMenu={false} color="inherit" />,
 		},
 	];
 
