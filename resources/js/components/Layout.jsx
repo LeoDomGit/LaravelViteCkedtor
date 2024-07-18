@@ -43,6 +43,7 @@ function Layout({ children }) {
            <a href={'/contacts'}> <MenuItem icon={<ShopIcon />}>Liên hệ</MenuItem></a>
            <a href={'/slides'}> <MenuItem icon={<ShopIcon />}>Slides</MenuItem></a>
            <a href={'/bills'}> <MenuItem icon={<CardTravelIcon />}>Hoá đơn</MenuItem></a>
+           <a href={'/bookings'}> <MenuItem icon={<CardTravelIcon />}>Đặt lịch</MenuItem></a>
            <SubMenu label="Dịch vụ" icon={<BrandingWatermarkIcon />}>
            <a href={'/service-collections'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Nhóm Dịch vụ </MenuItem></a>
            <a href={'/services'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Dịch vụ </MenuItem></a>

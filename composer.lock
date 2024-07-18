@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23276442eb5c8a06eb3d7180ad5a9b1c",
+    "content-hash": "fc35741641b56658f02076367f2ed0d7",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -3406,6 +3406,49 @@
                     "Leo\\ServicesCollections\\Providers\\": "src/Providers/",
                     "Leo\\ServicesCollections\\Database\\Migrations\\": "database/migrations/",
                     "Leo\\ServicesCollections\\Database\\Seeders\\": "database/seeders/"
+                },
+                "classmap": [
+                    "src/Controllers",
+                    "src/Providers",
+                    "src/Models",
+                    "./routes"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dom",
+                    "email": "leodomsolar@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "leo/sitemap",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/sitemap",
+                "reference": "ce16557e8b5189dee59edf0553cf61aa8ec1f1a4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Leo\\Sitemap\\Providers\\SitemapServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Leo\\Sitemap\\": "src/",
+                    "Leo\\Sitemap\\Providers\\": "src/Providers/",
+                    "Leo\\Sitemap\\Database\\Migrations\\": "database/migrations/",
+                    "Leo\\Sitemap\\Database\\Seeders\\": "database/seeders/"
                 },
                 "classmap": [
                     "src/Controllers",

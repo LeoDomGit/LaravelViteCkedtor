@@ -28,6 +28,7 @@
         "leo/slides": "*",
         "leo/users": "*",
         "leo/contacts":"*",
+        "leo/sitemap":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "pusher/pusher-php-server": "^7.2",
@@ -128,6 +129,9 @@
             ],
             "./plugins/contacts": [
                 "leo/contacts"
+            ],
+            "./plugins/sitemap": [
+                "leo/sitemap"
             ]
         }
     },
@@ -201,6 +205,10 @@
         {
             "type": "path",
             "url": "./packages/contacts/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/sitemap/"
         }
     ]
 }
