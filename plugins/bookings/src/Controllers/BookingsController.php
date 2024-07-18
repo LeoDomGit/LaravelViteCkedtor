@@ -237,6 +237,7 @@ class BookingController extends Controller
                 'phone' => $booking->customer->phone,
                 'name' => $booking->customer->name,
                 'email' => $booking->customer->email,
+                'time' => $booking->time,
             ];
         });
         return response()->json(['data' => $customers]);
@@ -254,12 +255,13 @@ class BookingController extends Controller
             ->get();
         $customers = $result->map(function ($booking) {
             return [
-                'id' => $booking->id,
+                'id_booking' => $booking->id,
                 'phone' => $booking->customer->phone,
                 'name' => $booking->customer->name,
                 'email' => $booking->customer->email,
                 'time' => $booking->time,
                 'service_name' => $booking->service->name,
+                'user_name' => $booking->user->name,
             ];
         });
         return response()->json(['data' => $customers]);
@@ -292,6 +294,16 @@ class BookingController extends Controller
             ]);
         }
 
+        return response()->json(['check' => true], 200);
+    }
+
+    public function successBill($id)
+    {
+        $bill = ServiceBills::findOrFail($id);
+        if (empty($bill)) {
+            return response()->json(['check' => false], 404);
+        }
+        $bill->update(['status' => 1]);
         return response()->json(['check' => true], 200);
     }
 }
