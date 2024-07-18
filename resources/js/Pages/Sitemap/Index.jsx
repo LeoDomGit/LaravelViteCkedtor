@@ -62,6 +62,7 @@ function Index({ sitemap }) {
 	const [staticpage, setStatic] = useState(1);
 	const [content, setContent] = useState("");
 	const [show, setShow] = useState(false);
+	const [idsitemap, setIdSitemap] = useState(null);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -76,11 +77,61 @@ function Index({ sitemap }) {
 		setContent("");
 		setShow(true);
 	};
-
+	const handleEditClick = (item)=>{
+		setUrl(item.url)		
+		setIdSitemap(item.id);
+		setPage(item.page);
+		setContent(item.content);
+		setStatic(item.static_page);
+		setShow(true);
+	}
 	useEffect(() => {
 		setData(sitemap);
 	}, [sitemap]);
-
+	const submitEditPage =()=> {
+		if (page == "") {
+			notyf.open({
+				type: "error",
+				message: "Thiếu tên trang",
+			});
+		} else if (staticpage == 1 && content == "") {
+			notyf.open({
+				type: "error",
+				message: "Vui lòng nhập content của trang",
+			});
+		} else if (url == "") {
+			notyf.open({
+				type: "error",
+				message: "Thiếu đường dẫn",
+			});
+		} else {
+			axios
+				.put("/sitemap/"+idsitemap, {
+					page: page,
+					content: content,
+					url: url,
+					static_page: staticpage,
+				})
+				.then((res) => {
+					if (res.data.check == true) {
+						notyf.open({
+							type: "success",
+							message: "Sửa thành công",
+						});
+						resetCreate();
+						setData(res.data.data);
+						setShow(false);
+					} else if (res.data.check == false) {
+						if (res.data.msg) {
+							notyf.open({
+								type: "error",
+								message: res.data.msg,
+							});
+						}
+					}
+				});
+		}
+	};
 	const submitPage = () => {
 		if (page == "") {
 			notyf.open({
@@ -169,7 +220,7 @@ function Index({ sitemap }) {
 			field: "action",
 			headerName: "Action",
 			width: 150,
-			renderCell: (params) => <GridActionsCellItem icon={<EditIcon />} label="Edit" onClick={() => handleEditClick(params.row.id)} showInMenu={false} color="inherit" />,
+			renderCell: (params) => <GridActionsCellItem icon={<EditIcon />} label="Edit" onClick={() => handleEditClick(params.row)} showInMenu={false} color="inherit" />,
 		},
 	];
 
@@ -199,7 +250,7 @@ function Index({ sitemap }) {
 														<span className="input-group-text" id="basic-addon1">
 															Tên trang
 														</span>
-														<input type="text" className="form-control" placeholder="Tên trang" onChange={(e) => setPage(e.target.value)} aria-label="Tên trang" aria-describedby="basic-addon1" />
+														<input type="text" className="form-control" placeholder="Tên trang" value={page} onChange={(e) => setPage(e.target.value)} aria-label="Tên trang" aria-describedby="basic-addon1" />
 													</div>
 												</div>
 												<div className="col-md-12">
@@ -207,7 +258,7 @@ function Index({ sitemap }) {
 														<span className="input-group-text" id="basic-addon1">
 															URL
 														</span>
-														<input type="text" className="form-control" onChange={(e) => setUrl(e.target.value)} placeholder="URL ..." aria-label="URL ..." aria-describedby="basic-addon1" />
+														<input type="text" className="form-control" onChange={(e) => setUrl(e.target.value)} value={url} placeholder="URL ..." aria-label="URL ..." aria-describedby="basic-addon1" />
 													</div>
 												</div>
 												<div className="col-md-12">
@@ -215,7 +266,7 @@ function Index({ sitemap }) {
 														<span className="input-group-text" id="basic-addon1">
 															Static page
 														</span>
-														<select name="" onChange={(e) => setStatic(e.target.value)} className="form-control" id="">
+														<select name="" onChange={(e) => setStatic(e.target.value)} defaultValue={staticpage} className="form-control" id="">
 															<option value={null}>Chọn loại trang </option>
 															<option value={1}>Trang tĩnh </option>
 															<option value={0}>Trang link </option>
@@ -225,7 +276,7 @@ function Index({ sitemap }) {
 											</div>
 											<div className="row">
 												<div className="col-md">
-													<CKEditor onBlur={setContent} />
+													<CKEditor onBlur={setContent} value={content} />
 												</div>
 											</div>
 										</div>
@@ -235,9 +286,17 @@ function Index({ sitemap }) {
 							</div>
 						</Modal.Body>
 						<Modal.Footer>
+							{!idsitemap && (
 							<button className="btn btn-primary" onClick={(e) => submitPage()}>
 								Thêm
 							</button>
+							)}
+							{idsitemap && (
+							<button className="btn btn-warning" onClick={(e) => submitEditPage()}>
+								Sửa
+							</button>
+							)}
+							
 						</Modal.Footer>
 					</Modal>
 					<Box sx={{ height: 400, width: "100%" }}>
