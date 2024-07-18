@@ -20,7 +20,8 @@ class BookingController extends Controller
     // List all bookings
     public function index()
     {
-        $bookings = Bookings::with(['user', 'customer', 'service'])->get();
+        $bookings = Bookings::with(['user', 'customer', 'service'])
+        ->get();
         return Inertia::render('Bookings/Index', ['bookings' => $bookings]);
     }
 
