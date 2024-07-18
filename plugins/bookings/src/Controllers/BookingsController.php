@@ -303,6 +303,7 @@ class BookingController extends Controller
         if (empty($bill)) {
             return response()->json(['check' => false], 404);
         }
+
         $bill->update(['status' => 1]);
         return response()->json(['check' => true], 200);
     }
