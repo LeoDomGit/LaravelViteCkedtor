@@ -321,10 +321,10 @@ class BookingController extends Controller
                     return [
                         'id' => $detail->id,
                         'id_booking' => $detail->booking->id,
-                        'time' => $detail->booking->time,
                         'service' => $detail->service->name,
                         'price' => $detail->service->price,
                         'discount' => $detail->service->discount,
+                        'time' => $detail->booking->time,
                         'created_at' => $detail->created_at,
                     ];
                 })
