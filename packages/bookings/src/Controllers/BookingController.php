@@ -21,6 +21,7 @@ class BookingController extends Controller
     public function index()
     {
         $bookings = Bookings::with(['user', 'customer', 'service'])
+        ->orderBy('id','desc')
         ->paginate(10);
         return Inertia::render('Bookings/Index', ['bookings' => $bookings]);
     }
