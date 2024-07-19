@@ -87,17 +87,8 @@ class SitemapController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function api_all()
+    public function destroy(string $id)
     {
-        $result=Sitemap::active()->get();
-        return response()->json($result);
-    }
-        /**
-     * Remove the specified resource from storage.
-     */
-    public function api_single(Request $request,$page)
-    {
-        $result=Sitemap::active()->where('page',$page)->first();
-        return response()->json($result);
+        //
     }
 }

@@ -14,7 +14,7 @@ class ContactsController extends Controller
      */
     public function index()
     {
-        $contact=Contacts::all();
+        $contact = Contacts::orderBy('id', 'desc')->get();
         return Inertia::render('Contacts/Index',['contacts'=>$contact]);
     }
 
