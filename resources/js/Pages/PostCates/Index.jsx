@@ -76,7 +76,7 @@ function Index({ postcates }) {
       renderCell: (params) => (
         <Switch
           checked={params.value == 1}
-          onChange={(e) => switchBrand(params, e.target.checked ? 1 : 0)}
+          onChange={(e) => switchPostCollection(params, e.target.checked ? 1 : 0)}
           inputProps={{ "aria-label": "controlled" }}
         />
       ),
@@ -88,7 +88,7 @@ function Index({ postcates }) {
       valueGetter: (params) => formatCreatedAt(params),
     },
   ];
-  const submitBrand = () => {
+  const submitPostCollection = () => {
     axios
       .post("/post-collections", {
         name: postCate,
@@ -111,10 +111,10 @@ function Index({ postcates }) {
       });
   };
   const resetCreate = () => {
-    setBrand("");
+    setPostCate("");
     setShow(true);
   };
-  const switchBrand = (params, value) => {
+  const switchPostCollection = (params, value) => {
     var id = params.id;
     var field = params.field;
     axios
@@ -219,13 +219,13 @@ function Index({ postcates }) {
       <>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Tạo thương hiệu sản phẩm</Modal.Title>
+            <Modal.Title>Tạo loại bài viết</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <input
               type="text"
               className="form-control"
-              onChange={(e) => setBrand(e.target.value)}
+              onChange={(e) => setPostCate(e.target.value)}
             />
           </Modal.Body>
           <Modal.Footer>
@@ -234,8 +234,8 @@ function Index({ postcates }) {
             </Button>
             <Button
               variant="primary"
-              disabled={brand == "" ? true : false}
-              onClick={(e) => submitBrand()}
+              disabled={postCate == "" ? true : false}
+              onClick={(e) => submitPostCollection()}
             >
               Tạo mới
             </Button>
@@ -261,7 +261,7 @@ function Index({ postcates }) {
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   <a
-                    className="btn btn-primary"
+                    className="btn btn-primary text-light"
                     onClick={(e) => resetCreate()}
                     aria-current="page"
                     href="#"
@@ -274,7 +274,7 @@ function Index({ postcates }) {
           </div>
         </nav>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-7">
             {data && data.length > 0 && (
               <Box sx={{ height: 400, width: "100%" }}>
                 <DataGrid

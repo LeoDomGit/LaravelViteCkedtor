@@ -13,6 +13,7 @@ import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CallIcon from '@mui/icons-material/Call';
 import MapIcon from '@mui/icons-material/Map';
+import BookIcon from '@mui/icons-material/Book';
 import "../../css/app.css";
 function Layout({ children }) {
   const { collapseSidebar } = useProSidebar();
@@ -52,7 +53,10 @@ function Layout({ children }) {
            <a href={'/service-collections'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Nhóm Dịch vụ </MenuItem></a>
            <a href={'/services'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Dịch vụ </MenuItem></a>
            </SubMenu>
-
+           <SubMenu label="Bài viết" icon={<BrandingWatermarkIcon />}>
+           <a href={'/post-collections'}> <MenuItem icon={<BookIcon />}>Nhóm bài viết </MenuItem></a>
+           <a href={'/posts'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Bài viết </MenuItem></a>
+           </SubMenu>
            <a href={'/logout'}> <MenuItem icon={<LogoutIcon />}>Log out</MenuItem></a>
 
 {/*
