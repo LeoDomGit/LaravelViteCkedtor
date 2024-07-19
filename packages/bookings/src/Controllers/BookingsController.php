@@ -20,9 +20,7 @@ class BookingController extends Controller
     // List all bookings
     public function index()
     {
-        $bookings = Bookings::with(['user', 'customer', 'service'])
-        ->orderBy('id','desc')
-        ->paginate(10);
+        $bookings = Bookings::with(['user', 'customer', 'service'])->paginate(5);
         return Inertia::render('Bookings/Index', ['bookings' => $bookings]);
     }
 
@@ -239,6 +237,7 @@ class BookingController extends Controller
                 'phone' => $booking->customer->phone,
                 'name' => $booking->customer->name,
                 'email' => $booking->customer->email,
+                'time' => $booking->time,
             ];
         });
         return response()->json(['data' => $customers]);
@@ -256,12 +255,14 @@ class BookingController extends Controller
             ->get();
         $customers = $result->map(function ($booking) {
             return [
-                'id' => $booking->id,
+                'id_booking' => $booking->id,
+                'id_customer' => $booking->id_customer,
                 'phone' => $booking->customer->phone,
                 'name' => $booking->customer->name,
                 'email' => $booking->customer->email,
                 'time' => $booking->time,
                 'service_name' => $booking->service->name,
+                'user_name' => $booking->user->name,
             ];
         });
         return response()->json(['data' => $customers]);
@@ -295,5 +296,64 @@ class BookingController extends Controller
         }
 
         return response()->json(['check' => true], 200);
+    }
+
+    public function successBill($id)
+    {
+        $bill = ServiceBills::with('serviceBillsDetails', 'customer')
+            ->where('id_customer', $id)
+            ->get();
+        if (empty($bill)) {
+            return response()->json(['check' => false], 404);
+        }
+
+        $data = $bill->map(function ($query) {
+            return [
+                'id' => $query->id,
+                'customer' => [
+                    'id' => $query->id_customer,
+                    'name' => $query->customer->name,
+                    'phone' => $query->customer->phone,
+                    'email' => $query->customer->email,
+                ],
+                'status' => $query->status,
+                'detail' => $query->serviceBillsDetails->map(function ($detail) {
+                    return [
+                        'id' => $detail->id,
+                        'id_booking' => $detail->booking->id,
+                        'time' => $detail->booking->time,
+                        'service' => $detail->service->name,
+                        'price' => $detail->service->price,
+                        'discount' => $detail->service->discount,
+                        'created_at' => $detail->created_at,
+                    ];
+                })
+            ];
+        });
+        return response()->json(['check' => true, 'data' => $data], 200);
+    }
+
+    public function updateStatusBill(Request $request, $id)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|numeric|boolean|min:0|max:1',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()->first()], 404);
+        }
+
+        $newStatus = $request->input('status');
+        $bills = ServiceBills::where('id_customer', $id)->get();
+
+        if ($bills->isEmpty()) {
+            return response()->json(['check' => false, 'msg' => 'Không tìm thấy hóa đơn cho khách hàng này.'], 404);
+        }
+
+        foreach ($bills as $bill) {
+            $bill->update(['status' => $newStatus]);
+        }
+        return response()->json(['check' => true, 'data' => $bills], 200);
     }
 }

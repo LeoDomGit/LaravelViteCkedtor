@@ -10,7 +10,8 @@ Route::prefix('api')->group(function () {
     Route::get('/bookings-customers', [BookingController::class, 'getCustomer']);
     Route::get('/bookings-customers/{id}', [BookingController::class, 'getBillsCustomer']);
     Route::post('/checkOut/{id}', [BookingController::class, 'createBill']);
-    // Route::get('/bookings-bills/{id}', [BookingController::class, 'getBillsForCustomers']);
+    Route::get('/bookings-bills/{id}', [BookingController::class, 'successBill']);
+    Route::put('/bookings-bills/update/{id}', [BookingController::class, 'updateStatusBill']);
     Route::put('/bookings/{id}', [BookingController::class, 'update']);
     Route::get('/bookings', [BookingController::class, 'api_home'])->middleware('auth:sanctum');
     Route::get('/bookings/nhan-vien', [BookingController::class, 'api_nhan_vien'])->middleware('auth:sanctum');
