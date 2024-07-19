@@ -256,6 +256,7 @@ class BookingController extends Controller
         $customers = $result->map(function ($booking) {
             return [
                 'id_booking' => $booking->id,
+                'id_customer' => $booking->id_customer,
                 'phone' => $booking->customer->phone,
                 'name' => $booking->customer->name,
                 'email' => $booking->customer->email,
@@ -299,12 +300,61 @@ class BookingController extends Controller
 
     public function successBill($id)
     {
-        $bill = ServiceBills::findOrFail($id);
+        $bill = ServiceBills::with('serviceBillsDetails', 'customer')
+            ->where('id_customer', $id)
+            ->get();
         if (empty($bill)) {
             return response()->json(['check' => false], 404);
         }
 
-        $bill->update(['status' => 1]);
-        return response()->json(['check' => true], 200);
+        $data = $bill->map(function ($query) {
+            return [
+                'id' => $query->id,
+                'customer' => [
+                    'id' => $query->id_customer,
+                    'name' => $query->customer->name,
+                    'phone' => $query->customer->phone,
+                    'email' => $query->customer->email,
+                ],
+                'status' => $query->status,
+                'detail' => $query->serviceBillsDetails->map(function ($detail) {
+                    return [
+                        'id' => $detail->id,
+                        'id_booking' => $detail->booking->id,
+                        'time' => $detail->booking->time,
+                        'service' => $detail->service->name,
+                        'price' => $detail->service->price,
+                        'discount' => $detail->service->discount,
+                        'created_at' => $detail->created_at,
+
+                    ];
+                })
+            ];
+        });
+        return response()->json(['check' => true, 'data' => $data], 200);
+    }
+
+    public function updateStatusBill(Request $request, $id)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|numeric|boolean|min:0|max:1',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()->first()], 404);
+        }
+
+        $newStatus = $request->input('status');
+        $bills = ServiceBills::where('id_customer', $id)->get();
+
+        if ($bills->isEmpty()) {
+            return response()->json(['check' => false, 'msg' => 'Không tìm thấy hóa đơn cho khách hàng này.'], 404);
+        }
+
+        foreach ($bills as $bill) {
+            $bill->update(['status' => $newStatus]);
+        }
+        return response()->json(['check' => true, 'data' => $bills], 200);
     }
 }
