@@ -136,6 +136,9 @@
             ],
             "./plugins/post": [
                 "leo/post"
+            ],
+            "./plugins/products": [
+                "leo/products"
             ]
         }
     },
@@ -216,7 +219,7 @@
         },
         {
             "type": "path",
-            "url": "./packages/posts/"
+            "url": "./packages/post/"
         }
     ]
 }

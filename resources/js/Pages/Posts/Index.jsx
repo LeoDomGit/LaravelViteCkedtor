@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout";
+import { Dropzone, FileMosaic } from "@dropzone-ui/react";
+import CKEditor from "../../components/CKEditor";
 
 function Index({ cates }) {
     const [title,setTitle]= useState('');
+    const [datacate,setDataCate]= useState(cates);
+    const [create,setCreate]= useState(false);
     const [summary,setSummary]= useState('');
+    const [content,setContent]= useState('');
     const [categories,setCategories]= useState(cates);
     return (
         <Layout>
@@ -47,7 +52,25 @@ function Index({ cates }) {
                                         aria-describedby="basic-addon1"
                                     />
                                 </div>
-                                
+                                <div className="input-group mb-3">
+                                    <span
+                                        className="input-group-text"
+                                        id="basic-addon1"
+                                    >
+                                        Nhóm bài viết
+                                    </span>
+                                   <select name=""className="form-control" id="">
+                                    <option value="0">Chọn loại bài viết</option>
+                                    {datacate.length>0 && datacate.map((item,index)=>(
+                                        <option value={item.id}>{item.name}</option>
+                                    ))}
+                                   </select>
+                                </div>
+                                <div className="row">
+                                   <div className="col-md">
+                                     <CKEditor/>
+                                   </div>
+                                </div>
                             </div>
                         </div>
                     </div>
