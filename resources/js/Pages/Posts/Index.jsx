@@ -110,6 +110,9 @@ function Index({ cates }) {
                                     <FormControlLabel control={<Switch />} label="Highlight" />
 
                                     </div>
+                                    <div className="col-md text-end">
+                                        <button className="btn btn-primary">Thêm</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
