@@ -78,7 +78,7 @@ function Index({ sitemap }) {
 		setShow(true);
 	};
 	const handleEditClick = (item)=>{
-		setUrl(item.url)		
+		setUrl(item.url)
 		setIdSitemap(item.id);
 		setPage(item.page);
 		setContent(item.content);
@@ -197,7 +197,7 @@ function Index({ sitemap }) {
 		{ field: "id", headerName: "ID", width: 70 },
 		{ field: "page", headerName: "Page", width: 200, editable: true },
 		{ field: "url", headerName: "Url", width: 250, editable: true },
-		{ field: "content", headerName: "Content", width: 250, editable: true },
+		{ field: "content", headerName: "Content", width: 250, editable: false },
 		{
 			field: "status",
 			headerName: "Status",
@@ -296,7 +296,7 @@ function Index({ sitemap }) {
 								Sửa
 							</button>
 							)}
-							
+
 						</Modal.Footer>
 					</Modal>
 					<Box sx={{ height: 400, width: "100%" }}>
