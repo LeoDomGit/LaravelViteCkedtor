@@ -1,0 +1,13 @@
+{
+    "name": "leo/post",
+    "description": "Post",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Leo\\Post\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}

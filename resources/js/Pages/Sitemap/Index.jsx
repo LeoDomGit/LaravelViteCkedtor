@@ -211,8 +211,8 @@ function Index({ sitemap }) {
 			editable: true,
 			renderCell: (params) => (
 				<Select value={params.value} onChange={(event) => handleCellEditStop(params.row.id, "static_page", event.target.value)}>
-					<MenuItem value={0}>Trang Tĩnh</MenuItem>
-					<MenuItem value={1}>Trang Link</MenuItem>
+					<MenuItem value={1}>Trang Tĩnh</MenuItem>
+					<MenuItem value={0}>Trang Link</MenuItem>
 				</Select>
 			),
 		},
