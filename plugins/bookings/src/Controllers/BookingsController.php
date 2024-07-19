@@ -326,7 +326,6 @@ class BookingController extends Controller
                         'price' => $detail->service->price,
                         'discount' => $detail->service->discount,
                         'created_at' => $detail->created_at,
-
                     ];
                 })
             ];
