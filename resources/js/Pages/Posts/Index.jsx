@@ -86,7 +86,7 @@ function Index({ cates }) {
                                     </select>
                                 </div>
                                 <div className="row mb-3">
-                                    <div className="col-md-3">
+                                    <div className="col-md-4 ">
                                     <Dropzone
                                         onChange={updateFiles}
                                         value={files}
