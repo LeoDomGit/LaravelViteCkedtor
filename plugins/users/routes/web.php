@@ -17,7 +17,7 @@ use App\Http\Middleware\CheckLogin;
 // });
 Route::middleware(['web',CheckLogin::class])->group(function () {
     Route::resource('users', UserController::class);
-    Route::resource('/logout', [UserController::class,'logout']);
+    Route::get('/logout', [UserController::class,'logout'])->middleware('web');
 
 });
 Route::get('/', [UserController::class,'login'])->middleware('web');
