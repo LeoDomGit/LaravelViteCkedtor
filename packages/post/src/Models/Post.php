@@ -14,7 +14,10 @@ class Post extends Model
     {
         return $query->where('status', 1);
     }
-
+    public function scopeHighlight($query)
+    {
+        return $query->where('status', 1)->where('highlight',1);
+    }
     public function cates(){
         return $this->belongsTo(PostCate::class,'id_collection');
     }

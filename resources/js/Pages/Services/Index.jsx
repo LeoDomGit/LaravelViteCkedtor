@@ -49,7 +49,7 @@ function Index({ services,collections }) {
               message: "Chỉnh sửa dịch vụ thành công",
             });
             setData(res.data.data);
-  
+
           } else if (res.data.check == false) {
             notyf.open({
               type: "error",
@@ -58,7 +58,7 @@ function Index({ services,collections }) {
           }
         });
     }
-   
+
   };
   window.CKEDITOR.replace("editor", options);
   const updateFiles = (incommingFiles) => {

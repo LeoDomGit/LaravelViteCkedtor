@@ -56,7 +56,7 @@ class PostCateController extends Controller
     }
     public function api_show(PostCate $postcate, $id)
     {
-        return response()->json(PostCate::active()->where('slug',$id)->get());
+        return response()->json(PostCate::with('posts')->active()->where('slug',$id)->get());
     }
 
     /**
