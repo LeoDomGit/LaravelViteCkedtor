@@ -251,7 +251,6 @@ class BookingController extends Controller
         $result = Bookings::with(['customer', 'user', 'service'])
             ->where('status', 2)
             ->where('id_customer', $id)
-            ->whereBetween('time', [$startOfDay, $endOfDay])
             ->get();
         $customers = $result->map(function ($booking) {
             return [
