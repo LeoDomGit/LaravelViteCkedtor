@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc35741641b56658f02076367f2ed0d7",
+    "content-hash": "526eb413ae86b1577b4663827046df2e",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -2892,6 +2892,7 @@
         },
         {
             "name": "leo/bills",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -2935,6 +2936,7 @@
         },
         {
             "name": "leo/bookings",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -2983,6 +2985,8 @@
         },
         {
             "name": "leo/brands",
+
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3031,6 +3035,7 @@
         },
         {
             "name": "leo/carts",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3074,6 +3079,7 @@
         },
         {
             "name": "leo/categories",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3122,6 +3128,7 @@
         },
         {
             "name": "leo/contacts",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3165,6 +3172,7 @@
         },
         {
             "name": "leo/customers",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3208,6 +3216,7 @@
         },
         {
             "name": "leo/permissions",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3250,7 +3259,51 @@
             }
         },
         {
+            "name": "leo/post",
+            "version": "dev-Posts",
+            "dist": {
+                "type": "path",
+                "url": "./packages/post",
+                "reference": "bca15de708426afd7c69e2352d31f6c9a219de2c"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Leo\\Post\\Providers\\PostServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Leo\\Post\\": "src/",
+                    "Leo\\Post\\Providers\\": "src/Providers/",
+                    "Leo\\Post\\Database\\Migrations\\": "database/migrations/",
+                    "Leo\\Post\\Database\\Seeders\\": "database/seeders/"
+                },
+                "classmap": [
+                    "src/Controllers",
+                    "src/Providers",
+                    "src/Models",
+                    "./routes"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dom",
+                    "email": "leodomsolar@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "leo/products",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3300,6 +3353,7 @@
         },
         {
             "name": "leo/roles",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3343,6 +3397,7 @@
         },
         {
             "name": "leo/services",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3386,6 +3441,7 @@
         },
         {
             "name": "leo/services_collections",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3429,6 +3485,7 @@
         },
         {
             "name": "leo/sitemap",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3472,6 +3529,7 @@
         },
         {
             "name": "leo/slides",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -3515,6 +3573,7 @@
         },
         {
             "name": "leo/users",
+            "version": "dev-Posts",
             "version": "dev-main",
             "dist": {
                 "type": "path",

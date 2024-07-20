@@ -11,4 +11,9 @@ class Sitemap extends Model
     use HasFactory;
     protected $table = 'sitemap';
     protected $fillable = ['id','page','static_page','content','url','status','created_at','updated_at'];
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
 }
