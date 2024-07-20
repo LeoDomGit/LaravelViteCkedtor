@@ -276,15 +276,14 @@ class BookingController extends Controller
             ->where('status', 2)
             ->whereBetween('time', [$startOfDay, $endOfDay])
             ->get();
-        if (empty($result)) {
-            return response()->json(['check' => false], 404);
+        if (count($result)==0) {
+            return response()->json(['check'=>false,'msg'=>'Không thể tạo bill ngày khác']);
         }
-
+        $idBill = ServiceBills::insertGetId([
+            'id_customer' => $result[0]->id_customer,
+            'status' => 0,
+        ]);
         foreach ($result as $query) {
-            $idBill = ServiceBills::insertGetId([
-                'id_customer' => $query->id_customer,
-                'status' => 0,
-            ]);
             ServiceBillsDetails::create([
                 'id_bill' => $idBill,
                 'id_service' => $query->id_service,
