@@ -14,6 +14,7 @@ use App\Events\PushBooking;
 use Illuminate\Support\Facades\Auth;
 use Leo\Services\Models\ServiceBills;
 use Leo\Services\Models\ServiceBillsDetails;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -227,21 +228,35 @@ class BookingController extends Controller
     // get all bookings for the current user
     public function getCustomer()
     {
-        $result = Bookings::with(['customer'])
-            ->where('status', 2)
-            ->get();
-        $customers = $result->map(function ($booking) {
-            return [
-                'id_booking' => $booking->id,
-                'id_customer' => $booking->id_customer,
-                'phone' => $booking->customer->phone,
-                'name' => $booking->customer->name,
-                'email' => $booking->customer->email,
-                'time' => $booking->time,
-            ];
-        });
+        $result = DB::table('bookings')
+        ->leftJoin('customers', 'bookings.id_customer', '=', 'customers.id')
+        ->leftJoin('service_bills', 'customers.id', '=', 'service_bills.id_customer')
+        ->where('bookings.status', 2)
+        ->select(
+            'bookings.id as id_booking',
+            'bookings.id_customer',
+            'customers.phone',
+            'customers.name',
+            'customers.email',
+            'bookings.time',
+            'service_bills.id as id_bill'
+        )
+        ->get();
+
+    $customers = $result->map(function ($booking) {
+        return [
+            'id_booking' => $booking->id_booking,
+            'id_customer' => $booking->id_customer,
+            'phone' => $booking->phone,
+            'name' => $booking->name,
+            'email' => $booking->email,
+            'time' => $booking->time,
+            'id_bill'=>$booking->id_bill,
+        ];
+    });
         return response()->json(['data' => $customers]);
     }
+
 
     public function getBillsCustomer($id)
     {
