@@ -160,13 +160,15 @@ class PostController extends Controller
     }
     public function api_single(Post $post,$id){
         $result=Post::with('cates')->active()->where('slug',$id)->first();
+        $id_collection= $result->id_collection;
+        $posts = Post::with('cates')->active()->where('id_collection',$id_collection)->get();
         $id_post=$result->id;
         $products = Products::join('links','links.id_link','=','products.id')
                 ->join('gallery','products.id','=','gallery.id_parent')
                 ->where('links.id_parent',$id_post)->where('products.status',1)
                 ->where('gallery.status',1)
                 ->select('products.*','gallery.image as image')->get();
-        return response()->json(['post'=>$result,'products'=>$products]);
+        return response()->json(['post'=>$result,'products'=>$products ,'relative'=>$posts]);
 
     }
 }
