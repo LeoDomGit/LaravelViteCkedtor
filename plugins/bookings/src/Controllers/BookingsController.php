@@ -277,15 +277,15 @@ class BookingController extends Controller
             ->where('status', 2)
             ->whereBetween('time', [$startOfDay, $endOfDay])
             ->get();
-        if (count($result)==0) {
-            return response()->json(['check' => false,'msg'=>'Booking không phải ngày hôm nay'], 200);
+        if (count($result) == 0) {
+            return response()->json(['check' => false, 'msg' => 'Booking không phải ngày hôm nay'], 200);
         }
         $idBill = ServiceBills::insertGetId([
             'id_customer' => $result[0]->id_customer,
             'status' => 0,
         ]);
         foreach ($result as $query) {
-            
+
             ServiceBillsDetails::create([
                 'id_bill' => $idBill,
                 'id_service' => $query->id_service,
@@ -293,10 +293,35 @@ class BookingController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            Bookings::where('id',$query->id)->update(['status'=>4,'updated_at'=>now()]);
+            Bookings::where('id', $query->id)->update(['status' => 4, 'updated_at' => now()]);
         }
 
         return response()->json(['check' => true], 200);
+    }
+
+    public function getBill()
+    {
+        $bills = ServiceBills::with('customer', 'serviceBillsDetails')->get();
+
+        $data = $bills->map(function ($query) {
+            return [
+                'id' => $query->id,
+                'id_customer' => $query->id_customer,
+                'customer_name' => $query->customer->name,
+                'email' => $query->customer->email,
+                'phone' => $query->customer->phone,
+                'address' => $query->customer->address,
+                'detail' => $query->serviceBillsDetails->map(function ($detail) {
+                    return [
+                        'price' => $detail->service->price,
+                        'discount' => $detail->service->discount,
+                    ];
+                }),
+                'status' => $query->status,
+                'created_at' => $query->created_at,
+            ];
+        });
+        return response()->json(['check' => true, 'data' => $data]);
     }
 
     public function successBill($id)
@@ -316,6 +341,7 @@ class BookingController extends Controller
                     'name' => $query->customer->name,
                     'phone' => $query->customer->phone,
                     'email' => $query->customer->email,
+                    'address' => $query->customer->address,
                 ],
                 'status' => $query->status,
                 'detail' => $query->serviceBillsDetails->map(function ($detail) {
