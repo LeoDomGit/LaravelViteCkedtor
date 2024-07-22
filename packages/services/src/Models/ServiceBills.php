@@ -11,7 +11,7 @@ class ServiceBills extends Model
     use HasFactory;
 
     protected $table = 'service_bills';
-    protected $fillable = ['id_customer', 'status'];
+    protected $fillable = ['id_customer', 'status', 'created_at', 'updated_at'];
 
     public function customer()
     {

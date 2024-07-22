@@ -3,7 +3,7 @@
 namespace Leo\Services\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\ServiceBills;
+use Leo\Services\Models\ServiceBills;
 use App\Http\Requests\StoreServiceBillsRequest;
 use App\Http\Requests\UpdateServiceBillsRequest;
 

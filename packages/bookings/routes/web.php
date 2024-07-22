@@ -10,6 +10,7 @@ Route::prefix('api')->group(function () {
     Route::get('/bookings-customers', [BookingController::class, 'getCustomer']);
     Route::get('/bookings-customers/{id}', [BookingController::class, 'getBillsCustomer']);
     Route::post('/checkOut/{id}', [BookingController::class, 'createBill']);
+    Route::get('/bookings-bills', [BookingController::class, 'getBill']);
     Route::get('/bookings-bills/{id}', [BookingController::class, 'successBill']);
     Route::put('/bookings-bills/update/{id}', [BookingController::class, 'updateStatusBill']);
     Route::put('/bookings/{id}', [BookingController::class, 'update']);
