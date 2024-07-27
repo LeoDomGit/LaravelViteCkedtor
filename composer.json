@@ -30,6 +30,7 @@
         "leo/contacts":"*",
         "leo/sitemap":"*",
         "leo/post":"*",
+        "leo/renvenues":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "pusher/pusher-php-server": "^7.2",
@@ -139,6 +140,9 @@
             ],
             "./plugins/products": [
                 "leo/products"
+            ],
+            "./plugins/renvenues": [
+                "leo/renvenues"
             ]
         }
     },
@@ -220,6 +224,10 @@
         {
             "type": "path",
             "url": "./packages/post/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/renvenues/"
         }
     ]
 }
