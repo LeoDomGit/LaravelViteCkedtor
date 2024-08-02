@@ -8,14 +8,12 @@ Route::middleware(['web', CheckLogin::class])->group(function () {
     Route::resource('revenues', RevenueController::class);
 });
 //product
-Route::get('api/revenue/product', [RevenueController::class, 'getProductRevenue']);
-Route::get('api/revenue/products/daily', [RevenueController::class, 'getProductRevenueByDate']);
-Route::get('api/revenue/products/monthly', [RevenueController::class, 'getProductRevenueByMonth']);
+Route::get('revenue/product', [RevenueController::class, 'getProductRevenue']);
+Route::get('revenue/products/daily', [RevenueController::class, 'getProductRevenueByDate']);
+Route::get('revenue/products/monthly', [RevenueController::class, 'getProductRevenueByMonth']);
 
 // services
-Route::get('api/revenue/services', [RevenueController::class, 'getServiceRevenue']);
-Route::get('api/revenue/services/daily', [RevenueController::class, 'getServiceRevenueByDate']);
-Route::get('api/revenue/services/monthly', [RevenueController::class, 'getServiceRevenueByMonth']);
-Route::get('api/revenue/services/weekly-monthly', [RevenueController::class, 'getServiceRevenueByWeekMonth']);
-//staff
-Route::get('api/revenue/customer-date', [RevenueController::class, 'getRevenueByCustomerAndDate']);
+Route::get('revenue/services', [RevenueController::class, 'getServiceRevenue']);
+Route::get('revenue/services/daily', [RevenueController::class, 'getServiceRevenueByDate']);
+Route::get('revenue/services/monthly', [RevenueController::class, 'getServiceRevenueByMonth']);
+Route::get('revenue/services/weekly-monthly', [RevenueController::class, 'getServiceRevenueByWeekMonth']);
