@@ -18,4 +18,4 @@ Route::get('api/revenue/services/daily', [RevenueController::class, 'getServiceR
 Route::get('api/revenue/services/monthly', [RevenueController::class, 'getServiceRevenueByMonth']);
 Route::get('api/revenue/services/weekly-monthly', [RevenueController::class, 'getServiceRevenueByWeekMonth']);
 //staff
-Route::get('api/revenue/customer-date', [RevenueController::class, 'getRevenueByCustomerAndDate']);
+Route::get('api/revenue/staff-date', [RevenueController::class, 'getRevenueByStaffAndDate']);
