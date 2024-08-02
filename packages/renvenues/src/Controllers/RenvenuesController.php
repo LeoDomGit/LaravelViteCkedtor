@@ -122,60 +122,60 @@ class RevenueController extends Controller
 
         return response()->json($revenues);
     }
-    //customer
-    public function getRevenueByCustomerAndDate(Request $request)
+    //staff
+    public function getRevenueByStaffAndDate(Request $request)
     {
-        $idCustomer = $request->input('id_customer');
+        $idUser = $request->input('id_user');
         $date = $request->input('date');
 
         if ($date) {
             if (!Carbon::hasFormat($date, 'Y-m-d')) {
                 return response()->json(['error' => 'Invalid date format. Use YYYY-MM-DD.'], 400);
             }
-            // Nếu có id_customer và date, lấy doanh thu của customer cụ thể theo date
-            //http://127.0.0.1:8000/api/revenue/customer-date?id_customer=2&date=2024-07-15
-            if ($idCustomer) {
+            // Nếu có id_user, lấy doanh thu cho nhân viên cụ thể trong ngày
+            //http://127.0.0.1:8000/api/revenue/staff-date?id_user=12&date=2024-07-15
+            if ($idUser) {
                 $revenues = DB::table('bookings')
                     ->join('services', 'bookings.id_service', '=', 'services.id')
-                    ->join('customers', 'bookings.id_customer', '=', 'customers.id')
-                    ->where('bookings.id_customer', $idCustomer)
+                    ->join('users', 'bookings.id_user', '=', 'users.id')
+                    ->where('bookings.id_user', $idUser)
                     ->whereDate('bookings.time', $date)
-                    ->select(DB::raw('customers.name as customer_name, SUM(services.price) as total_revenue'))
-                    ->groupBy('customers.name')
+                    ->select(DB::raw('users.name as user_name, SUM(services.price) as total_revenue'))
+                    ->groupBy('users.name')
                     ->orderBy('total_revenue', 'desc')
                     ->get();
             } else {
-                // Nếu không có id_customer, lấy doanh thu của tất cả customer trong ngày
-                //http://127.0.0.1:8000/api/revenue/customer-date?date=2024-07-15
+                // Nếu không có id_user, lấy doanh thu cho tất cả nhân viên trong ngày
+                //http://127.0.0.1:8000/api/revenue/staff-date?date=2024-07-15
                 $revenues = DB::table('bookings')
                     ->join('services', 'bookings.id_service', '=', 'services.id')
-                    ->join('customers', 'bookings.id_customer', '=', 'customers.id')
+                    ->join('users', 'bookings.id_user', '=', 'users.id')
                     ->whereDate('bookings.time', $date)
-                    ->select(DB::raw('customers.name as customer_name, SUM(services.price) as total_revenue'))
-                    ->groupBy('customers.name')
+                    ->select(DB::raw('users.name as user_name, SUM(services.price) as total_revenue'))
+                    ->groupBy('users.name')
                     ->orderBy('total_revenue', 'desc')
                     ->get();
             }
         } else {
-            // Nếu không có date, lấy tổng doanh thu của id_customer
-            //http://127.0.0.1:8000/api/revenue/customer-date?id_customer=2
-            if ($idCustomer) {
+            // Nếu không có ngày, lấy doanh thu cho tất cả thời gian
+            //http://127.0.0.1:8000/api/revenue/staff-date?id_user=12
+            if ($idUser) {
                 $revenues = DB::table('bookings')
                     ->join('services', 'bookings.id_service', '=', 'services.id')
-                    ->join('customers', 'bookings.id_customer', '=', 'customers.id')
-                    ->where('bookings.id_customer', $idCustomer)
-                    ->select(DB::raw('customers.name as customer_name, SUM(services.price) as total_revenue'))
-                    ->groupBy('customers.name')
+                    ->join('users', 'bookings.id_user', '=', 'users.id')
+                    ->where('bookings.id_user', $idUser)
+                    ->select(DB::raw('users.name as user_name, SUM(services.price) as total_revenue'))
+                    ->groupBy('users.name')
                     ->orderBy('total_revenue', 'desc')
                     ->get();
             } else {
-                // Nếu không có cả id_customer và date, lấy doanh thu cho tất cả customer và tất cả date
-                //http://127.0.0.1:8000/api/revenue/customer-date
+                // Nếu không có id_user, lấy doanh thu cho tất cả nhân viên và tất cả thời gian
+                //http://127.0.0.1:8000/api/revenue/staff-date
                 $revenues = DB::table('bookings')
                     ->join('services', 'bookings.id_service', '=', 'services.id')
-                    ->join('customers', 'bookings.id_customer', '=', 'customers.id')
-                    ->select(DB::raw('customers.name as customer_name, SUM(services.price) as total_revenue'))
-                    ->groupBy('customers.name')
+                    ->join('users', 'bookings.id_user', '=', 'users.id')
+                    ->select(DB::raw('users.name as user_name, SUM(services.price) as total_revenue'))
+                    ->groupBy('users.name')
                     ->orderBy('total_revenue', 'desc')
                     ->get();
             }
