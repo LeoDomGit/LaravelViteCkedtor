@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d26b34e8b16451d41ccf6cb72183c17",
+    "content-hash": "de73023e6a18a7029436b945304f6e3d",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -3008,6 +3008,54 @@
                     "Leo\\Brands\\Providers\\": "src/Providers/",
                     "Leo\\Brands\\Database\\Migrations\\": "database/migrations/",
                     "Leo\\Brands\\Database\\Seeders\\": "database/seeders/"
+                },
+                "classmap": [
+                    "src/Controllers",
+                    "src/Providers",
+                    "src/Models",
+                    "./routes"
+                ]
+            },
+            "scripts": {
+                "post-update-cmd": [
+                    "@php artisan migrate"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dom",
+                    "email": "leodomsolar@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "leo/campains",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "./packages/campains",
+                "reference": "17a06896fb77ba51a9fa6668a88bd7d026ed1d1c"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Leo\\Campains\\Providers\\CampainsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Leo\\Campains\\": "src/",
+                    "Leo\\Campains\\Providers\\": "src/Providers/",
+                    "Leo\\Campains\\Database\\Migrations\\": "database/migrations/",
+                    "Leo\\Campains\\Database\\Seeders\\": "database/seeders/"
                 },
                 "classmap": [
                     "src/Controllers",
