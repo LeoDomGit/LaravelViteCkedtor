@@ -1,0 +1,12 @@
+{
+    "name": "leo/campains",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Leo\\Campains\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}

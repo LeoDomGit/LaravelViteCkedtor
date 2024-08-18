@@ -329,7 +329,7 @@ function Index({roles,users}) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-7">
+                    <div className="col-md-8">
                     {data && data.length > 0 && (
                             <Box sx={{ height: 400, width: '100%' }}>
                                 <DataGrid
