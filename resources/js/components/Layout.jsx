@@ -14,6 +14,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import CallIcon from '@mui/icons-material/Call';
 import MapIcon from '@mui/icons-material/Map';
 import BookIcon from '@mui/icons-material/Book';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import "../../css/app.css";
 function Layout({ children }) {
   const { collapseSidebar } = useProSidebar();
@@ -57,6 +58,7 @@ function Layout({ children }) {
            <a href={'/post-collections'}> <MenuItem icon={<BookIcon />}>Nhóm bài viết </MenuItem></a>
            <a href={'/posts'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Bài viết </MenuItem></a>
            </SubMenu>
+           <a href={'/campains'}> <MenuItem icon={<AccountTreeIcon />}>Chiến dịch</MenuItem></a>
            <a href={'/logout'}> <MenuItem icon={<LogoutIcon />}>Log out</MenuItem></a>
 
 {/*
