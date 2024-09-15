@@ -21,7 +21,13 @@ class CategoriesController extends Controller
     }
     public function api_index(Categories $categories)
     {
-        return response()->json(Categories::active()->orderBy('id','asc')->get());
+        $categories = Categories::active()
+        ->whereHas('products', function ($query) {
+            $query->where('status', '>', 0);
+        })
+        ->orderBy('id', 'asc')
+        ->get();
+        return response()->json($categories);
     }
     public function api_show(Categories $categories, $id)
     {
@@ -39,10 +45,6 @@ class CategoriesController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:categories,name',
-            'id_parent'=>'exists:categories,id'
-        ], [
-            'name.required' => 'Chưa nhận được loại tài khoản',
-            'name.unique' => 'Loại tài khoản bị trùng',
         ]);
         if ($validator->fails()) {
             return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);

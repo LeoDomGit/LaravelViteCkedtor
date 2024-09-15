@@ -16,8 +16,9 @@ Route::prefix('api')->group(function () {
         Route::put('/{id}',[CustomersController::class,'update'])->middleware('auth:sanctum');
         Route::post('/auth/register',[CustomersController::class,'store']);
         Route::post('/auth/login',[CustomersController::class,'CheckLogin']);
-        Route::post('/auth/login-email',[CustomersController::class,'CheckLogin']);
+        Route::post('/auth/login-email',[CustomersController::class,'CheckLoginEmail']);
         Route::get('/bills',[CustomersController::class,'get_bills'])->middleware('auth:sanctum');
+        Route::get('/bills/{id}',[CustomersController::class,'show_detail'])->middleware('auth:sanctum');
 
     });
 });

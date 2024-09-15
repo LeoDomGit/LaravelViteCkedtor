@@ -100,7 +100,7 @@ class ServicesController
      */
     public function api_service()
     {
-        $result = Services::active()->get();
+        $result = Services::active()->paginate(4);
         return response()->json($result);
 
     }

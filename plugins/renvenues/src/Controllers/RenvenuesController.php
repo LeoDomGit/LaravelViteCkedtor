@@ -17,7 +17,7 @@ class RevenueController extends Controller
         return Inertia::render("Revenues/Index", ['revenues' => $revenues]);
     }
     // product
-    //http://127.0.0.1:8000/api/revenue/product
+    //http://127.0.0.1:8000/revenue/product
     public function getProductRevenue()
     {
         $revenues = DB::table('hoa_don_chi_tiet')
@@ -29,7 +29,7 @@ class RevenueController extends Controller
 
         return response()->json($revenues);
     }
-    //http://127.0.0.1:8000/api/revenue/products/daily?date1=2024-07-01&date2=2024-08-30
+    //http://127.0.0.1:8000/revenue/products/daily?date1=2024-07-01&date2=2024-08-30
     public function getProductRevenueByDate(Request $request)
     {
         $date1 = Carbon::parse($request->date1);
@@ -46,7 +46,7 @@ class RevenueController extends Controller
 
         return response()->json($revenues);
     }
-    //http://127.0.0.1:8000/api/revenue/products/monthly?month=2024-08-01
+    //http://127.0.0.1:8000/revenue/products/monthly?month=2024-08-01
     public function getProductRevenueByMonth(Request $request)
     {
         $month = Carbon::parse($request->month)->month;
@@ -64,7 +64,7 @@ class RevenueController extends Controller
     }
 
     //services
-    //http://127.0.0.1:8000/api/revenue/services
+    //http://127.0.0.1:8000/revenue/services
     public function getServiceRevenue()
     {
         $revenues = DB::table('bookings')
@@ -75,7 +75,7 @@ class RevenueController extends Controller
 
         return response()->json($revenues);
     }
-    //http://127.0.0.1:8000/api/revenue/services/daily?date1=2024-06-01&date2=2024-06-30
+    //http://127.0.0.1:8000/revenue/services/daily?date1=2024-06-01&date2=2024-06-30
     public function getServiceRevenueByDate(Request $request)
     {
         $date1 = Carbon::parse($request->date1);
@@ -91,7 +91,7 @@ class RevenueController extends Controller
 
         return response()->json($revenues);
     }
-    //http://127.0.0.1:8000/api/revenue/services/monthly?month=2024-06-01
+    //http://127.0.0.1:8000/revenue/services/monthly?month=2024-06-01
     public function getServiceRevenueByMonth(Request $request)
     {
         $month = Carbon::parse($request->month)->month;
@@ -105,7 +105,7 @@ class RevenueController extends Controller
 
         return response()->json($revenues);
     }
-    //http://127.0.0.1:8000/api/revenue/services/weekly-monthly?id_customer=2&date1=2024-07-01&date2=2024-08-31
+    //http://127.0.0.1:8000/revenue/services/weekly-monthly?id_customer=2&date1=2024-07-01&date2=2024-08-31
     public function getServiceRevenueByWeekMonth(Request $request)
     {
         $customerId = $request->id_customer;
@@ -120,66 +120,6 @@ class RevenueController extends Controller
             ->groupBy('week', 'month', 'services.name', 'services.price')
             ->get();
 
-        return response()->json($revenues);
-    }
-    //staff
-    public function getRevenueByStaffAndDate(Request $request)
-    {
-        $idUser = $request->input('id_user');
-        $date = $request->input('date');
-
-        if ($date) {
-            if (!Carbon::hasFormat($date, 'Y-m-d')) {
-                return response()->json(['error' => 'Invalid date format. Use YYYY-MM-DD.'], 400);
-            }
-            // Nếu có id_user, lấy doanh thu cho nhân viên cụ thể trong ngày
-            //http://127.0.0.1:8000/api/revenue/staff-date?id_user=12&date=2024-07-15
-            if ($idUser) {
-                $revenues = DB::table('bookings')
-                    ->join('services', 'bookings.id_service', '=', 'services.id')
-                    ->join('users', 'bookings.id_user', '=', 'users.id')
-                    ->where('bookings.id_user', $idUser)
-                    ->whereDate('bookings.time', $date)
-                    ->select(DB::raw('users.name as user_name, SUM(services.price) as total_revenue'))
-                    ->groupBy('users.name')
-                    ->orderBy('total_revenue', 'desc')
-                    ->get();
-            } else {
-                // Nếu không có id_user, lấy doanh thu cho tất cả nhân viên trong ngày
-                //http://127.0.0.1:8000/api/revenue/staff-date?date=2024-07-15
-                $revenues = DB::table('bookings')
-                    ->join('services', 'bookings.id_service', '=', 'services.id')
-                    ->join('users', 'bookings.id_user', '=', 'users.id')
-                    ->whereDate('bookings.time', $date)
-                    ->select(DB::raw('users.name as user_name, SUM(services.price) as total_revenue'))
-                    ->groupBy('users.name')
-                    ->orderBy('total_revenue', 'desc')
-                    ->get();
-            }
-        } else {
-            // Nếu không có ngày, lấy doanh thu cho tất cả thời gian
-            //http://127.0.0.1:8000/api/revenue/staff-date?id_user=12
-            if ($idUser) {
-                $revenues = DB::table('bookings')
-                    ->join('services', 'bookings.id_service', '=', 'services.id')
-                    ->join('users', 'bookings.id_user', '=', 'users.id')
-                    ->where('bookings.id_user', $idUser)
-                    ->select(DB::raw('users.name as user_name, SUM(services.price) as total_revenue'))
-                    ->groupBy('users.name')
-                    ->orderBy('total_revenue', 'desc')
-                    ->get();
-            } else {
-                // Nếu không có id_user, lấy doanh thu cho tất cả nhân viên và tất cả thời gian
-                //http://127.0.0.1:8000/api/revenue/staff-date
-                $revenues = DB::table('bookings')
-                    ->join('services', 'bookings.id_service', '=', 'services.id')
-                    ->join('users', 'bookings.id_user', '=', 'users.id')
-                    ->select(DB::raw('users.name as user_name, SUM(services.price) as total_revenue'))
-                    ->groupBy('users.name')
-                    ->orderBy('total_revenue', 'desc')
-                    ->get();
-            }
-        }
         return response()->json($revenues);
     }
 }

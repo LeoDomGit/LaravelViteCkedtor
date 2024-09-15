@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Leo\Customers\Mail\createUser;
 use Illuminate\Support\Facades\Auth;
 use Leo\Bills\Models\Bills;
-
+use Leo\Bills\Models\Bill_Detail;
 class CustomersController
 {
     /**
@@ -79,6 +79,38 @@ class CustomersController
                 'id'=>$customer->id,
                 'token' => $token,
             ]);
+        }else{
+            return response()->json(['check'=>false,'msg'=>'Sai email hoặc mật khẩu']);
+        }
+    }
+     /**
+     * Display the specified resource.
+     */
+    public function CheckLoginEmail(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:customers,email',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
+        }
+    
+        // Find the customer by email and check if they are active (status = 1)
+        $customer = Customers::where('email', $request->email)->where('status', 1)->first();
+    
+        if ($customer) {
+            // Delete old tokens and create a new one
+            $customer->tokens()->delete();
+            $token = $customer->createToken('CustomerToken')->plainTextToken;
+    
+            return response()->json([
+                'check' => true,
+                'id' => $customer->id,
+                'token' => $token,
+            ]);
+        } else {
+            // Return failure message if the customer is not active or does not exist
+            return response()->json(['check' => false, 'msg' => 'Email không hợp lệ hoặc tài khoản không hoạt động']);
         }
     }
     /**
@@ -89,7 +121,16 @@ class CustomersController
         $result = Customers::where('id',Auth::id())->first();
         return response()->json($result);
     }
-
+    public function show_detail(Request $request,$id)
+    {
+        
+        $bill = Bills::with('details.product')->find($id);
+        $total = $bill->details->sum(function($detail) {
+            return $detail->quantity * $detail->product->price;
+        });
+       $billList = Bill_Detail::with(['product','product.gallery'])->where('hoa_don_chi_tiet.id_hoa_don',$id)->select()->get();
+       return response()->json($billList);
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -118,7 +159,7 @@ class CustomersController
         if($request->has('email')){
             $data['email_verified_at']=null;
         }
-        if($data['password']){
+        if($request->has('password') && $data['password']){
             $data['password']=Hash::make($data['password']);
         }
         $data['updated_at']= now();

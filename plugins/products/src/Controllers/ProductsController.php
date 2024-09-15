@@ -424,7 +424,6 @@ class ProductsController extends Controller
         }
         $arr=[];
         foreach($request->cart as $item){
-            $item=json_decode($item);
             $product=Products::join('gallery','products.id','=','gallery.id_parent')->where('gallery.status',1)->where('products.id',$item[0])->select('products.id','gallery.image','slug','name','price','discount')->get();
             foreach($product as $item1){
                 $item2=[

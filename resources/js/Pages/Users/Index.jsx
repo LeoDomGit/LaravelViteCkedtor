@@ -115,13 +115,12 @@ function Index({roles,users}) {
                         type: 'success',
                         message: 'Create successfully'
                     });
-                    setData(res.data.data);
                     resetCreate();
                     if (res.data.data) {
-                        setData(res.data.data);
+                        setUsers(res.data.data);
                         resetCreate()
                     } else {
-                        setData([]);
+                        setUsers([]);
                     }
                 }
             })
@@ -147,7 +146,7 @@ function Index({roles,users}) {
                 if (res.data.data) {
                     setData(res.data.data);
                 } else {
-                    setData([]);
+                    setUsers([]);
                 }
             }
         })
@@ -186,7 +185,7 @@ function Index({roles,users}) {
                     setData(updatedUsers);
                     setIdRole(0);
                     setShow1(false);
-
+                    
                 }
             })
         }
@@ -236,7 +235,7 @@ function Index({roles,users}) {
             data ={
                 id:id,
                 name:params.row.name,
-                email:value
+                email:value 
             }
         } else if (field == 'name') {
             data ={
@@ -278,7 +277,7 @@ function Index({roles,users}) {
             <>
             <Modal show={show1} onHide={handleClose1}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Loại tài khoản</Modal.Title>
+                        <Modal.Title>Roles Modal</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                     <select name="" onChange={(e)=>setIdRole(e.target.value)} defaultValue={idRole} className='form-control'>
@@ -329,7 +328,7 @@ function Index({roles,users}) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-8">
+                    <div className="col-md-7">
                     {data && data.length > 0 && (
                             <Box sx={{ height: 400, width: '100%' }}>
                                 <DataGrid
