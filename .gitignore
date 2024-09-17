@@ -1,8 +1,6 @@
 node_modules
 .env
 vendor
-storage
-public/storage
 public/build
 public/assets
 public/css
