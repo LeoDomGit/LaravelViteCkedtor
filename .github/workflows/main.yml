@@ -103,6 +103,3 @@ jobs:
             .gitignore
             .htaccess
             node_modules/
-
-      - name: Run migrations
-        run: php artisan migrate --force
