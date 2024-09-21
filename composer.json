@@ -28,6 +28,10 @@
         "leo/slides": "*",
         "leo/users": "*",
         "leo/contacts":"*",
+        "leo/sitemap":"*",
+        "leo/post":"*",
+        "leo/renvenues":"*",
+        "leo/campains":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "pusher/pusher-php-server": "^7.2",
@@ -128,6 +132,21 @@
             ],
             "./plugins/contacts": [
                 "leo/contacts"
+            ],
+            "./plugins/sitemap": [
+                "leo/sitemap"
+            ],
+            "./plugins/post": [
+                "leo/post"
+            ],
+            "./plugins/products": [
+                "leo/products"
+            ],
+            "./plugins/renvenues": [
+                "leo/renvenues"
+            ],
+            "./plugins/campains": [
+                "leo/campains"
             ]
         }
     },
@@ -201,6 +220,22 @@
         {
             "type": "path",
             "url": "./packages/contacts/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/sitemap/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/post/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/renvenues/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/campains/"
         }
     ]
 }

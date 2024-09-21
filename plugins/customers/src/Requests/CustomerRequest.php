@@ -26,7 +26,7 @@ class CustomerRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'email'=>'required|email',
+            'email'=>'required|email|unique:customers,email',
             'password'=>'required|min:10',
             'phone'=>'min:10',
         ];
@@ -36,7 +36,7 @@ class CustomerRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'check' => false,
-            'msg'  => $validator->errors(),
+            'msg'  => $validator->errors()->first(),
         ], 200));
     }
 }

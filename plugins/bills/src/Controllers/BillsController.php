@@ -3,11 +3,11 @@
 namespace Leo\Bills\Controllers;
 
 use Leo\Bills\Models\Bills;
+use Leo\Bills\Models\Bill_Detail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Leo\Carts\Models\Carts;
 use Inertia\Inertia;
-use Leo\Bills\Models\Bill_Detail;
 use Illuminate\Support\Facades\Validator;
 
 class BillsController extends Controller

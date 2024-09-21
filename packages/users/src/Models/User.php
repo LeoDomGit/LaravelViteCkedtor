@@ -8,10 +8,10 @@ use Illuminate\Notifications\Notifiable;
 use Leo\Roles\Models\Roles;
 use Spatie\Permission\Traits\HasRoles;
 use Leo\Products\Models\Products;
-
+use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable  
 {
-    use HasFactory, Notifiable,HasRoles;
+    use HasFactory, Notifiable,HasRoles,HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.

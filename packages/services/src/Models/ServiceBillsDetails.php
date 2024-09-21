@@ -4,6 +4,7 @@ namespace Leo\Services\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Leo\Bookings\Models\Bookings;
 
 class ServiceBillsDetails extends Model
 {
@@ -19,5 +20,10 @@ class ServiceBillsDetails extends Model
     public function service()
     {
         return $this->belongsTo(Services::class, 'id_service');
+    }
+
+    public function booking()
+    {
+        return $this->belongsTo(Bookings::class, 'id_booking');
     }
 }

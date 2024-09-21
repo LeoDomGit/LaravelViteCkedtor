@@ -164,7 +164,7 @@ function Index({ services,collections }) {
       formData.append("name", name);
       formData.append("price", price);
       formData.append("compare_price", compare_price);
-      formData.append("id_collection", idCollection);
+      formData.append("id_collections", idCollection);
       formData.append("discount", discount);
       formData.append("summary", summary);
       formData.append("content", content);
