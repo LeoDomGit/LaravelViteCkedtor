@@ -170,7 +170,7 @@ class CustomersController
     /**
      * Update the specified resource in storage.
      */
-    public function resetPassword (Request $request,Customers $customers)
+    public function checkMailForget (Request $request,Customers $customers)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:customers,email',

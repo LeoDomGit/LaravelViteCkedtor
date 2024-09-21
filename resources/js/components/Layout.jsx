@@ -41,7 +41,11 @@ function Layout({ children }) {
             <a href={'/products'}> <MenuItem icon={<InventoryIcon />}>Sản phẩm</MenuItem></a>
             </SubMenu>
            <a href={'/slides'}> <MenuItem icon={<ShopIcon />}>Slides</MenuItem></a>
+           <a href={'/contacts'}> <MenuItem icon={<ShopIcon />}>Liên hệ</MenuItem></a>
+           <a href={'/slides'}> <MenuItem icon={<ShopIcon />}>Slides</MenuItem></a>
+           <a href={'/sitemap'}> <MenuItem icon={<ShopIcon />}>Sitemap</MenuItem></a>
            <a href={'/bills'}> <MenuItem icon={<CardTravelIcon />}>Hoá đơn</MenuItem></a>
+           <a href={'/campains'}> <MenuItem icon={<CardTravelIcon />}>Chiến dịch</MenuItem></a>
            <SubMenu label="Dịch vụ" icon={<BrandingWatermarkIcon />}>
            <a href={'/service-collections'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Nhóm Dịch vụ </MenuItem></a>
            <a href={'/services'}> <MenuItem icon={<DesignServicesTwoToneIcon />}>Dịch vụ </MenuItem></a>
