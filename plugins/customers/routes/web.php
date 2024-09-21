@@ -22,3 +22,4 @@ Route::prefix('api')->group(function () {
         Route::post('/checkMailForget',[CustomersController::class,'checkMailForget']);
     });
 });
+
