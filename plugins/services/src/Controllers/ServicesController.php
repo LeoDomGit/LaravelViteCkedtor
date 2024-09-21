@@ -10,6 +10,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Leo\ServicesCollections\Models\ServicesCollections;
+
 class ServicesController
 {
     use HasCrud;
@@ -26,9 +27,9 @@ class ServicesController
      */
     public function index()
     {
-        $services=Services::all();
-        $collections=ServicesCollections::active()->select('id','name')->get();
-        return Inertia::render('Services/Index',['services'=>$services,'collections'=>$collections]);
+        $services = Services::all();
+        $collections = ServicesCollections::active()->select('id', 'name')->get();
+        return Inertia::render('Services/Index', ['services' => $services, 'collections' => $collections]);
     }
 
     /**
@@ -36,8 +37,8 @@ class ServicesController
      */
     public function api_home(Request $request)
     {
-        $services =Services::highlight()->get();
-        return response()->json(['data'=>$services]);
+        $services = Services::highlight()->get();
+        return response()->json(['data' => $services]);
     }
 
 
@@ -59,40 +60,41 @@ class ServicesController
         if ($validator->fails()) {
             return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
         }
-        $data['name']=$request->name;
-        $data['slug']=Str::slug($request->name);
-        $data['price']=$request->price;
-        $data['compare_price']=$request->compare_price;
-        $data['discount']=$request->discount;
-        $data['summary']=$request->summary;
-        $data['summary']=$request->summary;
-        $data['content']=$request->content;
-        $file=$request->file('image');
+        $data['name'] = $request->name;
+        $data['slug'] = Str::slug($request->name);
+        $data['price'] = $request->price;
+        $data['compare_price'] = $request->compare_price;
+        $data['discount'] = $request->discount;
+        $data['summary'] = $request->summary;
+        $data['summary'] = $request->summary;
+        $data['content'] = $request->content;
+        $file = $request->file('image');
         $imageName = $file->getClientOriginalName();
         $extractTo = storage_path('app/public/services/');
         $file->move($extractTo, $imageName);
-        $data['image']=$imageName;
-        $data['created_at']=now();
+        $data['image'] = $imageName;
+        $data['created_at'] = now();
         Services::create($data);
-        $services=Services::all();
-        return response()->json(['check'=>true,'data'=>$services]);
+        $services = Services::all();
+        return response()->json(['check' => true, 'data' => $services]);
     }
     /**
      * Show the form for creating a new resource.
      */
 
-    public function api_single($slug){
-        $service=Services::active()->where('slug',$slug)->get();
+    public function api_single($slug)
+    {
+        $service = Services::active()->where('slug', $slug)->get();
         return response()->json($service);
     }
     /**
      * Display the specified resource.
      */
-    public function show(Services $services,$id)
+    public function show(Services $services, $id)
     {
-        $services=Services::find($id);
-        $collections=ServicesCollections::active()->select('id','name')->get();
-        return Inertia::render('Services/Edit',['collections'=>$collections,'service'=>$services]);
+        $services = Services::find($id);
+        $collections = ServicesCollections::active()->select('id', 'name')->get();
+        return Inertia::render('Services/Edit', ['collections' => $collections, 'service' => $services]);
     }
 
     /**
@@ -102,7 +104,6 @@ class ServicesController
     {
         $result = Services::active()->get();
         return response()->json($result);
-
     }
 
     /**

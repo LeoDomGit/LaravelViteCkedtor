@@ -15,4 +15,9 @@ class ServiceBillsDetails extends Model
     {
         return $this->belongsTo(ServiceBills::class, 'id_bill');
     }
+
+    public function service()
+    {
+        return $this->belongsTo(Services::class, 'id_service');
+    }
 }
