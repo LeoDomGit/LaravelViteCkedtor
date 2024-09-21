@@ -238,6 +238,7 @@ class BookingController extends Controller
                 'name' => $booking->customer->name,
                 'email' => $booking->customer->email,
                 'time' => $booking->time,
+                'status'=>$booking->status,
             ];
         });
         return response()->json(['data' => $customers]);
