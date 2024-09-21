@@ -3,9 +3,10 @@
 namespace Leo\Services\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\ServiceBills;
+use Leo\Services\Models\ServiceBills;
 use App\Http\Requests\StoreServiceBillsRequest;
 use App\Http\Requests\UpdateServiceBillsRequest;
+use Leo\Services\Models\ServiceBillsDetails;
 
 class ServiceBillsController extends Controller
 {
@@ -14,7 +15,24 @@ class ServiceBillsController extends Controller
      */
     public function index()
     {
-        //
+        $serviceBills = ServiceBillsDetails::with('service_bills.customer', 'service')
+            ->orderBy('id', 'desc')
+            ->get()
+            ->map(function ($serviceBill) {
+                $total = 0;
+                return [
+                    'id' => $serviceBill->id,
+                    'customer_name' => $serviceBill->service_bills->customer->name,
+                    'customer_email' => $serviceBill->service_bills->customer->email,
+                    'customer_phone' => $serviceBill->service_bills->customer->phone,
+                    'booking_date' => $serviceBill->service_bills->created_at,
+                    'service_name' => $serviceBill->service->name,
+                    'service_price' => $serviceBill->service->price,
+                    'status' => $serviceBill->service_bills->status,
+                    'total' => $total
+                ];
+            });
+        return response()->json(['check' => true, 'serviceBill' => $serviceBills]);
     }
 
     /**
