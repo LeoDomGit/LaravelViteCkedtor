@@ -3355,7 +3355,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/products",
-                "reference": "ffd03600cf428880a49e1529401c7b5c3a6eb815"
+                "reference": "de9de0f05bc8546930e78cf524d696b8a9cae232"
             },
             "type": "library",
             "extra": {

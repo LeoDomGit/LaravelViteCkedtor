@@ -19,11 +19,25 @@ class CustomersController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function submitForgetPassword(Request $request,Customers $customers)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:customers,email',
+            'token'=>'required',
+            'password'=>'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
+        }
+        $customer = Customers::where('email',$request->email)->first();
+        $token= $customer->token;
+        if($token!= $request->token){
+            return response()->json(['check'=>false,'msg'=>'Mã Token không hợp lệ']);
+        }
+        $customer->update(['password'=> Hash::make($request->password),'token'=>'','updated_at'=>now()]);
+        return response()->json(['check'=>true]);
+        
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -183,11 +197,11 @@ class CustomersController
             return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
         }
         $customer = Customers::where('email',$request->email)->first();
-        $password= random_int(1000,9999);
-        $customer->update(['password'=>Hash::make($password)]);
+        $token= random_int(1000,9999);
+        $customer->update(['token'=>$token]);
         $data = [
             'email' => $customer->email,
-            'password' => $password,
+            'token' => $token,
         ];
         Mail::to($customer->email)->send(new createUser($data));
         return response()->json(['check'=>true]);
