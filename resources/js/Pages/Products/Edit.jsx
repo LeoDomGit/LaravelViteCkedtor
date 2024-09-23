@@ -8,6 +8,7 @@ import { Dropzone, FileMosaic } from "@dropzone-ui/react";
 import Modal from 'react-bootstrap/Modal';
 import 'notyf/notyf.min.css';
 import CKEditor from "../../components/CKEditor";
+import Swal from 'sweetalert2';
 
 function Edit({dataId,dataBrand,dataCate,dataproduct,datagallery,dataimage}) {
     const [id,setId]= useState(dataId)
@@ -151,6 +152,34 @@ function Edit({dataId,dataBrand,dataCate,dataproduct,datagallery,dataimage}) {
         setProduct({ [name]: value });
         
     };
+    const handleDelete = (e)=>{
+        Swal.fire({
+            icon:'question',
+            text: "Xóa sản phẩm này ?",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Đúng",
+            denyButtonText: `Không`
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                axios.delete('/products/'+dataId).then((res)=>{
+                    if(res.data.check==true){
+                        setTimeout(() => {
+                            notyf.success('Đã xóa thành công');
+                        }, 17000);
+                        window.location.replace('/products');
+                    }else if(res.data.check==false){
+                        if(res.data.msg){
+                            notyf.error(res.data.msg);
+
+                        }
+                    }
+                })
+            } else if (result.isDenied) {
+            }
+          });
+    }
 
     const handleSubmit = () => {
         axios.put(`/products/${id}`, product,{
@@ -257,7 +286,8 @@ function Edit({dataId,dataBrand,dataCate,dataproduct,datagallery,dataimage}) {
                     </div>
                     <div className="row mt-3">
                         <div className="col-md-3">
-                            <button className="btn btn-primary" onClick={handleSubmit}>Save Changes</button>
+                            <button className="btn btn-primary" onClick={handleSubmit}>Lưu thông tin</button>
+                            <button className="btn btn-danger ms-3" onClick={(e)=>handleDelete()}>Xóa sản phẩm</button>
                         </div>
                     </div>
                 </div>

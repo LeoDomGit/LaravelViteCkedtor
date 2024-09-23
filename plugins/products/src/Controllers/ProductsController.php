@@ -6,6 +6,7 @@ use App\Traits\HasCrud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Leo\Bills\Models\Bill_Detail;
 use Leo\Products\Models\Products;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -155,9 +156,9 @@ class ProductsController extends Controller
 
         }
 
-        $data = Products::all();
+        $result = $this->model::with('categories', 'brands')->get();
 
-        return response()->json(['check' => true, 'data' => $data]);
+        return response()->json(['check' => true, 'data' => $result]);
 
     }
 
@@ -341,7 +342,22 @@ class ProductsController extends Controller
 
     public function destroy($identifier)
     {
-        $result = $this->destroyTraits($this->model, $identifier);
+        $product=Products::where('id', $identifier)->first();
+        if(!$product){
+            return response()->json(['check'=>false,'msg'=>'Không tìm thấy sản phẩm']);
+        }
+        $bill = Bill_Detail::where('id_product',$identifier)->first();
+        if($bill){
+            return response()->json(['check'=>false,'msg'=>'Không thể xóa sản phẩm vì có tồn tại LSMH']);
+        }
+        $images=Gallery::where('id_parent',$identifier)->select('image')->get();
+        foreach ($images as $image) {
+            $filePath = "public/products/{$image->image}";
+            Storage::delete($filePath);
+        }
+        Gallery::where('id_parent',$identifier)->delete();  
+        Products::where('id',$identifier)->delete();
+        $result = $this->model::with('categories','brands')->get();
         if (count($result) > 0) {
             return response()->json(['check' => true, 'result' => $result]);
         }
