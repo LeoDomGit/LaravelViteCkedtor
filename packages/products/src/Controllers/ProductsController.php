@@ -353,7 +353,6 @@ class ProductsController extends Controller
         $images=Gallery::where('id_parent',$identifier)->select('image')->get();
         foreach ($images as $image) {
             $filePath = "public/products/{$image->image}";
-            dd($filePath);
             Storage::delete($filePath);
         }
         Gallery::where('id_parent',$identifier)->delete();  
