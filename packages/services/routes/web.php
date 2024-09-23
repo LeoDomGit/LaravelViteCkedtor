@@ -15,5 +15,6 @@ Route::prefix('api/services/')->group(function () {
     Route::get('home', [ServicesController::class, 'api_home']);
     Route::get('service/{id}', [ServicesController::class, 'api_single']);
 
-    Route::get('/bills', [ServiceBillsController::class, 'index']);
+    Route::get('/bills', [ServiceBillsController::class, 'apiBill']);
 });
+Route::resource('/service-bills', ServiceBillsController::class);
