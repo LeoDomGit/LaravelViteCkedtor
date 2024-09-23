@@ -22,7 +22,7 @@ Route::middleware(['web',CheckLogin::class])->group(function () {
 });
 Route::get('/', [UserController::class,'login'])->middleware('web');
 Route::post('/users/checkLogin',[UserController::class,'checkLogin'])->middleware('web');
-Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware(['web','auth:admin']);
+Route::put('/users/switch/{id}', [UserController::class,'switchUser'])->middleware(['web']);
 Route::post('/api/manager/checkLogin',[UserController::class,'checkLoginManager']);
 Route::get('/api/staff', [UserController::class,'staff_list']);
 
