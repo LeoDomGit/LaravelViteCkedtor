@@ -2,6 +2,8 @@
 
 namespace Leo\Services\Controllers;
 
+use App\Models\Service;
+use Leo\Services\Models\ServiceBillsDetails;
 use Leo\Services\Models\Services;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -148,8 +150,21 @@ class ServicesController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Services $services)
+    public function destroy( $id)
     {
-        //
+        $service = Services::find($id);
+        if (!$service) {
+            return response()->json(['check' => false, 'msg' => 'Không tìm thấy mã dịch vụ']);
+        }
+        if (Storage::exists('public/services/' . $service->image)) {
+            Storage::delete('public/services/' . $service->image);
+        }
+        $check=ServiceBillsDetails::where('id_service', $service->id)->first();
+        if($check){
+            return response()->json(['check'=>false,'msg'=>'Service có tồn tại trong hóa đơn']);
+        }
+        Service::where('id',$id)->delete();
+        $services = Services::all();
+        return response()->json(['check'=>true,'data'=> $services]);
     }
 }
