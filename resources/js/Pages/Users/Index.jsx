@@ -7,6 +7,7 @@ import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
+import Swal from 'sweetalert2';
 function Index({roles,users}) {
     const [show1, setShow1] = useState(false);
     const [show, setShow] = useState(false);
@@ -146,11 +147,37 @@ function Index({roles,users}) {
                 if (res.data.data) {
                     setData(res.data.data);
                 } else {
-                    setUsers([]);
+                    setData([]);
                 }
             }
         })
     }
+    const deleteUser = (id)=>{
+        Swal.fire({
+            icon:'question',
+            text: "Xóa tài khoản này ?",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Đúng",
+            denyButtonText: `Không`
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                axios.delete('/users/'+id).then((res)=>{
+                    if(res.data.check==true){
+                        notyf.success("Đã xóa thành công");
+                        setData(res.data.data)
+                    }else if(res.data.check==false){
+                        if(res.data.msg){
+                            notyf.error(res.data.msg);
+                        }
+                    }
+                })
+            } else if (result.isDenied) {
+            }
+          });
+    }
+    
     const submitEdit = ()=>{
 
         if(idRole==0 || idUser==0){
@@ -193,7 +220,7 @@ function Index({roles,users}) {
 
     const columns = [
         { field: "id", headerName: "#", width: 100, renderCell: (params) => params.rowIndex },
-        { field: 'name', headerName: "Username", width: 100, editable: true },
+        { field: 'name', headerName: "Tên tài khoản", width: 100, editable: true },
         { field: 'email', headerName: "Email", width: 200, editable: true },
         {
             field: 'status',
@@ -209,22 +236,29 @@ function Index({roles,users}) {
         },
         {
             field: 'roleName',
-            headerName: 'Role Name',
+            headerName: 'Loại tài khoản',
             width: 130,
             renderCell: (params) => (
                 params.row.roles.name
             ),
         },
         {
-            field: 'created_at', headerName: 'Created at', width: 200, valueGetter: (params) => formatCreatedAt(params)
+            field: 'created_at', headerName: 'Ngày tạo', width: 200, valueGetter: (params) => formatCreatedAt(params)
         },
         {
-            headerName: 'Roles',
-            width: 70,
+            headerName: 'Tùy chỉnh',
+            width: 300,
             renderCell: (params) => (
-                <button className="btn btn-sm btn-primary" onClick={() => setEditRole(params.id)}>
-                    Roles
+                <>
+                 <button className="btn btn-sm btn-primary" onClick={() => setEditRole(params.id)}>
+                    Loại tài khoản
                 </button>
+                <button className="btn btn-sm btn-danger ms-3" onClick={() => deleteUser(params.id)}>
+                    Xóa 
+                </button>
+                </>
+               
+                
             )
         }
     ];
@@ -328,7 +362,7 @@ function Index({roles,users}) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-7">
+                    <div className="col-md-9">
                     {data && data.length > 0 && (
                             <Box sx={{ height: 400, width: '100%' }}>
                                 <DataGrid
