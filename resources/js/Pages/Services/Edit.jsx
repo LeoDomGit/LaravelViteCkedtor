@@ -194,6 +194,33 @@ function Index({ service,services,collections }) {
     }
    
   };
+  const deleteService = (id) => {
+    Swal.fire({
+      icon:'question',
+      text: "Bạn muốn xóa dịch vụ này ?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Đúng",
+      denyButtonText: `Không`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        axios.delete('/services/'+id).then((res)=>{
+          if(res.data.check==true){
+            notyf.success('Đã xóa thành công');
+            setTimeout(() => {
+              window.location.replace('/services');
+            }, 1800);
+          }else if(res.data.check==false){
+            if(res.data.msg){
+              notyf.error(res.data.msg);
+            }
+          }
+        })
+      } else if (result.isDenied) {
+      }
+    });
+  }
   const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'name', headerName: 'Tên dịch vụ', width: 200,editable:true },
@@ -239,7 +266,7 @@ function Index({ service,services,collections }) {
               id="navbarSupportedContent"
             >
  <a
-                    className="btn btn-primary"
+                    className="btn btn-primary text-light"
                     onClick={(e) => resetCreate()}
                     aria-current="page"
                     href="#"
@@ -249,9 +276,8 @@ function Index({ service,services,collections }) {
               <div className="d-flex">
               <a
                     className="btn btn-outline-success ms-3"
-                    onClick={(e) => setEdit(false)}
+                    href="/services"
                     aria-current="page"
-                    href="#"
                   >
                     Đóng
                   </a>
@@ -377,6 +403,13 @@ function Index({ service,services,collections }) {
                       className="btn btn-warning"
                     >
                       Sửa
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => deleteService(service.id)}
+                      className="btn btn-danger ms-3"
+                    >
+                      Xóa
                     </button>
                   </div>
                 </div>

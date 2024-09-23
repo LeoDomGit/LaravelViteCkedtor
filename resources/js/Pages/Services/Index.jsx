@@ -284,7 +284,7 @@ function Index({ services,collections }) {
               id="navbarSupportedContent"
             >
  <a
-                    className="btn btn-primary"
+                    className="btn btn-primary text-light"
                     onClick={(e) => resetCreate()}
                     aria-current="page"
                     href="#"
