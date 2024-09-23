@@ -64,6 +64,7 @@ class ServicesController
         $data['slug'] = Str::slug($request->name);
         $data['price'] = $request->price;
         $data['compare_price'] = $request->compare_price;
+        $data['id_collection'] = $request->id_collections;
         $data['discount'] = $request->discount;
         $data['summary'] = $request->summary;
         $data['summary'] = $request->summary;
