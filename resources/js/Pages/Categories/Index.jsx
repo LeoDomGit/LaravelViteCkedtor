@@ -293,7 +293,7 @@ const renderParentSelect = (params) => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <a className="btn btn-primary" onClick={(e) => resetCreate()} aria-current="page" href="#">
+                  <a className="btn btn-primary text-light" onClick={(e) => resetCreate()} aria-current="page" href="#">
                     Tạo mới
                   </a>
                 </li>
