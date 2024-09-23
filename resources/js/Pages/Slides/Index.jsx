@@ -189,7 +189,7 @@ function Index({ dataSlides }) {
   };
   const columns = [
     { field: "id", headerName: "#", width: 100 },
-    { field: "name", headerName: "Name", width: 200, editable: true },
+    { field: "name", headerName: "Name", width: 200, editable: false },
     { field: "slug", headerName: "Slug", width: 200, editable: false },
     {
       field: "status",

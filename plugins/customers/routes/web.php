@@ -20,6 +20,7 @@ Route::prefix('api')->group(function () {
         Route::get('/bills',[CustomersController::class,'get_bills'])->middleware('auth:sanctum');
         Route::get('/bills/{id}',[CustomersController::class,'show_detail'])->middleware('auth:sanctum');
         Route::post('/checkMailForget',[CustomersController::class,'checkMailForget']);
+        Route::post('/submitForgetPassword',[CustomersController::class,'submitForgetPassword']);
     });
 });
 

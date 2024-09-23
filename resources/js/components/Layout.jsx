@@ -80,7 +80,6 @@ function Layout({ children }) {
 								<MenuItem icon={<DesignServicesTwoToneIcon />}>Dịch vụ </MenuItem>
 							</a>
 						</SubMenu>
-
 						<a href={"/logout"}>
 							<MenuItem icon={<LogoutIcon />}>Log out</MenuItem>
 						</a>

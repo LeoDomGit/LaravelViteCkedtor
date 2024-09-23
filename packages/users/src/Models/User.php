@@ -5,6 +5,7 @@ namespace Leo\Users\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Leo\Bookings\Models\Bookings;
 use Leo\Roles\Models\Roles;
 use Spatie\Permission\Traits\HasRoles;
 use Leo\Products\Models\Products;
@@ -54,9 +55,9 @@ class User extends Authenticatable
         return $this->belongsTo(Roles::class, 'idRole');
     }
     
-    public function products()
+    public function bookings()
     {
-        return $this->hasMany(Products::class);
+        return $this->hasMany(Bookings::class);
     }
 
 }

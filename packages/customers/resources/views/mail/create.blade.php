@@ -9,7 +9,7 @@
   body, h1, p {
     margin: 0;
     padding: 0;
-    font-family: 'Times New Roman', Times, serif
+    font-family: 'Times New Roman', Times, serif;
   }
 
   /* Box Container */
@@ -39,6 +39,12 @@
     line-height: 1.5;
   }
 
+  /* List styles */
+  .email-box ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
   /* Responsive Styles */
   @media screen and (max-width: 767px) {
     .email-box {
@@ -50,10 +56,15 @@
 <body>
 
 <div class="email-box">
-  <h1>Tài khoản của quý khách là: </h1>
+  <h1>Tài khoản của quý khách là:</h1>
   <ul>
-    <li> Email: {{$data['email']}}</li>
-    <li> Password: {{$data['password']}}</li>
+    <li>Email: {{$data['email']}}</li>
+    @isset($data['password'])
+      <li>Password: {{$data['password']}}</li>        
+    @endisset
+    @isset($data['token'])
+      <li>Token: {{$data['token']}}</li>
+    @endisset
   </ul>
 </div>
 

@@ -261,7 +261,7 @@ function Index({ brands }) {
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   <a
-                    className="btn btn-primary"
+                    className="btn btn-primary text-light"
                     onClick={(e) => resetCreate()}
                     aria-current="page"
                     href="#"
