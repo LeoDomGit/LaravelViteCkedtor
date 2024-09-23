@@ -18,7 +18,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          
+
       - name: Install Composer dependencies
         run: |
           composer install --no-scripts --no-progress --no-suggest
@@ -91,15 +91,24 @@ jobs:
       - name: Remove node_modules folder
         run: rm -rf node_modules
 
-      - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
-        with:
-          server: ${{ secrets.SERVER }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          server-dir: /
-          exclude: |
-            .git*
-            .gitignore
-            .htaccess
-            node_modules/
+      - name: Zip the project
+        run: zip -r project.zip . -x 'node_modules/*'
+
+      - name: Deploy via SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+          echo "$SERVER_IP" >> ~/.ssh/known_hosts
+          
+          # Copy the zip file to the server
+          scp -o StrictHostKeyChecking=no project.zip $SERVER_USER@$SERVER_IP:/path-to-your-project
+
+          # Unzip the file on the server
+          ssh $SERVER_USER@$SERVER_IP 'cd /path-to-your-project && unzip project.zip && rm project.zip'
+
+      - name: Clean up on local machine
+        run: rm project.zip
