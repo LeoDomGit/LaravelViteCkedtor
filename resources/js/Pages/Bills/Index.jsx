@@ -17,9 +17,9 @@ function Index({ bills }) {
             case 0:
                 return 'Đặt hàng';
             case 1:
-                return 'Gửi hàng';
-            case 2:
                 return 'Thành công';
+            case 2:
+                return 'Thất bại';
             default:
                 return '';
         }
