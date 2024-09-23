@@ -7,6 +7,7 @@ use Leo\Roles\Models\Roles;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
+use Leo\Users\Models\User;
 class RolesController extends Controller
 {
     /**
@@ -91,8 +92,19 @@ class RolesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Roles $roles)
+    public function destroy(Roles $roles,$id)
     {
-        //
+        $role = Roles::find($id);
+        if(!$role){
+            return response()->json(['check'=>false,'msg'=>'Không tìm thấy loại tài khoản']);
+        }
+        $users = User::where('idRole',$id)->first();
+        
+        if($users){
+            return response()->json(['check'=>false,'msg'=>'Còn tồn tại tài khoản trong loại']);
+        }
+        $role->delete();
+        $roles=Roles::all();
+        return response()->json(['check'=>true,'data'=>$roles]);
     }
 }

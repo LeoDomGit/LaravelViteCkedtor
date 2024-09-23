@@ -7,6 +7,7 @@ import { Box, Typography } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import 'notyf/notyf.min.css';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 function Index({ roles }) {
   const [role, setRole] = useState('');
   const [data, setData] = useState(roles)
@@ -91,7 +92,28 @@ function Index({ roles }) {
     setShow(true)
   }
   const handleCellEditStop = (id, field, value) => {
-    axios
+    if(value==''){
+      Swal.fire({
+        icon:'question',
+        text: "Bạn muốn xóa loại tài khoản này ?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Đúng",
+        denyButtonText: `Không`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          axios.delete('/roles/'+id).then((res)=>{
+            if(res.data.check==true){
+              notyf.success("Đã xóa thành công");
+              setData(res.data.data)
+            }
+          })
+        } else if (result.isDenied) {
+        }
+      });
+    }else{
+      axios
       .put(
         `/roles/${id}`,
         {
@@ -119,6 +141,8 @@ function Index({ roles }) {
           });
         }
       });
+    }
+  
   };
   return (
 
