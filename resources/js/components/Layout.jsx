@@ -8,12 +8,12 @@ import BrandingWatermarkIcon from "@mui/icons-material/BrandingWatermark";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CardTravelIcon from "@mui/icons-material/CardTravel";
-import ShopIcon from "@mui/icons-material/Shop";
 import MapIcon from '@mui/icons-material/Map';
 import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
 import DesignServicesTwoToneIcon from "@mui/icons-material/DesignServicesTwoTone";
 import DialerSipIcon from '@mui/icons-material/DialerSip';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import BookIcon from '@mui/icons-material/Book';
 import "../../css/app.css";
 function Layout({ children }) {
 	const { collapseSidebar } = useProSidebar();
@@ -64,6 +64,9 @@ function Layout({ children }) {
 						</a>
 						<a href={"/sitemap"}>
 							<MenuItem icon={<MapIcon />}>Sitemap</MenuItem>
+						</a>
+						<a href={"/posts"}>
+							<MenuItem icon={<BookIcon />}>Bài viết</MenuItem>
 						</a>
 						<a href={"/bills"}>
 							<MenuItem icon={<CardTravelIcon />}>Hoá đơn</MenuItem>
