@@ -6,6 +6,7 @@ use App\Traits\HasCrud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Leo\Bookings\Models\Bookings;
 use Leo\Users\Mail\createUser;
 use Leo\Users\Models\User;
 use Leo\Users\Requests\StoreRequest;
@@ -93,11 +94,15 @@ class UserController
 
     public function destroy($identifier)
     {
-        $result= $this->destroyTraits($this->model, $identifier);
-        if(count($result)>0){
-            return response()->json(['check'=>true,'result'=>$result]);
-        }
-        return response()->json(['check'=>true]);
+      $user = User::find($identifier);
+      $booking = Bookings::where('id_user',$identifier)->first();
+      if($booking){
+        return response()->json(['check'=>false,'msg'=>'Còn tồn tại booking của nhân viên'],200);
+      }
+      User::where('id',$identifier)->delete();
+      $data= $this->model::with('roles')->get();
+      return response()->json(['check'=>true,'data'=> $data],200);
+
     }
     public function checkLoginManager(Request $request)
     {
