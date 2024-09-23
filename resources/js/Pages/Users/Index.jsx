@@ -146,11 +146,15 @@ function Index({roles,users}) {
                 if (res.data.data) {
                     setData(res.data.data);
                 } else {
-                    setUsers([]);
+                    setData([]);
                 }
             }
         })
     }
+    const deleteUser = (id)=>{
+
+    }
+    
     const submitEdit = ()=>{
 
         if(idRole==0 || idUser==0){
@@ -220,11 +224,18 @@ function Index({roles,users}) {
         },
         {
             headerName: 'Roles',
-            width: 70,
+            width: 300,
             renderCell: (params) => (
-                <button className="btn btn-sm btn-primary" onClick={() => setEditRole(params.id)}>
-                    Roles
+                <>
+                 <button className="btn btn-sm btn-primary" onClick={() => setEditRole(params.id)}>
+                    Loại tài khoản
                 </button>
+                <button className="btn btn-sm btn-danger ms-3" onClick={() => deleteUser(params.id)}>
+                    Xóa 
+                </button>
+                </>
+               
+                
             )
         }
     ];
@@ -328,7 +339,7 @@ function Index({roles,users}) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-7">
+                    <div className="col-md-8">
                     {data && data.length > 0 && (
                             <Box sx={{ height: 400, width: '100%' }}>
                                 <DataGrid
