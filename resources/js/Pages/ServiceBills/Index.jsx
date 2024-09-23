@@ -13,7 +13,7 @@ function Index({ serviceBills }) {
 		{ field: "customer_phone", headerName: "Số điện thoại", width: 200, renderCell: (params) => (params.value ? params.value : "N/A") },
 		{ field: "booking_date", headerName: "Ngày đến", width: 150 },
 		{ field: "service_name", headerName: "Tên dịch vụ", width: 250 },
-		{ field: "status", headerName: "Trạng thái", width: 150, renderCell: (params) => (params.value === 0 ? "Đặ̣t hàng" : "Gửi hàng") },
+		{ field: "status", headerName: "Trạng thái", width: 150, renderCell: (params) => (params.value === 0 ? "Chưa thanh toán" : "Đã thanh toán") },
 		{ field: "total", headerName: "Tổng tiền (VND)", width: 150, type: "number" },
 	];
 	return (
