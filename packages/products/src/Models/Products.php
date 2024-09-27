@@ -4,6 +4,7 @@ namespace Leo\Products\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use khanhduy\Comment\Models\Comment;
 use Leo\Brands\Models\Brands;
 use Leo\Carts\Models\Carts;
 use Leo\Categories\Models\Categories;
@@ -17,22 +18,41 @@ class Products extends Model
      *
      * @var array
      */
-    protected $table='products';
-    
+    protected $table = 'products';
+
     protected $fillable = [
-       'id', 'name', 'slug', 'status','content','price','in_stock','discount','idCate','idBrand', 'created_at','updated_at'
+        'id',
+        'name',
+        'slug',
+        'status',
+        'content',
+        'price',
+        'in_stock',
+        'discount',
+        'idCate',
+        'idBrand',
+        'created_at',
+        'updated_at'
     ];
-    
-    public function categories (){
-        return $this->belongsTo(Categories::class,'idCate');
+
+    public function categories()
+    {
+        return $this->belongsTo(Categories::class, 'idCate');
     }
 
-    public function brands (){
-        return $this->belongsTo(Brands::class,'idBrand');
+    public function brands()
+    {
+        return $this->belongsTo(Brands::class, 'idBrand');
     }
 
-    public function gallery (){
-        return $this->hasMany(Gallery::class,'id_parent');
+    public function gallery()
+    {
+        return $this->hasMany(Gallery::class, 'id_parent');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'id_product');
     }
 
     public function scopeActive($query)

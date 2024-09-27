@@ -1,4 +1,5 @@
 <?php
+
 namespace Leo\Products\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -30,15 +31,15 @@ class ProductsController extends Controller
     public function index()
     {
         $result = $this->model::with('categories', 'brands')->get();
-        $categories=Categories::active()->get();
-        $brands= Brands::active()->get();
-        return Inertia::render('Products/Index',['dataproducts'=>$result,'databrands'=>$brands,'datacategories'=>$categories]);
+        $categories = Categories::active()->get();
+        $brands = Brands::active()->get();
+        return Inertia::render('Products/Index', ['dataproducts' => $result, 'databrands' => $brands, 'datacategories' => $categories]);
     }
     public function Active()
     {
         $result = $this->model::with('categories', 'brands', 'gallery')
             ->where('status', 1)
-            ->where('gallery.status',1)
+            ->where('gallery.status', 1)
             ->paginate(3);
         return response()->json($result);
     }
@@ -80,8 +81,7 @@ class ProductsController extends Controller
 
             ]);
 
-            $result[] = Storage::url('products/'. $imageName);
-
+            $result[] = Storage::url('products/' . $imageName);
         }
 
         $oldImages = Gallery::where('id_parent', $id)->pluck('image')->toArray();
@@ -91,9 +91,7 @@ class ProductsController extends Controller
             foreach ($oldImages as  $value) {
 
                 $result[] = Storage::url('products/' . $id . '/' . $value);
-
             }
-
         }
 
         $result = array_merge($oldImages, $result);
@@ -101,7 +99,6 @@ class ProductsController extends Controller
         Products::where('id', $id)->update(['status' => 0]);
 
         return response()->json(['check' => true, 'result' => $result]);
-
     }
 
 
@@ -116,7 +113,7 @@ class ProductsController extends Controller
             'content' => 'required',
             'files' => 'required|array',
             'files.*' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'in_stock'=>'required|min:0',
+            'in_stock' => 'required|min:0',
         ]);
         if ($validator->fails()) {
             return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
@@ -131,7 +128,7 @@ class ProductsController extends Controller
         $data['discount'] = $request->discount;
         $data['content'] = $request->content;
         $data['in_stock'] = $request->in_stock;
-        $data['created_at']=now();
+        $data['created_at'] = now();
         $id = $this->model::insertGetId($data);
 
         foreach ($request->file('files') as $file) {
@@ -153,13 +150,11 @@ class ProductsController extends Controller
             ]);
 
             $result[] = Storage::url('products/' . $imageName);
-
         }
 
         $result = $this->model::with('categories', 'brands')->get();
 
         return response()->json(['check' => true, 'data' => $result]);
-
     }
 
 
@@ -177,7 +172,6 @@ class ProductsController extends Controller
         foreach ($oldImages as  $value) {
 
             $gallery[] = Storage::url('products/' .  $value);
-
         }
         $categories = Categories::active()->get();
         $brands = Brands::active()->get();
@@ -185,11 +179,10 @@ class ProductsController extends Controller
         $image = Gallery::where('id_parent', $identifier)->where('status', 1)->value("image");
 
         if ($image) {
-            return Inertia::render('Products/Edit',['dataId'=>$identifier,'dataBrand'=>$brands,'dataCate'=>$categories,'dataproduct' => $result, 'datagallery' => $gallery, 'dataimage' => Storage::url('products/'. $image)]);
+            return Inertia::render('Products/Edit', ['dataId' => $identifier, 'dataBrand' => $brands, 'dataCate' => $categories, 'dataproduct' => $result, 'datagallery' => $gallery, 'dataimage' => Storage::url('products/' . $image)]);
         } else {
-            return Inertia::render('Products/Edit',['dataId'=>$identifier,'dataBrand'=>$brands,'dataCate'=>$categories,'dataproduct' => $result, 'datagallery' => $gallery, 'dataimage' => Storage::url('products/'. $image)]);
+            return Inertia::render('Products/Edit', ['dataId' => $identifier, 'dataBrand' => $brands, 'dataCate' => $categories, 'dataproduct' => $result, 'datagallery' => $gallery, 'dataimage' => Storage::url('products/' . $image)]);
         }
-
     }
 
 
@@ -206,10 +199,9 @@ class ProductsController extends Controller
 
             ->update(['status' => 1]);
 
-        $result = Storage::url('products/'.$imageName);
+        $result = Storage::url('products/' . $imageName);
 
         return response()->json(['check' => true, 'result' => $result]);
-
     }
 
 
@@ -234,12 +226,10 @@ class ProductsController extends Controller
 
         foreach ($oldImages as  $value) {
 
-            $gallery[] = Storage::url('products/'. $value);
-
+            $gallery[] = Storage::url('products/' . $value);
         }
 
         return response()->json(['check' => true, 'gallery' => $gallery]);
-
     }
 
 
@@ -267,7 +257,6 @@ class ProductsController extends Controller
                 foreach ($files as $file) {
 
                     Gallery::create(['image' => $file->getFilename(), 'id_parent' => $identifier]);
-
                 }
 
 
@@ -275,19 +264,14 @@ class ProductsController extends Controller
                 Products::where('id', $identifier)->update(['status' => 0]);
 
                 return response()->json(['check' => true]);
-
             } else {
 
                 echo 'Failed to extract files.';
-
             }
-
         } else {
 
             return response()->json(['check' => false, 'msg' => 'file is required']);
-
         }
-
     }
 
 
@@ -342,22 +326,22 @@ class ProductsController extends Controller
 
     public function destroy($identifier)
     {
-        $product=Products::where('id', $identifier)->first();
-        if(!$product){
-            return response()->json(['check'=>false,'msg'=>'Không tìm thấy sản phẩm']);
+        $product = Products::where('id', $identifier)->first();
+        if (!$product) {
+            return response()->json(['check' => false, 'msg' => 'Không tìm thấy sản phẩm']);
         }
-        $bill = Bill_Detail::where('id_product',$identifier)->first();
-        if($bill){
-            return response()->json(['check'=>false,'msg'=>'Không thể xóa sản phẩm vì có tồn tại LSMH']);
+        $bill = Bill_Detail::where('id_product', $identifier)->first();
+        if ($bill) {
+            return response()->json(['check' => false, 'msg' => 'Không thể xóa sản phẩm vì có tồn tại LSMH']);
         }
-        $images=Gallery::where('id_parent',$identifier)->select('image')->get();
+        $images = Gallery::where('id_parent', $identifier)->select('image')->get();
         foreach ($images as $image) {
             $filePath = "public/products/{$image->image}";
             Storage::delete($filePath);
         }
-        Gallery::where('id_parent',$identifier)->delete();  
-        Products::where('id',$identifier)->delete();
-        $result = $this->model::with('categories','brands')->get();
+        Gallery::where('id_parent', $identifier)->delete();
+        Products::where('id', $identifier)->delete();
+        $result = $this->model::with('categories', 'brands')->get();
         if (count($result) > 0) {
             return response()->json(['check' => true, 'result' => $result]);
         }
@@ -374,88 +358,89 @@ class ProductsController extends Controller
         }
     }
 
-    public function api_product(Request $request){
-        if($request->has('limit')){
-            $result = Products::join('gallery','products.id','=','gallery.id_parent')
-            ->where('products.status',1)            
-            ->where('gallery.status',1)->select('products.*','gallery.image as image')
-                        ->take($request->limit)->get();
+    public function api_product(Request $request)
+    {
+        if ($request->has('limit')) {
+            $result = Products::join('gallery', 'products.id', '=', 'gallery.id_parent')
+                ->where('products.status', 1)
+                ->where('gallery.status', 1)->select('products.*', 'gallery.image as image')
+                ->take($request->limit)->get();
             return response()->json($result);
-    
-        }else{
-            $result = Products::join('gallery','products.id','=','gallery.id_parent')
-            ->where('products.status',1)            
-            ->where('gallery.status',1)->select('products.*','gallery.image as image')
-                        ->paginate(4);
+        } else {
+            $result = Products::join('gallery', 'products.id', '=', 'gallery.id_parent')
+                ->where('products.status', 1)
+                ->where('gallery.status', 1)->select('products.*', 'gallery.image as image')
+                ->paginate(4);
             return response()->json($result);
-    
         }
     }
     // --------------------------------------
-    public function api_search_product($slug){
+    public function api_search_product($slug)
+    {
         $result = Products::join('gallery', 'products.id', '=', 'gallery.id_parent')
-        ->where('products.status', 1)
-        ->where('gallery.status', 1)
-        ->where(function($query) use ($slug) {
-            $query->where('products.name', 'like', '%' . $slug . '%')
-                  ->orWhere('products.slug', 'like', '%' . $slug . '%');
-        })
-        ->select('products.*', 'gallery.image as image')
-        ->get();
-        if(count($result)==0){
-            return response()->json(['product'=>[]]);
+            ->where('products.status', 1)
+            ->where('gallery.status', 1)
+            ->where(function ($query) use ($slug) {
+                $query->where('products.name', 'like', '%' . $slug . '%')
+                    ->orWhere('products.slug', 'like', '%' . $slug . '%');
+            })
+            ->select('products.*', 'gallery.image as image')
+            ->get();
+        if (count($result) == 0) {
+            return response()->json(['product' => []]);
         }
-        return response()->json(['products'=>$result]);
+        return response()->json(['products' => $result]);
     }
     // --------------------------------------
-    public function api_single_product($slug){
-        $result = Products::with(['brands','categories'])->where('products.slug',$slug)->where('products.status',1)->select('products.*')
-                    ->first();
-        if(!$result){
+    public function api_single_product($slug)
+    {
+        $result = Products::with(['brands', 'categories', 'comments'])->where('products.slug', $slug)->where('products.status', 1)->select('products.*')
+            ->first();
+        if (!$result) {
             return response()->json([]);
         }
-        $medias = Gallery::where('id_parent',$result->id)->pluck('image');
-        $cate_products=Products::join('gallery','products.id','=','gallery.id_parent')
-        ->where('products.status',1)
-        ->where('products.idCate',$result->idCate)
-        ->where('gallery.status',1)
-        ->select('products.*','gallery.image as image')
-        ->take(4);
-        $brand_products=Products::join('gallery','products.id','=','gallery.id_parent')
-        ->where('products.status',1)
-        ->where('products.idBrand',$result->idBrand)
-        ->where('gallery.status',1)
-        ->select('products.*','gallery.image as image')
-        ->take(4);
+        $medias = Gallery::where('id_parent', $result->id)->pluck('image');
+        $cate_products = Products::join('gallery', 'products.id', '=', 'gallery.id_parent')
+            ->where('products.status', 1)
+            ->where('products.idCate', $result->idCate)
+            ->where('gallery.status', 1)
+            ->select('products.*', 'gallery.image as image')
+            ->take(4);
+        $brand_products = Products::join('gallery', 'products.id', '=', 'gallery.id_parent')
+            ->where('products.status', 1)
+            ->where('products.idBrand', $result->idBrand)
+            ->where('gallery.status', 1)
+            ->select('products.*', 'gallery.image as image')
+            ->take(4);
         $links = $cate_products->union($brand_products)->get();
-        return response()->json(['product'=>$result,'medias'=>$medias,'links'=>$links]);
-    }   
+        return response()->json(['product' => $result, 'medias' => $medias, 'links' => $links]);
+    }
 
-    public function api_load_cart_product(Request $request){
+    public function api_load_cart_product(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'cart' => 'required|array',
         ]);
         if ($validator->fails()) {
             return response()->json(['check' => false, 'msg' => $validator->errors()->first()]);
         }
-        $arr=[];
-        foreach($request->cart as $item){
-            $product=Products::join('gallery','products.id','=','gallery.id_parent')->where('gallery.status',1)->where('products.id',$item[0])->select('products.id','gallery.image','slug','name','price','discount')->get();
-            foreach($product as $item1){
-                $item2=[
-                    'id'=> $item1->id,
-                    'name'=>$item1->name,
-                    'slug'=>$item1->slug,
-                    'quantity'=>$item[1],
-                    'discount'=>(int)$item1->discount,
-                    'price'=>(int)$item1->price,
-                    'image'=>$item1->image,
-                    'total'=>(int)$item1->discount*$item[1],
+        $arr = [];
+        foreach ($request->cart as $item) {
+            $product = Products::join('gallery', 'products.id', '=', 'gallery.id_parent')->where('gallery.status', 1)->where('products.id', $item[0])->select('products.id', 'gallery.image', 'slug', 'name', 'price', 'discount')->get();
+            foreach ($product as $item1) {
+                $item2 = [
+                    'id' => $item1->id,
+                    'name' => $item1->name,
+                    'slug' => $item1->slug,
+                    'quantity' => $item[1],
+                    'discount' => (int)$item1->discount,
+                    'price' => (int)$item1->price,
+                    'image' => $item1->image,
+                    'total' => (int)$item1->discount * $item[1],
                 ];
-               array_push($arr,$item2);
+                array_push($arr, $item2);
             }
-       }
-       return response()->json($arr);
+        }
+        return response()->json($arr);
     }
 }
-

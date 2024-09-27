@@ -8,12 +8,13 @@ import BrandingWatermarkIcon from "@mui/icons-material/BrandingWatermark";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CardTravelIcon from "@mui/icons-material/CardTravel";
-import MapIcon from '@mui/icons-material/Map';
-import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
+import MapIcon from "@mui/icons-material/Map";
+import DriveFileMoveIcon from "@mui/icons-material/DriveFileMove";
 import DesignServicesTwoToneIcon from "@mui/icons-material/DesignServicesTwoTone";
-import DialerSipIcon from '@mui/icons-material/DialerSip';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import BookIcon from '@mui/icons-material/Book';
+import DialerSipIcon from "@mui/icons-material/DialerSip";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import BookIcon from "@mui/icons-material/Book";
+import CommentIcon from "@mui/icons-material/Comment";
 import "../../css/app.css";
 function Layout({ children }) {
 	const { collapseSidebar } = useProSidebar();
@@ -57,7 +58,7 @@ function Layout({ children }) {
 							<MenuItem icon={<DialerSipIcon />}>Liên hệ</MenuItem>
 						</a>
 						<a href={"/bookings"}>
-							<MenuItem icon={<CalendarMonthIcon  />}>Đặt lịch</MenuItem>
+							<MenuItem icon={<CalendarMonthIcon />}>Đặt lịch</MenuItem>
 						</a>
 						<a href={"/slides"}>
 							<MenuItem icon={<DriveFileMoveIcon />}>Slides</MenuItem>
@@ -67,6 +68,9 @@ function Layout({ children }) {
 						</a>
 						<a href={"/posts"}>
 							<MenuItem icon={<BookIcon />}>Bài viết</MenuItem>
+						</a>
+						<a href={"/comments"}>
+							<MenuItem icon={<CommentIcon />}>Bình luận</MenuItem>
 						</a>
 						<a href={"/bills"}>
 							<MenuItem icon={<CardTravelIcon />}>Hoá đơn</MenuItem>

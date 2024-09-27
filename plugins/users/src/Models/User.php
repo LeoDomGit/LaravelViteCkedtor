@@ -5,14 +5,16 @@ namespace Leo\Users\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use khanhduy\Comment\Models\Comment;
 use Leo\Bookings\Models\Bookings;
 use Leo\Roles\Models\Roles;
 use Spatie\Permission\Traits\HasRoles;
 use Leo\Products\Models\Products;
 use Laravel\Sanctum\HasApiTokens;
-class User extends Authenticatable  
+
+class User extends Authenticatable
 {
-    use HasFactory, Notifiable,HasRoles,HasApiTokens, Notifiable;
+    use HasFactory, Notifiable, HasRoles, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,15 +51,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    
+
     public function roles()
     {
         return $this->belongsTo(Roles::class, 'idRole');
     }
-    
+
     public function bookings()
     {
         return $this->hasMany(Bookings::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'id_user', 'id');
+    }
 }
