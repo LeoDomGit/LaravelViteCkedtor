@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de73023e6a18a7029436b945304f6e3d",
+    "content-hash": "a3c3a4ab00525bcc7d84f01eee42929f",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -1778,6 +1778,44 @@
             "time": "2024-08-16T14:57:26+00:00"
         },
         {
+            "name": "khanhduy/comment",
+            "version": "dev-Comment-Product",
+            "dist": {
+                "type": "path",
+                "url": "./packages/comment",
+                "reference": "646a46d0a7f25733afad2ba60c88f6d56c63ffae"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Khanhduy\\Comment\\Providers\\CommentServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Khanhduy\\Comment\\": "src/",
+                    "Khanhduy\\Comment\\Providers\\": "src/Providers"
+                },
+                "classmap": [
+                    "src/Controllers",
+                    "src/Models",
+                    "src/Providers",
+                    "./routes"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "devcontainerDuy",
+                    "email": "khanhduytran1803@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "laravel/framework",
             "version": "v10.48.22",
             "source": {
@@ -2110,16 +2148,16 @@
         },
         {
             "name": "laravel/serializable-closure",
-            "version": "v1.3.4",
+            "version": "v1.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/serializable-closure.git",
-                "reference": "61b87392d986dc49ad5ef64e75b1ff5fee24ef81"
+                "reference": "1dc4a3dbfa2b7628a3114e43e32120cce7cdda9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/61b87392d986dc49ad5ef64e75b1ff5fee24ef81",
-                "reference": "61b87392d986dc49ad5ef64e75b1ff5fee24ef81",
+                "url": "https://api.github.com/repos/laravel/serializable-closure/zipball/1dc4a3dbfa2b7628a3114e43e32120cce7cdda9c",
+                "reference": "1dc4a3dbfa2b7628a3114e43e32120cce7cdda9c",
                 "shasum": ""
             },
             "require": {
@@ -2167,7 +2205,7 @@
                 "issues": "https://github.com/laravel/serializable-closure/issues",
                 "source": "https://github.com/laravel/serializable-closure"
             },
-            "time": "2024-08-02T07:48:17+00:00"
+            "time": "2024-09-23T13:33:08+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -2243,16 +2281,16 @@
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.9.0",
+            "version": "v2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "502e0fe3f0415d06d5db1f83a472f0f3b754bafe"
+                "reference": "ba4d51eb56de7711b3a37d63aa0643e99a339ae5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/502e0fe3f0415d06d5db1f83a472f0f3b754bafe",
-                "reference": "502e0fe3f0415d06d5db1f83a472f0f3b754bafe",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/ba4d51eb56de7711b3a37d63aa0643e99a339ae5",
+                "reference": "ba4d51eb56de7711b3a37d63aa0643e99a339ae5",
                 "shasum": ""
             },
             "require": {
@@ -2303,40 +2341,40 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/tinker/issues",
-                "source": "https://github.com/laravel/tinker/tree/v2.9.0"
+                "source": "https://github.com/laravel/tinker/tree/v2.10.0"
             },
-            "time": "2024-01-04T16:10:04+00:00"
+            "time": "2024-09-23T13:32:56+00:00"
         },
         {
             "name": "lcobucci/clock",
-            "version": "3.2.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/clock.git",
-                "reference": "6f28b826ea01306b07980cb8320ab30b966cd715"
+                "reference": "db3713a61addfffd615b79bf0bc22f0ccc61b86b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/clock/zipball/6f28b826ea01306b07980cb8320ab30b966cd715",
-                "reference": "6f28b826ea01306b07980cb8320ab30b966cd715",
+                "url": "https://api.github.com/repos/lcobucci/clock/zipball/db3713a61addfffd615b79bf0bc22f0ccc61b86b",
+                "reference": "db3713a61addfffd615b79bf0bc22f0ccc61b86b",
                 "shasum": ""
             },
             "require": {
-                "php": "~8.2.0 || ~8.3.0",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
                 "psr/clock": "^1.0"
             },
             "provide": {
                 "psr/clock-implementation": "1.0"
             },
             "require-dev": {
-                "infection/infection": "^0.27",
-                "lcobucci/coding-standard": "^11.0.0",
+                "infection/infection": "^0.29",
+                "lcobucci/coding-standard": "^11.1.0",
                 "phpstan/extension-installer": "^1.3.1",
                 "phpstan/phpstan": "^1.10.25",
                 "phpstan/phpstan-deprecation-rules": "^1.1.3",
                 "phpstan/phpstan-phpunit": "^1.3.13",
                 "phpstan/phpstan-strict-rules": "^1.5.1",
-                "phpunit/phpunit": "^10.2.3"
+                "phpunit/phpunit": "^11.3.6"
             },
             "type": "library",
             "autoload": {
@@ -2357,7 +2395,7 @@
             "description": "Yet another clock abstraction",
             "support": {
                 "issues": "https://github.com/lcobucci/clock/issues",
-                "source": "https://github.com/lcobucci/clock/tree/3.2.0"
+                "source": "https://github.com/lcobucci/clock/tree/3.3.1"
             },
             "funding": [
                 {
@@ -2369,7 +2407,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2023-11-17T17:00:27+00:00"
+            "time": "2024-09-24T20:45:14+00:00"
         },
         {
             "name": "lcobucci/jwt",
@@ -2899,7 +2937,7 @@
         },
         {
             "name": "leo/bills",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/bills",
@@ -2942,7 +2980,7 @@
         },
         {
             "name": "leo/bookings",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/bookings",
@@ -2990,7 +3028,7 @@
         },
         {
             "name": "leo/brands",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/brands",
@@ -3038,7 +3076,7 @@
         },
         {
             "name": "leo/campains",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/campains",
@@ -3086,7 +3124,7 @@
         },
         {
             "name": "leo/carts",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/carts",
@@ -3129,7 +3167,7 @@
         },
         {
             "name": "leo/categories",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/categories",
@@ -3177,7 +3215,7 @@
         },
         {
             "name": "leo/contacts",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/contacts",
@@ -3220,7 +3258,7 @@
         },
         {
             "name": "leo/customers",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/customers",
@@ -3263,7 +3301,7 @@
         },
         {
             "name": "leo/permissions",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/permissions",
@@ -3306,7 +3344,7 @@
         },
         {
             "name": "leo/post",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/post",
@@ -3349,11 +3387,11 @@
         },
         {
             "name": "leo/products",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/products",
-                "reference": "de9de0f05bc8546930e78cf524d696b8a9cae232"
+                "reference": "ffd03600cf428880a49e1529401c7b5c3a6eb815"
             },
             "type": "library",
             "extra": {
@@ -3398,7 +3436,7 @@
         },
         {
             "name": "leo/renvenues",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/renvenues",
@@ -3441,7 +3479,7 @@
         },
         {
             "name": "leo/roles",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/roles",
@@ -3484,7 +3522,7 @@
         },
         {
             "name": "leo/services",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/services",
@@ -3527,7 +3565,7 @@
         },
         {
             "name": "leo/services_collections",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/services_collections",
@@ -3570,7 +3608,7 @@
         },
         {
             "name": "leo/sitemap",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/sitemap",
@@ -3613,7 +3651,7 @@
         },
         {
             "name": "leo/slides",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/slides",
@@ -3656,7 +3694,7 @@
         },
         {
             "name": "leo/users",
-            "version": "dev-API_Service_bIlll",
+            "version": "dev-Comment-Product",
             "dist": {
                 "type": "path",
                 "url": "./packages/users",
@@ -9282,26 +9320,26 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.15.4",
+            "version": "2.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "a139776fa3f5985a50b509f2a02ff0f709d2a546"
+                "reference": "befcdc0e5dce67252aa6322d82424be928214fa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/a139776fa3f5985a50b509f2a02ff0f709d2a546",
-                "reference": "a139776fa3f5985a50b509f2a02ff0f709d2a546",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/befcdc0e5dce67252aa6322d82424be928214fa2",
+                "reference": "befcdc0e5dce67252aa6322d82424be928214fa2",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9 || ^7.0 || ^8.0",
+                "php": "^7.1 || ^8.0",
                 "psr/log": "^1.0.1 || ^2.0 || ^3.0"
             },
             "require-dev": {
-                "mockery/mockery": "^0.9 || ^1.0",
-                "phpunit/phpunit": "^4.8.36 || ^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.8 || ^9.3.3",
-                "symfony/var-dumper": "^2.6 || ^3.0 || ^4.0 || ^5.0"
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.8 || ^9.3.3",
+                "symfony/var-dumper": "^4.0 || ^5.0"
             },
             "suggest": {
                 "symfony/var-dumper": "Pretty print complex values better with var-dumper available",
@@ -9341,7 +9379,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.15.4"
+                "source": "https://github.com/filp/whoops/tree/2.16.0"
             },
             "funding": [
                 {
@@ -9349,7 +9387,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-11-03T12:00:00+00:00"
+            "time": "2024-09-25T12:00:00+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -9404,16 +9442,16 @@
         },
         {
             "name": "laravel/pint",
-            "version": "v1.17.3",
+            "version": "v1.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/pint.git",
-                "reference": "9d77be916e145864f10788bb94531d03e1f7b482"
+                "reference": "35c00c05ec43e6b46d295efc0f4386ceb30d50d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pint/zipball/9d77be916e145864f10788bb94531d03e1f7b482",
-                "reference": "9d77be916e145864f10788bb94531d03e1f7b482",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/35c00c05ec43e6b46d295efc0f4386ceb30d50d9",
+                "reference": "35c00c05ec43e6b46d295efc0f4386ceb30d50d9",
                 "shasum": ""
             },
             "require": {
@@ -9466,20 +9504,20 @@
                 "issues": "https://github.com/laravel/pint/issues",
                 "source": "https://github.com/laravel/pint"
             },
-            "time": "2024-09-03T15:00:28+00:00"
+            "time": "2024-09-24T17:22:50+00:00"
         },
         {
             "name": "laravel/sail",
-            "version": "v1.32.0",
+            "version": "v1.33.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "4a7e41d280861ca7e35710cea011a07669b4003b"
+                "reference": "d54af9d5745e3680d8a6463ffd9f314aa53eb2d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/4a7e41d280861ca7e35710cea011a07669b4003b",
-                "reference": "4a7e41d280861ca7e35710cea011a07669b4003b",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/d54af9d5745e3680d8a6463ffd9f314aa53eb2d1",
+                "reference": "d54af9d5745e3680d8a6463ffd9f314aa53eb2d1",
                 "shasum": ""
             },
             "require": {
@@ -9529,7 +9567,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2024-09-11T20:14:29+00:00"
+            "time": "2024-09-22T19:04:21+00:00"
         },
         {
             "name": "mockery/mockery",

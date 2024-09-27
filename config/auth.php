@@ -77,7 +77,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Leo\Customer\Models\Customer::class,
+            'model' => Leo\Customers\Models\Customers::class,
         ],
 
         'admins' => [

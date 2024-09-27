@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "*",
@@ -27,11 +30,12 @@
         "leo/services_collections": "*",
         "leo/slides": "*",
         "leo/users": "*",
-        "leo/contacts":"*",
-        "leo/sitemap":"*",
-        "leo/post":"*",
-        "leo/renvenues":"*",
-        "leo/campains":"*",
+        "leo/contacts": "*",
+        "leo/sitemap": "*",
+        "leo/post": "*",
+        "leo/renvenues": "*",
+        "leo/campains": "*",
+        "khanhduy/comment": "*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "pusher/pusher-php-server": "^7.2",
@@ -147,10 +151,13 @@
             ],
             "./plugins/campains": [
                 "leo/campains"
+            ],
+            "./plugins/comment": [
+                "khanhduy/comment"
             ]
         }
     },
-   "config": {
+    "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
@@ -236,6 +243,10 @@
         {
             "type": "path",
             "url": "./packages/campains/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/comment/"
         }
     ]
 }
