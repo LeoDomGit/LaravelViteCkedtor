@@ -31,7 +31,7 @@ class CommentController extends Controller
         }
 
         $req = $request->all();
-        $req['id_user'] = Auth::user()->id;
+        $req['id_user'] = $request->session()->get('user')->id;
         $comment = Comment::create($req);
         if ($comment) {
             $data = Comment::with('product', 'customer', 'user',  'service', 'parent')->get();
@@ -44,7 +44,7 @@ class CommentController extends Controller
         $validator = Validator::make($request->all(), [
             'id_product' => 'required',
             'comment' => 'required',
-            'id_parent' => 'nullable|exists:comments,id',
+            'id_parent' => 'nullable|exists:comment,id',
         ]);
 
         if ($validator->fails()) {
@@ -52,12 +52,12 @@ class CommentController extends Controller
         }
 
         $req = $request->all();
-        $req['id_customer'] = Auth::guard('customer')->user()->id;
+        $req['id_customer'] = $request->user()->id;
 
         $comment = Comment::create($req);
 
         if ($comment) {
-            $data = Comment::with('product', 'customer', 'user', 'service', 'parent')->get();
+            $data = Comment::with('product', 'customer', 'user', 'service', 'parent')->where('id_product', $request->id_product)->get();
             return response()->json(['check' => true, 'msg' => 'Thêm thành công', 'data' => $data]);
         }
         return response()->json(['check' => false, 'msg' => 'Thêm thất bại']);
@@ -97,7 +97,7 @@ class CommentController extends Controller
 
         $comment = Comment::find($id);
 
-        if (!$comment || $comment->id_customer !== Auth::guard('customer')->user()->id) {
+        if (!$comment || $comment->id_customer !== $request->user()->id) {
             return response()->json(['check' => false, 'msg' => 'Bạn không có quyền sửa bình luận này']);
         }
 
@@ -119,10 +119,10 @@ class CommentController extends Controller
         return response()->json(['check' => true]);
     }
 
-    public function deleteComment($id)
+    public function deleteComment(Request $request, $id)
     {
         $comment = Comment::find($id);
-        if (!$comment || $comment->id_customer !== Auth::guard('customer')->user()->id) {
+        if (!$comment || $comment->id_customer !== $request->user()->id) {
             return response()->json(['check' => false, 'msg' => 'Bạn không có quyền xóa bình luận này']);
         }
 

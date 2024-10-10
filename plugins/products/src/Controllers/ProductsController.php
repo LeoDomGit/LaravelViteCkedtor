@@ -394,11 +394,30 @@ class ProductsController extends Controller
     // --------------------------------------
     public function api_single_product($slug)
     {
-        $result = Products::with(['brands', 'categories', 'comments'])->where('products.slug', $slug)->where('products.status', 1)->select('products.*')
+        $result = Products::with(['brands', 'categories', 'comments' => function ($query) {
+            $query->where('status', 1);
+        }, 'comments.customer' => function ($query) {
+            $query->select('id', 'name');
+        }, 'comments.user' => function ($query) {
+            $query->select('id', 'name');
+        }])->where('products.slug', $slug)->where('products.status', 1)->select('products.*')
             ->first();
         if (!$result) {
             return response()->json([]);
         }
+
+        $product = $result->toArray();
+        $product['comments'] = $result->comments->map(function ($comment) {
+            return [
+                'id' => $comment->id,
+                'comment' => $comment->comment,
+                'customer' => $comment->customer,
+                'user' => $comment->user,
+                'id_parent' => $comment->id_parent,
+                'created_at' => $comment->created_at
+            ];
+        });
+
         $medias = Gallery::where('id_parent', $result->id)->pluck('image');
         $cate_products = Products::join('gallery', 'products.id', '=', 'gallery.id_parent')
             ->where('products.status', 1)
@@ -413,7 +432,7 @@ class ProductsController extends Controller
             ->select('products.*', 'gallery.image as image')
             ->take(4);
         $links = $cate_products->union($brand_products)->get();
-        return response()->json(['product' => $result, 'medias' => $medias, 'links' => $links]);
+        return response()->json(['product' => $product, 'medias' => $medias, 'links' => $links]);
     }
 
     public function api_load_cart_product(Request $request)
