@@ -18,6 +18,7 @@ class CheckLogin
         if (!$request->session()->has('user')) {
             return redirect('/');
         }
+
         return $next($request);
     }
 }

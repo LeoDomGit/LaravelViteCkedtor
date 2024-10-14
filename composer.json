@@ -36,6 +36,7 @@
         "leo/renvenues": "*",
         "leo/campains": "*",
         "khanhduy/comment": "*",
+        "leo/chat":"*",
         "maatwebsite/excel": "*",
         "mnsami/composer-custom-directory-installer": "*",
         "pusher/pusher-php-server": "^7.2",
@@ -154,6 +155,9 @@
             ],
             "./plugins/comment": [
                 "khanhduy/comment"
+            ],
+            "./plugins/chat": [
+                "leo/chat"
             ]
         }
     },
@@ -247,6 +251,10 @@
         {
             "type": "path",
             "url": "./packages/comment/"
+        },
+        {
+            "type": "path",
+            "url": "./packages/chat/"
         }
     ]
 }

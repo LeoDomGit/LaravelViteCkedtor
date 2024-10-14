@@ -12,6 +12,7 @@ function Products({ dataproducts, databrands, datacategories }) {
     const [categories, setCategories] = useState(datacategories);
     const [brands, setBrands] = useState(databrands);
     const [products, setProducts] = useState(dataproducts);
+    const API_KEY = import.meta.env.VITE_OPEN_AI_KEY;
     const handleCellEditStop = (id, field, value) => {
         axios
             .put(
@@ -51,6 +52,8 @@ function Products({ dataproducts, databrands, datacategories }) {
                 });
             });
     };
+
+  
     const notyf = new Notyf({
         duration: 1000,
         position: {
@@ -285,7 +288,66 @@ function Products({ dataproducts, databrands, datacategories }) {
                 }
             });
     };
-
+    const [timer, setTimer] = useState(null);
+    const handleCreateContent = async () => {
+        if (!name) {
+          notyf.error('Product name cannot be empty');
+          return;
+        }
+    
+        try {
+          const prompt = `Create a product introduction in Vietnamese for ${name}, including its features, price of ${discount} VND, and a compare price of ${price} VND. The content should be around 1200 words and engaging. And make HTML CSS for it as content with paragraphs, font-size of text min 16px`;
+    
+          const apiRequestBody = {
+            model: "gpt-3.5-turbo",
+            messages: [
+              { role: "user", content: prompt },
+            ],
+          };
+    
+          const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(apiRequestBody),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Error generating content');
+          }
+    
+          const data = await response.json();
+          const generatedContent = data.choices[0]?.message?.content || '';
+    
+          setContent(generatedContent);
+          notyf.success('Content generated successfully');
+        } catch (error) {
+          console.error('Error:', error);
+          notyf.error('Failed to generate content');
+        }
+      };
+    
+      // UseEffect to run handleCreateContent 3 seconds after name change
+      useEffect(() => {
+        if (!name) return;
+    
+        if (timer) {
+          clearTimeout(timer);
+        }
+    
+        const newTimer = setTimeout(() => {
+          handleCreateContent();
+        }, 3000);
+    
+        setTimer(newTimer);
+    
+        return () => {
+          clearTimeout(newTimer); // Cleanup on component unmount or before new setTimeout
+        };
+      }, [name,price,discount]); // Dependency array listens for changes in 'name'
+      
     const handleRemoveImage = (index) => {
         const updatedFiles = [...selectedFiles];
         updatedFiles.splice(index, 1);
@@ -319,19 +381,13 @@ function Products({ dataproducts, databrands, datacategories }) {
                                 </button>
                             </div>
                             <div className="col-md"></div>
-                            <div className="col-md-2">
-                                {create == true && (
-                                    <button
-                                        className="btn btn-sm btn-primary"
-                                        onClick={(e) => SubmitProduct()}
-                                    >
-                                        Store
-                                    </button>
-                                )}
-                            </div>
                         </div>
                         {create == true && (
-                            <>
+                       <div className="row">
+                        <div className="col-md-8">
+                        <div class="card shadow">
+                                <div class="card-body">
+                                <>
                                 <div className="row">
                                     <div className="col-md-3">
                                         <label>Name:</label>
@@ -434,7 +490,7 @@ function Products({ dataproducts, databrands, datacategories }) {
                                         />
                                     </div>
                                 </div>
-                                <div className="row mt-3">
+                                <div className="row mt-3 ps-3">
                                     <CKEditor
                                         value={content}
                                         onBlur={setContent}
@@ -481,8 +537,26 @@ function Products({ dataproducts, databrands, datacategories }) {
                                             </div>
                                         ))}
                                     </div>
+                                    <div className="row">
+                                        <div className="col-md-3">
+                                        {create == true && (
+                                    <button
+                                        className="btn w-100 btn-primary"
+                                        onClick={(e) => SubmitProduct()}
+                                    >
+                                        Store
+                                    </button>
+                                )}
+                                        </div>
+                                    </div>
                                 </div>
                             </>
+                                </div>
+                            </div>
+                        </div>
+                       </div>
+                            
+
                         )}
                         {create == false && products && products.length > 0 && (
                             <Box sx={{ height: 400 }}>
